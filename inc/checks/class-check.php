@@ -14,6 +14,8 @@ abstract class Check {
 	/**
 	 * Status of this check after being run.
 	 *
+	 * Can be one of 'success', 'warning', 'error'.
+	 *
 	 * @var string
 	 */
 	public static $status;
@@ -32,5 +34,17 @@ abstract class Check {
 	 * subclassed. Method is expected to set $status_code and $status_message.
 	 */
 	abstract public function run();
+
+	/**
+	 * Get results of the check.
+	 *
+	 * @return array
+	 */
+	public function get_results() {
+		return array(
+			'status'    => self::$status,
+			'message'   => self::$message,
+		);
+	}
 
 }
