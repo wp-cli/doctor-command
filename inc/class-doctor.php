@@ -8,59 +8,6 @@ class Doctor {
 
 	private $checks = array();
 
-	/**
-	 * Run a series of checks against WordPress to diagnose issues.
-	 *
-	 * A check is a routine run against some scope of WordPress that reports
-	 * a 'status' and a 'message'. The status can be 'success', 'warning', or
-	 * 'error'. The message should be a human-readable explanation of the
-	 * status.
-	 *
-	 * <checks>...
-	 * : One or more checks to run.
-	 *
-	 * @when before_wp_load
-	 */
-	public function diagnose( $args, $assoc_args ) {
-
-		// @todo run all of the checks that don't require WP to be loaded
-
-		// @todo load WordPress
-
-		// @todo run all of the checks that require WP to be loaded
-
-		// @todo display results; warn if a check provides invalid status
-
-	}
-
-	/**
-	 * List available checks to run.
-	 *
-	 * [--format=<format>]
-	 * : Render output in a specific format.
-	 * ---
-	 * default: table
-	 * options:
-	 *   - table
-	 *   - json
-	 *   - csv
-	 * ---
-	 *
-	 * @when before_wp_load
-	 */
-	public function checks( $args, $assoc_args ) {
-
-		$items = array();
-		foreach( self::$instance->checks as $name => $class ) {
-			$reflection = new ReflectionClass( $class );
-			$items[] = array(
-				'name'        => $name,
-				'description' => self::remove_decorations( $reflection->getDocComment() ),
-			);
-		}
-		Utils\format_items( $assoc_args['format'], $items, array( 'name', 'description' ) );
-	}
-
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new Doctor;
@@ -84,16 +31,24 @@ class Doctor {
 	}
 
 	/**
-	 * Remove unused cruft from PHPdoc comment.
+	 * Get checks registred with the Doctor.
 	 *
-	 * @param string $comment PHPdoc comment.
-	 * @return string
+	 * @param array $args Filter checks based on some attribute.
 	 */
-	private static function remove_decorations( $comment ) {
-		$comment = preg_replace( '|^/\*\*[\r\n]+|', '', $comment );
-		$comment = preg_replace( '|\n[\t ]*\*/$|', '', $comment );
-		$comment = preg_replace( '|^[\t ]*\* ?|m', '', $comment );
-		return $comment;
+	public static function get_checks( $args = array() ) {
+
+		$checks = self::$instance->checks;
+		if ( ! empty( $args ) ) {
+			$checks = array_filter( $checks, function( $check ) use ( $args ) {
+				foreach( $args as $key => $value ) {
+					if ( $check::$$key !== $value ) {
+						return false;
+					}
+				}
+				return true;
+			});
+		}
+		return $checks;
 	}
 
 }

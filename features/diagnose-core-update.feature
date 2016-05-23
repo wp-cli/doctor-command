@@ -6,9 +6,9 @@ Feature: Check whether WordPress is up to date
     When I run `wp doctor diagnose core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
-      | core-update   | success | WordPress is at the latest version, 4.5.2 |
+      | core-update   | success | WordPress is at the latest version.       |
 
-  Scenario: WordPress has a new minor version
+  Scenario: WordPress has a new minor version but no new major version
     Given a WP install
     And I run `wp core download --version=4.5.1 --force`
 
@@ -17,11 +17,11 @@ Feature: Check whether WordPress is up to date
       | name          | status  | message                                   |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
 
-  Scenario: WordPress has a new major version
+  Scenario: WordPress has a new major version but no new minor version
     Given a WP install
-    And I run `wp core download --version=4.4.2 --force`
+    And I run `wp core download --version=4.4.3 --force`
 
     When I run `wp doctor diagnose core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                             |
-      | core-update   | warning | A new version of WordPress is available for update. |
+      | core-update   | warning | A new major version of WordPress is available for update. |

@@ -16,8 +16,10 @@ This package implements the following commands:
 Run a series of checks against WordPress to diagnose issues.
 
 ~~~
-wp doctor diagnose <checks>...
+wp doctor diagnose <checks>... [--format=<format>]
 ~~~
+
+**OPTIONS**
 
 A check is a routine run against some scope of WordPress that reports
 a 'status' and a 'message'. The status can be 'success', 'warning', or
@@ -25,7 +27,27 @@ a 'status' and a 'message'. The status can be 'success', 'warning', or
 status.
 
 	<checks>...
-		One or more checks to run.
+		Names of one or more checks to run.
+
+	[--format=<format>]
+		Render results in a particular format.
+		---
+		default: table
+		options:
+		  - table
+		  - json
+		  - csv
+		  - yaml
+		---
+
+**EXAMPLES**
+
+    $ wp doctor diagnose core-update
+    +-------------+---------+-----------------------------------------------------------+
+    | name        | status  | message                                                   |
+    +-------------+---------+-----------------------------------------------------------+
+    | core-update | warning | A new major version of WordPress is available for update. |
+    +-------------+---------+-----------------------------------------------------------+
 
 
 
@@ -37,6 +59,8 @@ List available checks to run.
 wp doctor checks [--format=<format>]
 ~~~
 
+**OPTIONS**
+
 	[--format=<format>]
 		Render output in a specific format.
 		---
@@ -46,6 +70,15 @@ wp doctor checks [--format=<format>]
 		  - json
 		  - csv
 		---
+
+**EXAMPLES**
+
+    $ wp doctor checks
+    +-------------+---------------------------------------------+
+    | name        | description                                 |
+    +-------------+---------------------------------------------+
+    | core-update | Check whether WordPress core is up to date. |
+    +-------------+---------------------------------------------+
 
 
 
