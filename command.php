@@ -5,6 +5,7 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 }
 
 require_once dirname( __FILE__ ) . '/inc/class-doctor.php';
+require_once dirname( __FILE__ ) . '/inc/class-doctor-command.php';
 
 spl_autoload_register( function( $class ) {
 	$class = ltrim( $class, '\\' );
@@ -31,5 +32,4 @@ foreach( array(
 	Doctor::add_check( str_replace( '_', '-', strtolower( $name ) ), $class );
 }
 
-WP_CLI::add_command( 'doctor diagnose', array( 'Doctor', 'diagnose' ) );
-WP_CLI::add_command( 'doctor checks', array( 'Doctor', 'checks' ) );
+WP_CLI::add_command( 'doctor', 'Doctor_Command' );
