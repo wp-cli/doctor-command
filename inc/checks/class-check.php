@@ -5,11 +5,11 @@ namespace Doctor\Checks;
 abstract class Check {
 
 	/**
-	 * Whether or not this check requires WP to be loaded.
+	 * WP-CLI hook to perform the check on.
 	 *
 	 * @var boolean
 	 */
-	public static $require_wp_load;
+	public static $when;
 
 	/**
 	 * Status of this check after being run.

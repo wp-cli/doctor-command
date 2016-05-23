@@ -45,21 +45,15 @@ class Doctor_Command {
 	public function diagnose( $args, $assoc_args ) {
 
 		$completed = array();
-		$check_args = array( 'require_wp_load' => false );
-		foreach( Doctor::get_checks( $check_args ) as $name => $check ) {
-			$check->run();
-			$completed[ $name ] = $check;
-		}
-
-		$check_args = array( 'require_wp_load' => true );
-		$checks = Doctor::get_checks( $check_args );
-		if ( ! empty( $checks ) ) {
-			$this->load_wordpress_with_template();
-			foreach( $checks as $name => $check ) {
+		$checks = Doctor::get_checks();
+		foreach( $checks as $name => $check ) {
+			WP_CLI::add_hook( $check::$when, function() use ( $name, $check, &$completed ) {
 				$check->run();
 				$completed[ $name ] = $check;
-			}
+			});
 		}
+
+		$this->load_wordpress_with_template();
 
 		$results = array();
 		foreach( $completed as $name => $check ) {
