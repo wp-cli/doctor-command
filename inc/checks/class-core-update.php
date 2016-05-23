@@ -9,7 +9,7 @@ use WP_CLI;
  */
 class Core_Update extends Check {
 
-	public static $require_wp_load = true;
+	public static $when = 'after_wp_load';
 
 	public function run() {
 		ob_start();

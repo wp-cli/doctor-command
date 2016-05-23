@@ -36,19 +36,7 @@ class Doctor {
 	 * @param array $args Filter checks based on some attribute.
 	 */
 	public static function get_checks( $args = array() ) {
-
-		$checks = self::$instance->checks;
-		if ( ! empty( $args ) ) {
-			$checks = array_filter( $checks, function( $check ) use ( $args ) {
-				foreach( $args as $key => $value ) {
-					if ( $check::$$key !== $value ) {
-						return false;
-					}
-				}
-				return true;
-			});
-		}
-		return $checks;
+		return self::$instance->checks;
 	}
 
 }
