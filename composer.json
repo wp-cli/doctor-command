@@ -1,8 +1,15 @@
 {
     "name": "runcommand/doctor",
     "description": "Run a series of checks against WordPress to diagnose issues.",
+    "homepage": "https://runcommand.io/wp/doctor/",
     "license": "MIT",
-    "authors": [],
+    "authors": [
+        {
+            "name": "Daniel Bachhuber",
+            "email": "daniel@runcommand.io",
+            "homepage": "https://runcommand.io"
+        }
+    ],
     "minimum-stability": "dev",
     "autoload": {
         "files": [ "command.php" ]
