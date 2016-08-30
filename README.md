@@ -3,7 +3,7 @@ runcommand/doctor
 
 Run a series of checks against WordPress to diagnose issues.
 
-[![Build Status](https://travis-ci.org/runcommand/doctor.svg?branch=master)](https://travis-ci.org/runcommand/doctor)
+[![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)
 
 Quick links: [Using](#using) | [Installing](#installing) | [Contributing](#contributing)
 
@@ -11,12 +11,12 @@ Quick links: [Using](#using) | [Installing](#installing) | [Contributing](#contr
 
 This package implements the following commands:
 
-### wp doctor diagnose
+### wp doctor check
 
 Run a series of checks against WordPress to diagnose issues.
 
 ~~~
-wp doctor diagnose <checks>... [--format=<format>]
+wp doctor check <checks>... [--format=<format>]
 ~~~
 
 **OPTIONS**
@@ -80,8 +80,6 @@ wp doctor checks [--format=<format>]
     | core-update | Check whether WordPress core is up to date. |
     +-------------+---------------------------------------------+
 
-
-
 ## Installing
 
 Installing this package requires WP-CLI v0.23.0 or greater. Update to the latest stable release with `wp cli update`.
@@ -118,3 +116,6 @@ Once you've decided to commit the time to seeing your pull request through, plea
 2. Submit your pull request early for feedback.
 3. Include functional tests with your changes. [Read the WP-CLI documentation](https://wp-cli.org/docs/pull-requests/#functional-tests) for an introduction.
 4. Follow the [WordPress Coding Standards](http://make.wordpress.org/core/handbook/coding-standards/).
+
+
+*This README.md is generated dynamically from the project's codebase using `wp scaffold package-readme` ([doc](https://github.com/wp-cli/scaffold-package-command#wp-scaffold-package-readme)). To suggest changes, please submit a pull request against the corresponding part of the codebase.*
