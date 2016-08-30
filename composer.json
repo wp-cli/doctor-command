@@ -19,8 +19,13 @@
         "behat/behat": "~2.5"
     },
     "extras": {
+        "readme": {
+            "shields": [
+                "[![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)"
+            ]
+        },
         "commands": [
-            "doctor diagnose",
+            "doctor check",
             "doctor checks"
         ]
     }
