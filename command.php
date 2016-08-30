@@ -4,17 +4,15 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 	return;
 }
 
-require_once dirname( __FILE__ ) . '/inc/class-doctor.php';
-require_once dirname( __FILE__ ) . '/inc/class-doctor-command.php';
-
 spl_autoload_register( function( $class ) {
 	$class = ltrim( $class, '\\' );
-	if ( 0 !== stripos( $class, 'Doctor\\Checks\\' ) ) {
+	if ( 0 !== stripos( $class, 'runcommand\\Doctor\\' ) ) {
 		return;
 	}
 
 	$parts = explode( '\\', $class );
-	array_shift( $parts ); // Don't need "Doctor"
+	array_shift( $parts ); // Don't need "runcommand\Doctor"
+	array_shift( $parts );
 	$last = array_pop( $parts ); // File should be 'class-[...].php'
 	$last = 'class-' . $last . '.php';
 	$parts[] = $last;
@@ -25,11 +23,11 @@ spl_autoload_register( function( $class ) {
 });
 
 foreach( array(
-	'Doctor\Checks\Core_Update',
+	'runcommand\Doctor\Checks\Core_Update',
 ) as $class ) {
 	$bits = explode( '\\', $class );
 	$name = array_pop( $bits );
-	Doctor::add_check( str_replace( '_', '-', strtolower( $name ) ), $class );
+	runcommand\Doctor\Checks::add_check( str_replace( '_', '-', strtolower( $name ) ), $class );
 }
 
-WP_CLI::add_command( 'doctor', 'Doctor_Command' );
+WP_CLI::add_command( 'doctor', 'runcommand\Doctor\Command' );

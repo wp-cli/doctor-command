@@ -3,7 +3,7 @@ Feature: Check whether WordPress is up to date
   Scenario: WordPress is up to date
     Given a WP install
 
-    When I run `wp doctor diagnose core-update`
+    When I run `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
       | core-update   | success | WordPress is at the latest version.       |
@@ -12,7 +12,7 @@ Feature: Check whether WordPress is up to date
     Given a WP install
     And I run `wp core download --version=4.5.1 --force`
 
-    When I run `wp doctor diagnose core-update`
+    When I run `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
@@ -21,7 +21,7 @@ Feature: Check whether WordPress is up to date
     Given a WP install
     And I run `wp core download --version=4.4.4 --force`
 
-    When I run `wp doctor diagnose core-update`
+    When I run `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                             |
       | core-update   | warning | A new major version of WordPress is available for update. |

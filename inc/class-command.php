@@ -1,11 +1,14 @@
 <?php
 
+namespace runcommand\Doctor;
+
+use WP_CLI;
 use \WP_CLI\Utils;
 
 /**
  * Diagnose what ails WordPress.
  */
-class Doctor_Command {
+class Command {
 
 	/**
 	 * Run a series of checks against WordPress to diagnose issues.
@@ -42,10 +45,10 @@ class Doctor_Command {
 	 *
 	 * @when before_wp_load
 	 */
-	public function diagnose( $args, $assoc_args ) {
+	public function check( $args, $assoc_args ) {
 
 		$completed = array();
-		$checks = Doctor::get_checks();
+		$checks = Checks::get_checks();
 		foreach( $checks as $name => $check ) {
 			WP_CLI::add_hook( $check::$when, function() use ( $name, $check, &$completed ) {
 				$check->run();
@@ -93,7 +96,7 @@ class Doctor_Command {
 	public function checks( $args, $assoc_args ) {
 
 		$items = array();
-		foreach( Doctor::get_checks() as $name => $class ) {
+		foreach( Checks::get_checks() as $name => $class ) {
 			$reflection = new ReflectionClass( $class );
 			$items[] = array(
 				'name'        => $name,

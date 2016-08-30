@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctor\Checks;
+namespace runcommand\Doctor\Checks;
 
 abstract class Check {
 
