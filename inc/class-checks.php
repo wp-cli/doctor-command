@@ -1,8 +1,10 @@
 <?php
 
+namespace runcommand\Doctor;
+
 use \WP_CLI\Utils;
 
-class Doctor {
+class Checks {
 
 	private static $instance;
 
@@ -10,7 +12,7 @@ class Doctor {
 
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new Doctor;
+			self::$instance = new Checks;
 		}
 		return self::$instance;
 	}

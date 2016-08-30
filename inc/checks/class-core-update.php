@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctor\Checks;
+namespace runcommand\Doctor\Checks;
 
 use WP_CLI;
 
@@ -15,7 +15,7 @@ class Core_Update extends Check {
 		ob_start();
 		WP_CLI::run_command( array( 'core', 'check-update' ), array( 'format' => 'json' ) );
 		$ret = ob_get_clean();
-		$updates = json_decode( $ret, true );
+		$updates = ! empty( $ret ) ? json_decode( $ret, true ) : array();
 		$has_minor = $has_major = false;
 		foreach( $updates as $update ) {
 			switch ( $update['update_type'] ) {
