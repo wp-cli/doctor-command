@@ -19,7 +19,7 @@ Feature: Check whether WordPress is up to date
 
   Scenario: WordPress has a new major version but no new minor version
     Given a WP install
-    And I run `wp core download --version=4.4.3 --force`
+    And I run `wp core download --version=4.4.4 --force`
 
     When I run `wp doctor diagnose core-update`
     Then STDOUT should be a table containing rows:
