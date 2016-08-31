@@ -20,8 +20,11 @@ class Command {
 	 * 'error'. The message should be a human-readable explanation of the
 	 * status.
 	 *
-	 * <checks>...
+	 * [<checks>...]
 	 * : Names of one or more checks to run.
+	 *
+	 * [--all]
+	 * : Run all registered checks.
 	 *
 	 * [--format=<format>]
 	 * : Render results in a particular format.
@@ -46,6 +49,11 @@ class Command {
 	 * @when before_wp_load
 	 */
 	public function check( $args, $assoc_args ) {
+
+		$all = ! Utils\get_flag_value( $assoc_args, 'all' );
+		if ( empty( $args ) && $all ) {
+			WP_CLI::error( 'Please specify one or more checks, or use --all.' );
+		}
 
 		$completed = array();
 		$checks = Checks::get_checks();

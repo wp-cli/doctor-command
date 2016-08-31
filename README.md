@@ -16,7 +16,7 @@ This package implements the following commands:
 Run a series of checks against WordPress to diagnose issues.
 
 ~~~
-wp doctor check <checks>... [--format=<format>]
+wp doctor check [<checks>...] [--all] [--format=<format>]
 ~~~
 
 **OPTIONS**
@@ -26,8 +26,11 @@ a 'status' and a 'message'. The status can be 'success', 'warning', or
 'error'. The message should be a human-readable explanation of the
 status.
 
-	<checks>...
+	[<checks>...]
 		Names of one or more checks to run.
+
+	[--all]
+		Run all registered checks.
 
 	[--format=<format>]
 		Render results in a particular format.
