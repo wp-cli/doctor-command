@@ -3,7 +3,8 @@
 namespace runcommand\Doctor;
 
 use WP_CLI;
-use \WP_CLI\Utils;
+use WP_CLI\Formatter;
+use WP_CLI\Utils;
 
 /**
  * Diagnose what ails WordPress.
@@ -25,6 +26,9 @@ class Command {
 	 *
 	 * [--all]
 	 * : Run all registered checks.
+	 *
+	 * [--fields=<fields>]
+	 * : Display one or more fields.
 	 *
 	 * [--format=<format>]
 	 * : Render results in a particular format.
@@ -76,9 +80,10 @@ class Command {
 		foreach( $completed as $name => $check ) {
 			$results[] = array_merge( $check->get_results(), array( 'name' => $name ) );
 		}
-
 		// @todo warn if a check provides invalid status
-		Utils\format_items( $assoc_args['format'], $results, array( 'name', 'status', 'message' ) );
+
+		$formatter = new Formatter( $assoc_args, array( 'name', 'status', 'message' ) );
+		$formatter->display_items( $results );
 	}
 
 	/**

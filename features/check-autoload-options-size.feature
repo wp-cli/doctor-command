@@ -1,0 +1,39 @@
+Feature: Check the size of autoloaded options
+
+  Scenario: Autoloaded options are less than 900 kb
+    Given a WP install
+
+    When I run `wp doctor check autoload-options-size --fields=name,status`
+    Then STDOUT should be a table containing rows:
+      | name                    | status  |
+      | autoload-options-size   | success |
+
+    When I run `wp doctor check autoload-options-size --fields=message`
+    Then STDOUT should contain:
+      """
+      is less than threshold
+      """
+
+  Scenario: Autoloaded options are greater than 900 kb
+    Given a WP install
+    And a explode-options.php file:
+      """
+      <?php
+      $value = str_pad( '9', pow( 9, 7 ), '9' );
+      update_option( 'foobar', $value );
+      """
+
+    When I run `wp eval-file explode-options.php`
+    And I run `wp option get foobar`
+    Then STDERR should be empty
+
+    When I run `wp doctor check autoload-options-size --fields=name,status`
+    Then STDOUT should be a table containing rows:
+      | name                    | status  |
+      | autoload-options-size   | warning |
+
+    When I run `wp doctor check autoload-options-size --fields=message`
+    Then STDOUT should contain:
+      """
+      exceeds threshold
+      """
