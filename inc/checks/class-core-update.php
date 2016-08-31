@@ -29,14 +29,14 @@ class Core_Update extends Check {
 		}
 
 		if ( $has_minor ) {
-			self::$status = 'error';
-			self::$message = "Updating to WordPress' newest minor version is strongly recommended.";
+			$this->status = 'error';
+			$this->message = "Updating to WordPress' newest minor version is strongly recommended.";
 		} else if ( $has_major ) {
-			self::$status = 'warning';
-			self::$message = 'A new major version of WordPress is available for update.';
+			$this->status = 'warning';
+			$this->message = 'A new major version of WordPress is available for update.';
 		} else {
-			self::$status = 'success';
-			self::$message = 'WordPress is at the latest version.';
+			$this->status = 'success';
+			$this->message = 'WordPress is at the latest version.';
 		}
 
 	}
