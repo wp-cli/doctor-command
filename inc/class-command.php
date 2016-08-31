@@ -106,12 +106,13 @@ class Command {
 	 *     +-------------+---------------------------------------------+
 	 *
 	 * @when before_wp_load
+	 * @subcommand list
 	 */
-	public function checks( $args, $assoc_args ) {
+	public function list_( $args, $assoc_args ) {
 
 		$items = array();
 		foreach( Checks::get_checks() as $name => $class ) {
-			$reflection = new ReflectionClass( $class );
+			$reflection = new \ReflectionClass( $class );
 			$items[] = array(
 				'name'        => $name,
 				'description' => self::remove_decorations( $reflection->getDocComment() ),
