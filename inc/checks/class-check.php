@@ -7,9 +7,9 @@ abstract class Check {
 	/**
 	 * WP-CLI hook to perform the check on.
 	 *
-	 * @var boolean
+	 * @var string
 	 */
-	public static $when;
+	 protected $when = 'after_wp_load';
 
 	/**
 	 * Status of this check after being run.
@@ -26,6 +26,13 @@ abstract class Check {
 	 * @var integer
 	 */
 	protected $message;
+
+	/**
+	 * Get when the check is expected to run.
+	 */
+	public function get_when() {
+		return $this->when;
+	}
 
 	/**
 	 * Run the check.

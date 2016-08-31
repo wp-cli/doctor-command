@@ -9,8 +9,6 @@ use WP_CLI;
  */
 class Autoload_Options_Size extends Check {
 
-	public static $when = 'after_wp_load';
-
 	/**
 	 * Threshold in kilobytes
 	 */
