@@ -54,12 +54,12 @@ status.
 
 
 
-### wp doctor checks
+### wp doctor list
 
 List available checks to run.
 
 ~~~
-wp doctor checks [--format=<format>]
+wp doctor list [--format=<format>]
 ~~~
 
 **OPTIONS**
