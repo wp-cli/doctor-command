@@ -64,6 +64,12 @@ class Command {
 			});
 		}
 
+		if ( ! isset( WP_CLI::get_runner()->config['url'] ) ) {
+			WP_CLI::add_wp_hook( 'muplugins_loaded', function(){
+				WP_CLI::set_url( home_url( '/' ) );
+			});
+		}
+
 		$this->load_wordpress_with_template();
 
 		$results = array();
