@@ -19,13 +19,12 @@ Feature: Check the size of autoloaded options
     And a explode-options.php file:
       """
       <?php
-      $value = str_pad( '9', pow( 9, 7 ), '9' );
-      update_option( 'foobar', $value );
+      $value = str_pad( '9', 15000, '9' );
+      for( $i = 0; $i < 75; $i++ ) {
+        update_option( 'foobar' . $i, $value );
+      }
       """
-
-    When I run `wp eval-file explode-options.php`
-    And I run `wp option get foobar`
-    Then STDERR should be empty
+    And I run `wp eval-file explode-options.php`
 
     When I run `wp doctor check autoload-options-size --fields=name,status`
     Then STDOUT should be a table containing rows:
