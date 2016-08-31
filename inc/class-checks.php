@@ -38,6 +38,16 @@ class Checks {
 	 * @param array $args Filter checks based on some attribute.
 	 */
 	public static function get_checks( $args = array() ) {
+		if ( ! empty( $args['name'] ) ) {
+			$checks = array();
+			$names = is_array( $args['name'] ) ? $args['name'] : array( $args['name'] );
+			foreach( $names as $name ) {
+				if ( isset( self::$instance->checks[ $name ] ) ) {
+					$checks[ $name ] = self::$instance->checks[ $name ];
+				}
+			}
+			return $checks;
+		}
 		return self::$instance->checks;
 	}
 
