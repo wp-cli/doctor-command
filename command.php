@@ -26,6 +26,7 @@ foreach( array(
 	'runcommand\Doctor\Checks\Autoload_Options_Size',
 	'runcommand\Doctor\Checks\Core_Update',
 	'runcommand\Doctor\Checks\Plugin_Update',
+	'runcommand\Doctor\Checks\Theme_Update',
 ) as $class ) {
 	$bits = explode( '\\', $class );
 	$name = array_pop( $bits );
