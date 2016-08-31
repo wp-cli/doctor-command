@@ -23,6 +23,7 @@ spl_autoload_register( function( $class ) {
 });
 
 foreach( array(
+	'runcommand\Doctor\Checks\Autoload_Options_Size',
 	'runcommand\Doctor\Checks\Core_Update',
 	'runcommand\Doctor\Checks\Plugin_Update',
 ) as $class ) {
