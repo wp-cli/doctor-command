@@ -9,8 +9,6 @@ use WP_CLI;
  */
 class Theme_Update extends Check {
 
-	public static $when = 'after_wp_load';
-
 	public function run() {
 		ob_start();
 		WP_CLI::run_command( array( 'theme', 'list' ), array( 'format' => 'json' ) );
