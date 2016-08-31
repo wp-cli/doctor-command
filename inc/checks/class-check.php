@@ -18,14 +18,14 @@ abstract class Check {
 	 *
 	 * @var string
 	 */
-	public static $status;
+	protected $status;
 
 	/**
 	 * Message of this check after being run.
 	 *
 	 * @var integer
 	 */
-	public static $message;
+	protected $message;
 
 	/**
 	 * Run the check.
@@ -42,8 +42,8 @@ abstract class Check {
 	 */
 	public function get_results() {
 		return array(
-			'status'    => self::$status,
-			'message'   => self::$message,
+			'status'    => $this->status,
+			'message'   => $this->message,
 		);
 	}
 
