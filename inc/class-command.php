@@ -56,7 +56,7 @@ class Command {
 		}
 
 		$completed = array();
-		$checks = Checks::get_checks();
+		$checks = Checks::get_checks( array( 'name' => $args ) );
 		foreach( $checks as $name => $check ) {
 			WP_CLI::add_hook( $check::$when, function() use ( $name, $check, &$completed ) {
 				$check->run();
