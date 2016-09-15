@@ -7,13 +7,10 @@ use WP_CLI;
 /**
  * Check whether WordPress plugins are up to date
  */
-class Plugin_Update extends Check {
+class Plugin_Update extends Plugin {
 
 	public function run() {
-		ob_start();
-		WP_CLI::run_command( array( 'plugin', 'list' ), array( 'format' => 'json' ) );
-		$ret = ob_get_clean();
-		$plugins = ! empty( $ret ) ? json_decode( $ret, true ) : array();
+		$plugins = self::get_plugins();
 		$update_count = 0;
 		foreach( $plugins as $plugin ) {
 			if ( 'available' === $plugin['update'] ) {
