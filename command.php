@@ -26,6 +26,7 @@ foreach( array(
 	'runcommand\Doctor\Checks\Autoload_Options_Size',
 	'runcommand\Doctor\Checks\Core_Update',
 	'runcommand\Doctor\Checks\Core_Verify_Checksums',
+	'runcommand\Doctor\Checks\Plugin_Deactivated',
 	'runcommand\Doctor\Checks\Plugin_Update',
 	'runcommand\Doctor\Checks\Theme_Update',
 ) as $class ) {
