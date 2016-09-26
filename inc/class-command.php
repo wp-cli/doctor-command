@@ -91,6 +91,9 @@ class Command {
 	 *
 	 * ## OPTIONS
 	 *
+	 * [--fields=<fields>]
+	 * : Limit the output to specific fields. Defaults to all fields.
+	 *
 	 * [--format=<format>]
 	 * : Render output in a specific format.
 	 * ---
@@ -115,6 +118,10 @@ class Command {
 	 */
 	public function list_( $args, $assoc_args ) {
 
+		$assoc_args = array_merge( array(
+			'fields'    => 'name,description',
+		), $assoc_args );
+
 		$items = array();
 		foreach( Checks::get_checks() as $name => $class ) {
 			$reflection = new \ReflectionClass( $class );
@@ -123,7 +130,7 @@ class Command {
 				'description' => self::remove_decorations( $reflection->getDocComment() ),
 			);
 		}
-		Utils\format_items( $assoc_args['format'], $items, array( 'name', 'description' ) );
+		Utils\format_items( $assoc_args['format'], $items, explode( ',', $assoc_args['fields'] ) );
 	}
 
 	/**
