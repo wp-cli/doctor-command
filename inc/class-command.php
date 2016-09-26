@@ -27,6 +27,9 @@ class Command {
 	 * [--all]
 	 * : Run all registered checks.
 	 *
+	 * [--config=<file>]
+	 * : Use checks registered in a specific configuration file.
+	 *
 	 * [--fields=<fields>]
 	 * : Display one or more fields.
 	 *
@@ -53,6 +56,9 @@ class Command {
 	 * @when before_wp_load
 	 */
 	public function check( $args, $assoc_args ) {
+
+		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
+		Checks::register_config( $config );
 
 		$all = ! Utils\get_flag_value( $assoc_args, 'all' );
 		if ( empty( $args ) && $all ) {
@@ -91,6 +97,9 @@ class Command {
 	 *
 	 * ## OPTIONS
 	 *
+	 * [--config=<file>]
+	 * : Use checks registered in a specific configuration file.
+	 *
 	 * [--fields=<fields>]
 	 * : Limit the output to specific fields. Defaults to all fields.
 	 *
@@ -121,6 +130,9 @@ class Command {
 		$assoc_args = array_merge( array(
 			'fields'    => 'name,description',
 		), $assoc_args );
+
+		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
+		Checks::register_config( $config );
 
 		$items = array();
 		foreach( Checks::get_checks() as $name => $class ) {
@@ -182,6 +194,13 @@ class Command {
 		$comment = preg_replace( '|\n[\t ]*\*/$|', '', $comment );
 		$comment = preg_replace( '|^[\t ]*\* ?|m', '', $comment );
 		return $comment;
+	}
+
+	/**
+	 * Get the path to the default config file
+	 */
+	private static function get_default_config() {
+		return dirname( dirname( __FILE__ ) ) . '/doctor.yml';
 	}
 
 }

@@ -22,19 +22,4 @@ spl_autoload_register( function( $class ) {
 	}
 });
 
-foreach( array(
-	'runcommand\Doctor\Checks\Autoload_Options_Size',
-	'runcommand\Doctor\Checks\Core_Update',
-	'runcommand\Doctor\Checks\Core_Verify_Checksums',
-	'runcommand\Doctor\Checks\Plugin_Deactivated',
-	'runcommand\Doctor\Checks\Plugin_Update',
-	'runcommand\Doctor\Checks\Theme_Update',
-) as $class ) {
-	$bits = explode( '\\', $class );
-	$name = array_pop( $bits );
-	$name = str_replace( '_', '-', strtolower( $name ) );
-	$check = new $class;
-	runcommand\Doctor\Checks::add_check( $name, $check );
-}
-
 WP_CLI::add_command( 'doctor', 'runcommand\Doctor\Command' );
