@@ -8,3 +8,16 @@ Feature: Basic check usage
       """
       Error: Please specify one or more checks, or use --all.
       """
+
+  Scenario: List all default checks
+    Given a WP install
+
+    When I run `wp doctor list --fields=name`
+    Then STDOUT should be a table containing rows:
+      | name                  |
+      | autoload-options-size |
+      | core-update           |
+      | core-verify-checksums |
+      | plugin-deactivated    |
+      | plugin-update         |
+      | theme-update          |
