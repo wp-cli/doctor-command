@@ -8,15 +8,43 @@ Feature: Check the values of defined constants
       define( 'WP_DEBUG', true );
       """
 
-    When I run `wp doctor check constant-wp-debug-false`
+    When I run `wp doctor check constant-wp-debug-falsy`
     Then STDOUT should be a table containing rows:
       | name                       | status  | message                                    |
-      | constant-wp-debug-false    | success | Constant 'WP_DEBUG' is defined 'false'.    |
+      | constant-wp-debug-falsy    | success | Constant 'WP_DEBUG' is defined falsy.      |
 
-    When I run `wp doctor check constant-wp-debug-false --require=wp-debug-true.php`
+    When I run `wp doctor check constant-wp-debug-falsy --require=wp-debug-true.php`
     Then STDOUT should be a table containing rows:
       | name                       | status  | message                                    |
-      | constant-wp-debug-false    | error   | Constant 'WP_DEBUG' is defined 'true' but expected to be 'false'.  |
+      | constant-wp-debug-falsy    | error   | Constant 'WP_DEBUG' is defined 'true' but expected to be falsy.  |
+
+  Scenario: SAVEQUERIES is defined to falsy
+    Given a WP install
+    And a savequeries-false.php file:
+      """
+      <?php
+      define( 'SAVEQUERIES', false );
+      """
+    And a savequeries-true.php file:
+      """
+      <?php
+      define( 'SAVEQUERIES', true );
+      """
+
+    When I run `wp doctor check constant-savequeries-falsy`
+    Then STDOUT should be a table containing rows:
+      | name                        | status  | message                                          |
+      | constant-savequeries-falsy  | success | Constant 'SAVEQUERIES' is undefined.             |
+
+    When I run `wp doctor check constant-savequeries-falsy --require=savequeries-false.php`
+    Then STDOUT should be a table containing rows:
+      | name                        | status  | message                                          |
+      | constant-savequeries-falsy  | success | Constant 'SAVEQUERIES' is defined falsy.         |
+
+    When I run `wp doctor check constant-savequeries-falsy --require=savequeries-true.php`
+    Then STDOUT should be a table containing rows:
+      | name                        | status  | message                                                    |
+      | constant-savequeries-falsy  | error   | Constant 'SAVEQUERIES' is defined 'true' but expected to be falsy. |
 
   Scenario: Expected constant is defined
     Given a WP install

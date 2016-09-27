@@ -17,11 +17,18 @@ class Constant_Definition extends Check {
 	protected $constant;
 
 	/**
-	 * Whether or not the constant is expected to be defined
+	 * Whether or not the constant is expected to be defined.
 	 *
 	 * @var bool
 	 */
 	protected $defined;
+
+	/**
+	 * Whether or not the constant is expected to be a falsy value.
+	 *
+	 * @var bool
+	 */
+	protected $falsy;
 
 	/**
 	 * Expected value of the constant.
@@ -41,6 +48,39 @@ class Constant_Definition extends Check {
 	}
 
 	public function run() {
+
+		if ( isset( $this->falsy ) ) {
+			if ( ! defined( $this->constant ) ) {
+				if ( $this->falsy ) {
+					$this->status = 'success';
+					$this->message = "Constant '{$this->constant}' is undefined.";
+				} else {
+					$this->status = 'error';
+					$this->message = "Constant '{$this->constant}' is undefined but expected to not be falsy.";
+				}
+			} else {
+				$actual_value = constant( $this->constant );
+				$human_actual = self::human_value( $actual_value );
+				if ( ! $actual_value ) {
+					if ( $this->falsy ) {
+						$this->status = 'success';
+						$this->message = "Constant '{$this->constant}' is defined falsy.";
+					} else {
+						$this->status = 'error';
+						$this->message = "Constant '{$this->constant}' is defined '{$human_actual}' but expected to not be falsy.";
+					}
+				} else {
+					if ( ! $this->falsy ) {
+						$this->status = 'success';
+						$this->message = "Constant '{$this->constant}' is not defined falsy.";
+					} else {
+						$this->status = 'error';
+						$this->message = "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be falsy.";
+					}
+				}
+			}
+			return;
+		}
 
 		if ( ! defined( $this->constant ) ) {
 			if ( $this->defined ) {
