@@ -15,6 +15,10 @@ core-update:
   class: runcommand\Doctor\Checks\Core_Update
 core-verify-checksums:
   class: runcommand\Doctor\Checks\Core_Verify_Checksums
+cron-duplicates:
+  class: runcommand\Doctor\Checks\Cron_Duplicates
+cron-count:
+  class: runcommand\Doctor\Checks\Cron_Count
 plugin-deactivated:
   class: runcommand\Doctor\Checks\Plugin_Deactivated
 plugin-update:
