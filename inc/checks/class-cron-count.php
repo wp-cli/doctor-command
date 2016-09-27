@@ -17,7 +17,7 @@ class Cron_Count extends Cron {
 	protected $threshold_count = 50;
 
 	public function run() {
-		$crons = $this->get_crons();
+		$crons = self::get_crons();
 		$job_count = 0;
 		foreach( $crons as $timestamp => $jobs ) {
 			// 'cron' option includes a 'version' key... ?!?!
