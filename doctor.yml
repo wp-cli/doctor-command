@@ -1,0 +1,13 @@
+# Default check configuration for `wp doctor`
+autoload-options-size:
+  class: runcommand\Doctor\Checks\Autoload_Options_Size
+core-update:
+  class: runcommand\Doctor\Checks\Core_Update
+core-verify-checksums:
+  class: runcommand\Doctor\Checks\Core_Verify_Checksums
+plugin-deactivated:
+  class: runcommand\Doctor\Checks\Plugin_Deactivated
+plugin-update:
+  class: runcommand\Doctor\Checks\Plugin_Update
+theme-update:
+  class: runcommand\Doctor\Checks\Theme_Update
