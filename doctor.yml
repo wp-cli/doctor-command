@@ -1,6 +1,16 @@
 # Default check configuration for `wp doctor`
 autoload-options-size:
   class: runcommand\Doctor\Checks\Autoload_Options_Size
+constant-savequeries-false:
+  class: runcommand\Doctor\Checks\Constant_Definition
+  options:
+    constant: SAVEQUERIES
+    defined: false
+constant-wp-debug-false:
+  class: runcommand\Doctor\Checks\Constant_Definition
+  options:
+    constant: WP_DEBUG
+    expected_value: false
 core-update:
   class: runcommand\Doctor\Checks\Core_Update
 core-verify-checksums:
