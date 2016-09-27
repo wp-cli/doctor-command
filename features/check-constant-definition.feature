@@ -18,6 +18,21 @@ Feature: Check the values of defined constants
       | name                       | status  | message                                    |
       | constant-wp-debug-false    | error   | Constant 'WP_DEBUG' is defined 'true' but expected to be 'false'.  |
 
+  Scenario: Expected constant is defined
+    Given a WP install
+    And a config.yml file:
+      """
+      constant-db-host-defined:
+        class: runcommand\Doctor\Checks\Constant_Definition
+        options:
+          constant: DB_HOST
+          defined: true
+      """
+
+    When I run `wp doctor check constant-db-host-defined --config=config.yml`
+    Then STDOUT should be a table containing rows:
+      | name                     | status    | message                               |
+      | constant-db-host-defined | success   | Constant 'DB_HOST' is defined.        |
 
   Scenario: Expected constant is missing
     Given a WP install

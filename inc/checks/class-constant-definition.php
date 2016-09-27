@@ -61,6 +61,12 @@ class Constant_Definition extends Check {
 			return;
 		}
 
+		if ( $this->defined && ! isset( $this->expected_value ) ) {
+			$this->status = 'success';
+			$this->message = "Constant '{$this->constant}' is defined.";
+			return;
+		}
+
 		$actual_value = constant( $this->constant );
 		$human_actual = self::human_value( $actual_value );
 
