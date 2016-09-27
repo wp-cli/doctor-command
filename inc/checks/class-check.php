@@ -28,6 +28,19 @@ abstract class Check {
 	protected $message;
 
 	/**
+	 * Initialize the check.
+	 */
+	public function __construct( $options = array() ) {
+		$skipped = array( 'when', 'status', 'message' );
+		foreach( $options as $k => $v ) {
+			if ( in_array( $k, $skipped, true ) ) {
+				continue;
+			}
+			$this->$k = $v;
+		}
+	}
+
+	/**
 	 * Get when the check is expected to run.
 	 */
 	public function get_when() {
