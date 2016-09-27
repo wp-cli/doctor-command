@@ -71,7 +71,7 @@ class Checks {
 			}
 			return $checks;
 		}
-		return self::$instance->checks;
+		return self::get_instance()->checks;
 	}
 
 }
