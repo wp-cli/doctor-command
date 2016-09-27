@@ -32,7 +32,8 @@ class Checks {
 			if ( empty( $check_args['class'] ) ) {
 				continue;
 			}
-			$obj = new $check_args['class'];
+			$options = ! empty( $check_args['options'] ) ? $check_args['options'] : array();
+			$obj = new $check_args['class']( $options );
 			self::add_check( $check_name, $obj );
 		}
 	}
