@@ -14,7 +14,10 @@ abstract class Cron extends Check {
 			return self::$crons;
 		}
 
-		self::$crons = get_option('cron');;
+		ob_start();
+		WP_CLI::run_command( array( 'cron', 'event', 'list' ), array( 'format' => 'json' ) );
+		$ret = ob_get_clean();
+		self::$crons = ! empty( $ret ) ? json_decode( $ret, true ) : array();
 		return self::$crons;
 	}
 
