@@ -17,22 +17,12 @@ class Cron_Duplicates extends Cron {
 	protected $threshold_count = 10;
 
 	public function run() {
-		$crons = $this->get_crons();
+		$crons = self::get_crons();
 		$job_counts = array();
-		foreach( $crons as $timestamp => $jobs ) {
-			// 'cron' option includes a 'version' key... ?!?!
-			if ( 'version' === $timestamp ) {
-				continue;
-			}
-
-			foreach( $jobs as $job => $data ) {
-				$job_counts[ $job ]++;
-			}
-		}
-
 		$excess_duplicates = false;
-		foreach( $job_counts as $job => $count ) {
-			if ( $count >= $this->threshold_count ) {
+		foreach( $crons as $job ) {
+			$job_counts[ $job['name'] ]++;
+			if ( $job_counts[ $job['name'] ] >= $this->threshold_count ) {
 				$excess_duplicates = true;
 			}
 		}

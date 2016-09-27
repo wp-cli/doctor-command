@@ -18,19 +18,7 @@ class Cron_Count extends Cron {
 
 	public function run() {
 		$crons = self::get_crons();
-		$job_count = 0;
-		foreach( $crons as $timestamp => $jobs ) {
-			// 'cron' option includes a 'version' key... ?!?!
-			if ( 'version' === $timestamp ) {
-				continue;
-			}
-
-			foreach( $jobs as $job => $data ) {
-				$job_count++;
-			}
-		}
-
-		if ( $job_count >= $this->threshold_count ) {
+		if ( count( $crons ) >= $this->threshold_count ) {
 			$this->status = 'error';
 			$this->message = 'Total number of cron jobs exceeds expected threshold.';
 		} else {
