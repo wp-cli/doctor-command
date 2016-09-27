@@ -60,13 +60,20 @@ class Command {
 		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
 		Checks::register_config( $config );
 
-		$all = ! Utils\get_flag_value( $assoc_args, 'all' );
-		if ( empty( $args ) && $all ) {
+		$all = Utils\get_flag_value( $assoc_args, 'all' );
+		if ( empty( $args ) && ! $all ) {
 			WP_CLI::error( 'Please specify one or more checks, or use --all.' );
 		}
 
 		$completed = array();
 		$checks = Checks::get_checks( array( 'name' => $args ) );
+		if ( empty( $checks ) ) {
+			if ( $args ) {
+				WP_CLI::error( count( $args ) > 1 ? 'Invalid checks.' : 'Invalid check.' );
+			} else {
+				WP_CLI::error( 'No checks registered.' );
+			}
+		}
 		foreach( $checks as $name => $check ) {
 			WP_CLI::add_hook( $check->get_when(), function() use ( $name, $check, &$completed ) {
 				$check->run();
