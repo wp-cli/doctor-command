@@ -33,6 +33,9 @@ class Checks {
 				continue;
 			}
 			$options = ! empty( $check_args['options'] ) ? $check_args['options'] : array();
+			if ( ! class_exists( $check_args['class'] ) ) {
+				WP_CLI::error( "Check class for '{$check_name}' doesn't exist. Verify check registration." );
+			}
 			$obj = new $check_args['class']( $options );
 			self::add_check( $check_name, $obj );
 		}
@@ -46,11 +49,20 @@ class Checks {
 	 */
 	public static function add_check( $name, $check ) {
 
-		// @todo check name must be A-Za-z0-9-
+		if ( ! preg_match( '#^[A-Za-z0-9-]+$#', $name ) ) {
+			WP_CLI::error( "Check name '{$name}' is invalid. Verify check registration." );
+		}
+
 		// @todo check class must subclass Doctor\Check;
 
 		if ( ! is_object( $check ) ) {
+			if ( ! class_exists( $check ) ) {
+				WP_CLI::error( "Check class for '{$name}' doesn't exist. Verify check registration." );
+			}
 			$check = new $check;
+		}
+		if ( ! is_subclass_of( $check, 'runcommand\Doctor\Checks\Check' ) ) {
+			WP_CLI::error( "Check class for '{$name}' needs to extend Check base class. Verify check registration." );
 		}
 		self::$instance->checks[ $name ] = $check;
 	}
