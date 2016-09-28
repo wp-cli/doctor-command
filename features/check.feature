@@ -4,10 +4,13 @@ Feature: Basic check usage
     Given a WP install
     And I run `wp plugin activate --all`
 
+    When I run `wp doctor list --format=count`
+    Then save STDOUT as {CHECK_COUNT}
+
     When I run `wp doctor check --all --spotlight`
     Then STDOUT should be:
       """
-      Success: All 10 checks report 'success'.
+      Success: All {CHECK_COUNT} checks report 'success'.
       """
 
     When I run `wp doctor check plugin-deactivated --spotlight`
