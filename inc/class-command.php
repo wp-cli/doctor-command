@@ -137,6 +137,7 @@ class Command {
 	 *   - table
 	 *   - json
 	 *   - csv
+	 *   - count
 	 * ---
 	 *
 	 * ## EXAMPLES
