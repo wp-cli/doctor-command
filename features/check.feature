@@ -1,5 +1,27 @@
 Feature: Basic check usage
 
+  Scenario: Use --spotlight to focus on warnings and errors
+    Given a WP install
+    And I run `wp plugin activate --all`
+
+    When I run `wp doctor check --all --spotlight`
+    Then STDOUT should be:
+      """
+      Success: All 10 checks report 'success'.
+      """
+
+    When I run `wp doctor check plugin-deactivated --spotlight`
+    Then STDOUT should be:
+      """
+      Success: The check reports 'success'.
+      """
+
+    When I run `wp doctor check --all --spotlight --format=json`
+    Then STDOUT should be:
+      """
+      []
+      """
+
   Scenario: Error when no checks nor --all are provided
     Given a WP install
 

@@ -27,6 +27,9 @@ class Command {
 	 * [--all]
 	 * : Run all registered checks.
 	 *
+	 * [--spotlight]
+	 * : Focus on warnings and errors; ignore any successful checks.
+	 *
 	 * [--config=<file>]
 	 * : Use checks registered in a specific configuration file.
 	 *
@@ -94,6 +97,22 @@ class Command {
 			$results[] = array_merge( $check->get_results(), array( 'name' => $name ) );
 		}
 		// @todo warn if a check provides invalid status
+
+		if ( Utils\get_flag_value( $assoc_args, 'spotlight' ) ) {
+			$check_count = count( $results );
+			$results = array_filter( $results, function( $check ){
+				return in_array( $check['status'], array( 'warning', 'error' ), true );
+			});
+			if ( empty( $results ) && 'table' === $assoc_args['format'] ) {
+				if ( 1 === $check_count ) {
+					$message = "The check reports 'success'.";
+				} else {
+					$message = "All {$check_count} checks report 'success'.";
+				}
+				WP_CLI::success( $message );
+				return;
+			}
+		}
 
 		$formatter = new Formatter( $assoc_args, array( 'name', 'status', 'message' ) );
 		$formatter->display_items( $results );
