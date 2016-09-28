@@ -6,8 +6,8 @@ Feature: Check whether a high number of plugins are activated
 
     When I run `wp doctor check plugin-active-count`
     Then STDOUT should be a table containing rows:
-      | name                | status  | message                              |
-      | plugin-active-count | success | Using less than 80 active plugins.   |
+      | name                | status  | message                                                   |
+      | plugin-active-count | success | Number of active plugins (2) is less than threshold (80). |
 
   Scenario: Greater than threshold plugins are active
     Given a WP install
@@ -23,5 +23,5 @@ Feature: Check whether a high number of plugins are activated
 
     When I run `wp doctor check plugin-active-count --config=config.yml`
     Then STDOUT should be a table containing rows:
-      | name                | status  | message                            |
-      | plugin-active-count | warning | More than 3 plugins are active.    |
+      | name                | status  | message                                             |
+      | plugin-active-count | warning | Number of active plugins (4) exceeds threshold (3). |

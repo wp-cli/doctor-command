@@ -29,10 +29,10 @@ class Plugin_Active_Count extends Plugin {
 		$threshold = (int) $this->threshold_count;
 		if ( $active > $threshold ) {
 			$this->status = 'warning';
-			$this->message = "More than {$threshold} plugins are active.";
+			$this->message = "Number of active plugins ({$active}) exceeds threshold ({$threshold}).";
 		} else {
 			$this->status = 'success';
-			$this->message = "Using less than {$threshold} active plugins.";
+			$this->message = "Number of active plugins ({$active}) is less than threshold ({$threshold}).";
 		}
 
 	}
