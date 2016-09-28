@@ -18,11 +18,20 @@
     "require-dev": {
         "behat/behat": "~2.5"
     },
-    "extras": {
+    "extra": {
         "readme": {
             "shields": [
                 "[![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)"
-            ]
+            ],
+            "sections": [
+                "Using",
+                "Installing",
+                "Support"
+            ],
+            "support": {
+                "body": "https://raw.githubusercontent.com/runcommand/runcommand-theme/master/bin/readme-partials/support-premium.md"
+            },
+            "show_powered_by": false
         },
         "commands": [
             "doctor check",
