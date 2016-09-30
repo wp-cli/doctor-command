@@ -21,8 +21,11 @@ class Cron_Duplicates extends Cron {
 		$job_counts = array();
 		$excess_duplicates = false;
 		foreach( $crons as $job ) {
-			$job_counts[ $job['name'] ]++;
-			if ( $job_counts[ $job['name'] ] >= $this->threshold_count ) {
+			if ( ! isset( $job_counts[ $job['hook'] ] ) ) {
+				$job_counts[ $job['hook'] ] = 0;
+			}
+			$job_counts[ $job['hook'] ]++;
+			if ( $job_counts[ $job['hook'] ] >= $this->threshold_count ) {
 				$excess_duplicates = true;
 			}
 		}
