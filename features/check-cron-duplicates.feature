@@ -2,12 +2,23 @@ Feature: Check for excess duplicate cron entries
 
   Background:
     Given a WP install
+    And a wp-debug.php file:
+      """
+      <?php
+      define( 'WP_DEBUG', true );
+      """
+    And a wp-cli.yml file:
+      """
+      require:
+        - wp-debug.php
+      """
 
   Scenario: Cron check is healthy against a normal WordPress install
     When I run `wp doctor check cron-duplicates`
     Then STDOUT should be a table containing rows:
       | name            | status  | message                                                       |
       | cron-duplicates | success | All cron job counts are within normal operating expectations. |
+    And STDERR should be empty
 
   Scenario: Cron check errors with excess duplicate crons
     Given a wp-content/mu-plugins/plugin.php file:
@@ -24,3 +35,4 @@ Feature: Check for excess duplicate cron entries
     Then STDOUT should be a table containing rows:
       | name            | status  | message                                          |
       | cron-duplicates | error   | Detected 10 or more of the same cron job.        |
+    And STDERR should be empty
