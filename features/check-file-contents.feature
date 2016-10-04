@@ -53,3 +53,49 @@ Feature: Check files in a WordPress install
       """
       [{"name":"file-sessions","status":"error","message":"2 'php' files failed check for '.*(session_start|\\$_SESSION).*'."}]
       """
+
+  Scenario: Check for use of $_SERVER['SERVER_NAME'] in wp-config.php
+    Given a WP install
+    And a config.yml file:
+      """
+      file-server-name-wp-config:
+        check: File_Contents
+        options:
+          regex: define\(.+WP_(HOME|SITEURL).+\$_SERVER.+SERVER_NAME
+          path: wp-config.php
+      """
+    And a wp-content/mu-plugins/ignored-define.php file:
+      """
+      <?php
+      @define( 'WP_SITEURL', $_SERVER['SERVER_NAME'] );
+      """
+
+    When I run `wp doctor check file-server-name-wp-config --config=config.yml --format=json`
+    Then STDOUT should be JSON containing:
+      """
+      [{"name":"file-server-name-wp-config","status":"success","message":"All 'php' files passed check for 'define\\(.+WP_(HOME|SITEURL).+\\$_SERVER.+SERVER_NAME'."}]
+      """
+
+    Given a prepend-siteurl.php file:
+      """
+      <?php
+      $contents = file_get_contents( dirname( __FILE__ ) . '/wp-config.php' );
+      $contents = str_replace( '<?php', '<?php' . PHP_EOL . "@define( 'WP_SITEURL', \$_SERVER['SERVER_NAME'] );", $contents );
+      file_put_contents( dirname( __FILE__ ) . '/wp-config.php', $contents );
+      """
+
+    When I run `wp eval-file prepend-siteurl.php --skip-wordpress`
+    Then STDERR should be empty
+
+    When I run `cat wp-config.php`
+    Then STDOUT should contain:
+      """
+      <?php
+      @define( 'WP_SITEURL', $_SERVER['SERVER_NAME'] );
+      """
+
+    When I run `wp doctor check file-server-name-wp-config --config=config.yml --format=json`
+    Then STDOUT should be JSON containing:
+      """
+      [{"name":"file-server-name-wp-config","status":"error","message":"1 'php' file failed check for 'define\\(.+WP_(HOME|SITEURL).+\\$_SERVER.+SERVER_NAME'."}]
+      """

@@ -24,6 +24,15 @@ abstract class File extends Check {
 	protected $extension = 'php';
 
 	/**
+	 * Check a specific file path.
+	 *
+	 * Value should be relative to ABSPATH (e.g. 'wp-content' or 'wp-config.php')
+	 *
+	 * @var string
+	 */
+	protected $path = '';
+
+	/**
 	 * Only check the wp-content directory.
 	 *
 	 * @var boolean
@@ -56,6 +65,7 @@ abstract class File extends Check {
 		return array(
 			'extension'       => $this->extension,
 			'only_wp_content' => $this->only_wp_content,
+			'path'            => $this->path,
 		);
 	}
 
