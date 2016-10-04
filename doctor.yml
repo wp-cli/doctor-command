@@ -1,29 +1,29 @@
 # Default check configuration for `wp doctor`
 autoload-options-size:
-  class: runcommand\Doctor\Checks\Autoload_Options_Size
+  check: Autoload_Options_Size
 constant-savequeries-falsy:
-  class: runcommand\Doctor\Checks\Constant_Definition
+  check: Constant_Definition
   options:
     constant: SAVEQUERIES
     falsy: true
 constant-wp-debug-falsy:
-  class: runcommand\Doctor\Checks\Constant_Definition
+  check: Constant_Definition
   options:
     constant: WP_DEBUG
     falsy: true
 core-update:
-  class: runcommand\Doctor\Checks\Core_Update
+  check: Core_Update
 core-verify-checksums:
-  class: runcommand\Doctor\Checks\Core_Verify_Checksums
+  check: Core_Verify_Checksums
 cron-duplicates:
-  class: runcommand\Doctor\Checks\Cron_Duplicates
+  check: Cron_Duplicates
 cron-count:
-  class: runcommand\Doctor\Checks\Cron_Count
+  check: Cron_Count
 plugin-active-count:
-  class: runcommand\Doctor\Checks\Plugin_Active_Count
+  check: Plugin_Active_Count
 plugin-deactivated:
-  class: runcommand\Doctor\Checks\Plugin_Deactivated
+  check: Plugin_Deactivated
 plugin-update:
-  class: runcommand\Doctor\Checks\Plugin_Update
+  check: Plugin_Update
 theme-update:
-  class: runcommand\Doctor\Checks\Theme_Update
+  check: Theme_Update

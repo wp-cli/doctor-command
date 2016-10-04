@@ -20,7 +20,7 @@ Feature: Configure the Doctor
     When I try `wp doctor check --all --config=config.yml`
     Then STDERR should be:
       """
-      Error: Check class for 'undefined-class' doesn't exist. Verify check registration.
+      Error: Class 'Class_Undefined' for check 'undefined-class' doesn't exist. Verify check registration.
       """
 
   Scenario: Error when a check class doesn't extend our base class
@@ -34,7 +34,7 @@ Feature: Configure the Doctor
     When I try `wp doctor check --all --config=config.yml`
     Then STDERR should be:
       """
-      Error: Check class for 'invalid-class' needs to extend Check base class. Verify check registration.
+      Error: Class 'WP_CLI' for check 'invalid-class' needs to extend Check base class. Verify check registration.
       """
 
   Scenario: Error when an invalid check name is provided
