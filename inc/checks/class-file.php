@@ -24,6 +24,13 @@ abstract class File extends Check {
 	protected $extension = 'php';
 
 	/**
+	 * Only check the wp-content directory.
+	 *
+	 * @var boolean
+	 */
+	protected $only_wp_content = false;
+
+	/**
 	 * Any files matching the check.
 	 *
 	 * @var array
@@ -41,12 +48,15 @@ abstract class File extends Check {
 	}
 
 	/**
-	 * Get the file extension for this check
+	 * Get the options for this check
 	 *
 	 * @return string
 	 */
-	public function get_extension() {
-		return $this->extension;
+	public function get_options() {
+		return array(
+			'extension'       => $this->extension,
+			'only_wp_content' => $this->only_wp_content,
+		);
 	}
 
 }
