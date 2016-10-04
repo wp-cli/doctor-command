@@ -53,8 +53,6 @@ class Checks {
 			WP_CLI::error( "Check name '{$name}' is invalid. Verify check registration." );
 		}
 
-		// @todo check class must subclass Doctor\Check;
-
 		if ( ! is_object( $check ) ) {
 			if ( ! class_exists( $check ) ) {
 				WP_CLI::error( "Check class for '{$name}' doesn't exist. Verify check registration." );
