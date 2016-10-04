@@ -7,19 +7,12 @@ use SplFileInfo;
 /**
  * Check files on the filesystem.
  */
-class File extends Check {
+abstract class File extends Check {
 
 	/**
 	 * File checks are run as a group
 	 */
 	protected $when = false;
-
-	/**
-	 * Regex pattern to check.
-	 *
-	 * @var string
-	 */
-	protected $regex;
 
 	/**
 	 * File extension to check.
@@ -37,29 +30,14 @@ class File extends Check {
 	 */
 	protected $matches = array();
 
-	public function run() {
-
-		if ( isset( $this->regex ) ) {
-			if ( ! empty( $this->matches ) ) {
-				$this->status = 'error';
-				$count = count( $this->matches );
-				$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
-				$this->message = "{$message} failed check for '{$this->regex}'.";
-			} else {
-				$this->status = 'success';
-				$this->message = "All '{$this->extension}' files passed check for '{$this->regex}'.";
-			}
+	/**
+	 * Initialize the check.
+	 */
+	public function __construct( $options = array() ) {
+		if ( isset( $options['matches'] ) ) {
+			unset( $options['matches'] );
 		}
-
-	}
-
-	public function check_file( SplFileInfo $file ) {
-		if ( isset( $this->regex ) ) {
-			$contents = file_get_contents( $file->getPathname() );
-			if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
-				$this->matches[] = $file;
-			}
-		}
+		parent::__construct( $options );
 	}
 
 	/**
