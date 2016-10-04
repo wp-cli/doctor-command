@@ -19,6 +19,10 @@ cron-duplicates:
   check: Cron_Duplicates
 cron-count:
   check: Cron_Count
+file-eval:
+  check: File
+  options:
+    regex: eval\(.*base64_decode\(.*
 plugin-active-count:
   check: Plugin_Active_Count
 plugin-deactivated:
