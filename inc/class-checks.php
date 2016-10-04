@@ -29,14 +29,16 @@ class Checks {
 		}
 		$check_data = spyc_load_file( $file );
 		foreach( $check_data as $check_name => $check_args ) {
-			if ( empty( $check_args['class'] ) ) {
+			if ( empty( $check_args['class'] ) && empty( $check_args['check'] ) ) {
 				continue;
 			}
-			$options = ! empty( $check_args['options'] ) ? $check_args['options'] : array();
-			if ( ! class_exists( $check_args['class'] ) ) {
-				WP_CLI::error( "Check class for '{$check_name}' doesn't exist. Verify check registration." );
+
+			$class = ! empty( $check_args['check'] ) ? 'runcommand\Doctor\Checks\\' . $check_args['check'] : $check_args['class'];
+			if ( ! class_exists( $class ) ) {
+				WP_CLI::error( "Class '{$class}' for check '{$check_name}' doesn't exist. Verify check registration." );
 			}
-			$obj = new $check_args['class']( $options );
+			$options = ! empty( $check_args['options'] ) ? $check_args['options'] : array();
+			$obj = new $class( $options );
 			self::add_check( $check_name, $obj );
 		}
 	}
@@ -55,12 +57,13 @@ class Checks {
 
 		if ( ! is_object( $check ) ) {
 			if ( ! class_exists( $check ) ) {
-				WP_CLI::error( "Check class for '{$name}' doesn't exist. Verify check registration." );
+				WP_CLI::error( "Class '{$check}' for check '{$name}' doesn't exist. Verify check registration." );
 			}
 			$check = new $check;
 		}
 		if ( ! is_subclass_of( $check, 'runcommand\Doctor\Checks\Check' ) ) {
-			WP_CLI::error( "Check class for '{$name}' needs to extend Check base class. Verify check registration." );
+			$class = get_class( $check );
+			WP_CLI::error( "Class '{$class}' for check '{$name}' needs to extend Check base class. Verify check registration." );
 		}
 		self::$instance->checks[ $name ] = $check;
 	}
