@@ -20,7 +20,7 @@ cron-duplicates:
 cron-count:
   check: Cron_Count
 file-eval:
-  check: File
+  check: File_Contents
   options:
     regex: eval\(.*base64_decode\(.*
 plugin-active-count:
