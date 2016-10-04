@@ -2,6 +2,9 @@
 
 namespace runcommand\Doctor;
 
+use Exception;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use WP_CLI;
 use WP_CLI\Formatter;
 use WP_CLI\Utils;
@@ -77,10 +80,41 @@ class Command {
 				WP_CLI::error( 'No checks registered.' );
 			}
 		}
+		$file_checks = array();
 		foreach( $checks as $name => $check ) {
-			WP_CLI::add_hook( $check->get_when(), function() use ( $name, $check, &$completed ) {
-				$check->run();
-				$completed[ $name ] = $check;
+			if ( $when = $check->get_when() ) {
+				WP_CLI::add_hook( $when, function() use ( $name, $check, &$completed ) {
+					$check->run();
+					$completed[ $name ] = $check;
+				});
+			} else {
+				$file_check = 'runcommand\Doctor\Checks\File';
+				if ( is_a( $check, $file_check ) || is_subclass_of( $check, $file_check ) ) {
+					$file_checks[ $name ] = $check;
+				}
+			}
+		}
+		if ( ! empty( $file_checks ) ) {
+			WP_CLI::add_hook( 'after_wp_config_load', function() use( $file_checks, &$completed ){
+				try {
+					$directory = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
+					$iterator = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
+					foreach( $iterator as $file ) {
+						foreach( $file_checks as $name => $check ) {
+							$extension = $check->get_extension();
+							$extension = explode( '|', $extension );
+							if ( in_array( $file->getExtension(), $extension, true ) ) {
+								$check->check_file( $file );
+							}
+						}
+					}
+				} catch( Exception $e ) {
+					WP_CLI::error( $e->getMessage() );
+				}
+				foreach( $file_checks as $name => $check ) {
+					$check->run();
+					$completed[ $name ] = $check;
+				}
 			});
 		}
 
