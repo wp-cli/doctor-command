@@ -27,7 +27,14 @@ class Checks {
 		if ( ! is_file( $file ) ) {
 			WP_CLI::error( 'Invalid configuration file.' );
 		}
+
 		$check_data = spyc_load_file( $file );
+
+		if ( ! empty( $check_data['_']['inherit'] ) ) {
+			$inherited = self::absolutize( $check_data['_']['inherit'], dirname( $file ) );
+			self::register_config( $inherited );
+		}
+
 		foreach( $check_data as $check_name => $check_args ) {
 			if ( empty( $check_args['class'] ) && empty( $check_args['check'] ) ) {
 				continue;
@@ -85,6 +92,19 @@ class Checks {
 			return $checks;
 		}
 		return self::get_instance()->checks;
+	}
+
+	/**
+	 * Make a path absolute.
+	 *
+	 * @param string $path Path to file.
+	 * @param string $base Base path to prepend.
+	 */
+	private static function absolutize( $path, $base ) {
+		if ( !empty( $path ) && !\WP_CLI\Utils\is_path_absolute( $path ) ) {
+			$path = $base . DIRECTORY_SEPARATOR . $path;
+		}
+		return $path;
 	}
 
 }

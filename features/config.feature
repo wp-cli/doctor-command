@@ -50,3 +50,36 @@ Feature: Configure the Doctor
       """
       Error: Check name 'check space' is invalid. Verify check registration.
       """
+
+  Scenario: Support inheriting another config file
+    Given an empty directory
+    And a first-config.yml file:
+      """
+      constant-wp-debug:
+        check: Constant_Definition
+        options:
+          constant: WP_DEBUG
+          falsy: true
+      """
+    And a second-config.yml file:
+      """
+      _:
+        inherit: first-config.yml
+      constant-savequeries:
+        check: Constant_Definition
+        options:
+          constant: SAVEQUERIES
+          falsy: true
+      """
+
+    When I run `wp doctor list --format=count --config=first-config.yml`
+    Then STDOUT should be:
+      """
+      1
+      """
+
+    When I run `wp doctor list --format=count --config=second-config.yml`
+    Then STDOUT should be:
+      """
+      2
+      """
