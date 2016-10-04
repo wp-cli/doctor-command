@@ -81,11 +81,18 @@ class Command {
 			}
 		}
 		$file_checks = array();
+		$progress = false;
+		if ( $all && 'table' === $assoc_args['format'] ) {
+			$progress = Utils\make_progress_bar( 'Running checks', count( $checks ) );
+		}
 		foreach( $checks as $name => $check ) {
 			if ( $when = $check->get_when() ) {
-				WP_CLI::add_hook( $when, function() use ( $name, $check, &$completed ) {
+				WP_CLI::add_hook( $when, function() use ( $name, $check, &$completed, &$progress ) {
 					$check->run();
 					$completed[ $name ] = $check;
+					if ( $progress ) {
+						$progress->tick();
+					}
 				});
 			} else {
 				$file_check = 'runcommand\Doctor\Checks\File';
@@ -95,7 +102,7 @@ class Command {
 			}
 		}
 		if ( ! empty( $file_checks ) ) {
-			WP_CLI::add_hook( 'after_wp_config_load', function() use( $file_checks, &$completed ){
+			WP_CLI::add_hook( 'after_wp_config_load', function() use( $file_checks, &$completed, &$progress ){
 				try {
 					$directory = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 					$iterator = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
@@ -124,6 +131,9 @@ class Command {
 				foreach( $file_checks as $name => $check ) {
 					$check->run();
 					$completed[ $name ] = $check;
+					if ( $progress ) {
+						$progress->tick();
+					}
 				}
 			});
 		}
@@ -140,6 +150,11 @@ class Command {
 		foreach( $completed as $name => $check ) {
 			$results[] = array_merge( $check->get_results(), array( 'name' => $name ) );
 		}
+
+		if ( $progress ) {
+			$progress->finish();
+		}
+
 		// @todo warn if a check provides invalid status
 
 		if ( Utils\get_flag_value( $assoc_args, 'spotlight' ) ) {
