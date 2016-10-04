@@ -99,13 +99,19 @@ class Command {
 				try {
 					$directory = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 					$iterator = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
+					$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
 					foreach( $iterator as $file ) {
 						foreach( $file_checks as $name => $check ) {
-							$extension = $check->get_extension();
-							$extension = explode( '|', $extension );
-							if ( in_array( $file->getExtension(), $extension, true ) ) {
-								$check->check_file( $file );
+							$options = $check->get_options();
+							if ( ! empty( $options['only_wp_content'] )
+								&& 0 !== stripos( $file->getPath(), $wp_content_dir ) ) {
+								continue;
 							}
+							$extension = explode( '|', $options['extension'] );
+							if ( ! in_array( $file->getExtension(), $extension, true ) ) {
+								continue;
+							}
+							$check->check_file( $file );
 						}
 					}
 				} catch( Exception $e ) {
