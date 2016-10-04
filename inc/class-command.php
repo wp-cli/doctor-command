@@ -107,6 +107,10 @@ class Command {
 								&& 0 !== stripos( $file->getPath(), $wp_content_dir ) ) {
 								continue;
 							}
+							if ( ! empty( $options['path'] )
+								&& 0 !== stripos( $file->getPathname(), ABSPATH . $options['path'] ) ) {
+								continue;
+							}
 							$extension = explode( '|', $options['extension'] );
 							if ( ! in_array( $file->getExtension(), $extension, true ) ) {
 								continue;
