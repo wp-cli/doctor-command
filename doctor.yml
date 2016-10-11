@@ -23,6 +23,11 @@ file-eval:
   check: File_Contents
   options:
     regex: eval\(.*base64_decode\(.*
+option-blog-public:
+  check: Option_Value
+  options:
+    option: blog_public
+    expected_value: 1
 plugin-active-count:
   check: Plugin_Active_Count
 plugin-deactivated:
