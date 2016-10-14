@@ -1,5 +1,13 @@
 Feature: Check whether a high percentage of plugins are deactivated
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | plugin-deactivated         | Warns when greater than 40% of plugins are deactivated.                        |
+
   Scenario: All plugins are activated
     Given a WP install
     And I run `wp plugin install user-switching rewrite-rules-inspector`

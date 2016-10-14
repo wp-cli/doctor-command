@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check whether WordPress themes are up to date
+ * Warns when there are theme updates available.
  */
 class Theme_Update extends Check {
 

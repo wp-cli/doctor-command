@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check the value a defined constant
+ * Confirms expected state of the %constant% constant.
  */
 class Constant_Definition extends Check {
 

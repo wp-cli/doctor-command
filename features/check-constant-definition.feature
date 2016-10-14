@@ -1,5 +1,14 @@
 Feature: Check the values of defined constants
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | constant-savequeries-falsy | Confirms expected state of the SAVEQUERIES constant.                           |
+      | constant-wp-debug-falsy    | Confirms expected state of the WP_DEBUG constant.                              |
+
   Scenario: WP_DEBUG is defined to false
     Given a WP install
     And a wp-debug-true.php file:

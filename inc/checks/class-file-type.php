@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use SplFileInfo;
 
 /**
- * Check the type of a file on the filesystem.
+ * Checks files on the filesystem to be of a certain type.
  */
 class File_Type extends File {
 

@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check the status of a given plugin.
+ * Errors if plugin '%plugin_name%' isn't in the expected state '%plugin_status%'.
  */
 class Plugin_Status extends Plugin {
 

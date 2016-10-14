@@ -221,11 +221,30 @@ class Command {
 		Checks::register_config( $config );
 
 		$items = array();
-		foreach( Checks::get_checks() as $name => $class ) {
+		foreach( Checks::get_checks() as $check_name => $class ) {
 			$reflection = new \ReflectionClass( $class );
+			$description = self::remove_decorations( $reflection->getDocComment() );
+			$tokens = array();
+			$skipped = array( 'when', 'status', 'message' );
+			foreach( $reflection->getProperties() as $prop ) {
+				$prop_name = $prop->getName();
+				if ( in_array( $prop_name, $skipped, true ) ) {
+					continue;
+				}
+				$prop->setAccessible( true );
+				$value = $prop->getValue( $class );
+				if ( is_array( $value ) ) {
+					$value = json_encode( $value );
+				}
+				$tokens[ '%' . $prop_name . '%' ] = $value;
+			}
+			if ( ! empty( $tokens ) ) {
+				$description = str_replace( array_keys( $tokens ), array_values( $tokens ), $description );
+			}
+
 			$items[] = array(
-				'name'        => $name,
-				'description' => self::remove_decorations( $reflection->getDocComment() ),
+				'name'        => $check_name,
+				'description' => $description,
 			);
 		}
 		Utils\format_items( $assoc_args['format'], $items, explode( ',', $assoc_args['fields'] ) );
