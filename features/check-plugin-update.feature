@@ -1,5 +1,13 @@
 Feature: Check whether plugins are up to date
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | plugin-update              | Warns when there are plugin updates available.                                 |
+
   Scenario: Plugins are up to date
     Given a WP install
 

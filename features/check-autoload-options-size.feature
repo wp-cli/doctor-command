@@ -1,5 +1,13 @@
 Feature: Check the size of autoloaded options
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | autoload-options-size      | Warns when autoloaded options size exceeds threshold of 900 kb.                |
+
   Scenario: Autoloaded options are less than 900 kb
     Given a WP install
 

@@ -3,6 +3,12 @@ Feature: Check total number of cron entries
   Background:
     Given a WP install
 
+  Scenario: Verify check description
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | cron-count                 | Errors when there's an excess of 50 total cron jobs registered.                |
+
   Scenario: Cron check is healthy against a normal WordPress install
     When I run `wp doctor check cron-count`
     Then STDOUT should be a table containing rows:
