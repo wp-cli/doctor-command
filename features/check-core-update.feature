@@ -1,5 +1,13 @@
 Feature: Check whether WordPress is up to date
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | core-update                | Errors when new WordPress minor release is available; warns for major release. |
+
   Scenario: WordPress is up to date
     Given a WP install
 

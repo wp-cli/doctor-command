@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check whether WordPress plugins are up to date
+ * Warns when there are plugin updates available.
  */
 class Plugin_Update extends Plugin {
 

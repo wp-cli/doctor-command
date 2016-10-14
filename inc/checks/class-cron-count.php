@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check whether there is an excess total number of cron jobs.
+ * Errors when there's an excess of %threshold_count% total cron jobs registered.
  */
 class Cron_Count extends Cron {
 

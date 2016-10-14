@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check the value of an option in the database.
+ * Confirms the expected value of the '%option%' option.
  */
 class Option_Value extends Check {
 

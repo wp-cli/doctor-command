@@ -1,5 +1,13 @@
 Feature: Check whether WordPress core verifies against its checksums
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | core-verify-checksums      | Verifies WordPress files against published checksums; errors on failure.       |
+
   Scenario: WordPress verifies against checksums
     Given a WP install
 

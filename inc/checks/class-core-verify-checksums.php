@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check whether WordPress core verifies against its checksums.
+ * Verifies WordPress files against published checksums; errors on failure.
  */
 class Core_Verify_Checksums extends Check {
 

@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Greater than a certain percentage of deactivated plugins.
+ * Warns when there are greater than %threshold_count% plugins activated.
  */
 class Plugin_Active_Count extends Plugin {
 

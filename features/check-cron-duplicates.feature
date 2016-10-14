@@ -13,6 +13,12 @@ Feature: Check for excess duplicate cron entries
         - wp-debug.php
       """
 
+  Scenario: Verify check description
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | cron-duplicates            | Errors when there's an excess of 10 duplicate cron jobs registered.            |
+
   Scenario: Cron check is healthy against a normal WordPress install
     When I run `wp doctor check cron-duplicates`
     Then STDOUT should be a table containing rows:
