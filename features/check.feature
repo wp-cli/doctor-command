@@ -70,3 +70,23 @@ Feature: Basic check usage
       | plugin-deactivated    |
       | plugin-update         |
       | theme-update          |
+
+  Scenario: Discard redirects emitted by WordPress
+    Given a WP install
+    And a wp-content/mu-plugins/redirect.php file:
+      """
+      <?php
+      add_action( 'template_redirect', function(){
+        wp_redirect( 'http://google.com' );
+        exit;
+      });
+      """
+
+    When I run `wp doctor check autoload-options-size --fields=name,status`
+    Then STDERR should contain:
+      """
+      Warning: Incomplete check execution. Some code is trying to do a URL redirect. Backtrace:
+      """
+    And STDOUT should be a table containing rows:
+      | name                   | status             |
+      | autoload-options-size  | success            |
