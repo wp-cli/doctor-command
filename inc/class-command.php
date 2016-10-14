@@ -144,7 +144,11 @@ class Command {
 			});
 		}
 
-		$this->load_wordpress_with_template();
+		try {
+			$this->load_wordpress_with_template();
+		} catch( Exception $e ) {
+			WP_CLI::warning( $e->getMessage() );
+		}
 
 		$results = array();
 		foreach( $completed as $name => $check ) {
@@ -255,6 +259,13 @@ class Command {
 	 */
 	private function load_wordpress_with_template() {
 		global $wp_query;
+
+		WP_CLI::add_wp_hook( 'wp_redirect', function( $to ){
+			ob_start();
+			debug_print_backtrace();
+			$message = ob_get_clean();
+			throw new Exception( "Incomplete check execution. Some code is trying to do a URL redirect. Backtrace:" . PHP_EOL . $message );
+		}, 1 );
 
 		WP_CLI::get_runner()->load_wordpress();
 
