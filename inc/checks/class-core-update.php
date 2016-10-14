@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use WP_CLI;
 
 /**
- * Check whether WordPress core is up to date.
+ * Errors when new WordPress minor release is available; warns for major release.
  */
 class Core_Update extends Check {
 

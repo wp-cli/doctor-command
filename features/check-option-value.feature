@@ -1,5 +1,13 @@
 Feature: Check the value of a given option
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | option-blog-public         | Confirms the expected value of the 'blog_public' option.                       |
+
   Scenario: Check the value of blog_public
     Given a WP install
     And a blog-private.yml file:

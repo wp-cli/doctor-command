@@ -1,5 +1,21 @@
 Feature: Check the status of a plugin
 
+  Scenario: Verify check description
+    Given a WP install
+    And a config.yml file:
+      """
+      plugin-akismet-active:
+        class: runcommand\Doctor\Checks\Plugin_Status
+        options:
+          plugin_name: akismet
+          plugin_status: active
+      """
+
+    When I run `wp doctor list --fields=name,description --config=config.yml`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | plugin-akismet-active      | Errors if plugin 'akismet' isn't in the expected state 'active'.               |
+
   Scenario: Basic usage
     Given a WP install
     And a config.yml file:

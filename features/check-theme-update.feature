@@ -1,5 +1,13 @@
 Feature: Check whether themes are up to date
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | theme-update               | Warns when there are theme updates available.                                  |
+
   Scenario: Themes are up to date
     Given a WP install
 

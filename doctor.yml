@@ -15,10 +15,10 @@ core-update:
   check: Core_Update
 core-verify-checksums:
   check: Core_Verify_Checksums
-cron-duplicates:
-  check: Cron_Duplicates
 cron-count:
   check: Cron_Count
+cron-duplicates:
+  check: Cron_Duplicates
 file-eval:
   check: File_Contents
   options:

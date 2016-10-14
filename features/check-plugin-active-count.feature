@@ -1,5 +1,13 @@
 Feature: Check whether a high number of plugins are activated
 
+  Scenario: Verify check description
+    Given an empty directory
+
+    When I run `wp doctor list --fields=name,description`
+    Then STDOUT should be a table containing rows:
+      | name                       | description                                                                    |
+      | plugin-active-count        | Warns when there are greater than 80 plugins activated.                        |
+
   Scenario: Less than threshold plugins are active
     Given a WP install
     And I run `wp plugin activate --all`
