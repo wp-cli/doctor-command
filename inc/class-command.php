@@ -21,8 +21,7 @@ class Command {
 	 *
 	 * A check is a routine run against some scope of WordPress that reports
 	 * a 'status' and a 'message'. The status can be 'success', 'warning', or
-	 * 'error'. The message should be a human-readable explanation of the
-	 * status.
+	 * 'error'. The message is a human-readable explanation of the status.
 	 *
 	 * [<checks>...]
 	 * : Names of one or more checks to run.
@@ -37,7 +36,7 @@ class Command {
 	 * : Use checks registered in a specific configuration file.
 	 *
 	 * [--fields=<fields>]
-	 * : Display one or more fields.
+	 * : Limit the output to specific fields. Default is name,status,message.
 	 *
 	 * [--format=<format>]
 	 * : Render results in a particular format.
@@ -52,12 +51,21 @@ class Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     $ wp doctor diagnose core-update
+	 *     # Verify WordPress core is up to date.
+	 *     $ wp doctor check core-update
 	 *     +-------------+---------+-----------------------------------------------------------+
 	 *     | name        | status  | message                                                   |
 	 *     +-------------+---------+-----------------------------------------------------------+
 	 *     | core-update | warning | A new major version of WordPress is available for update. |
 	 *     +-------------+---------+-----------------------------------------------------------+
+	 *
+	 *     # Verify the site is public as expected.
+	 *     $ wp doctor check option-blog-public
+	 *     +--------------------+--------+--------------------------------------------+
+	 *     | name               | status | message                                    |
+	 *     +--------------------+--------+--------------------------------------------+
+	 *     | option-blog-public | error  | Site is private but expected to be public. |
+	 *     +--------------------+--------+--------------------------------------------+
 	 *
 	 * @when before_wp_load
 	 */
@@ -182,7 +190,7 @@ class Command {
 	}
 
 	/**
-	 * List available checks to run.
+	 * List all available checks to run.
 	 *
 	 * ## OPTIONS
 	 *
@@ -190,7 +198,7 @@ class Command {
 	 * : Use checks registered in a specific configuration file.
 	 *
 	 * [--fields=<fields>]
-	 * : Limit the output to specific fields. Defaults to all fields.
+	 * : Limit the output to specific fields. Defaults to name,description.
 	 *
 	 * [--format=<format>]
 	 * : Render output in a specific format.
@@ -205,7 +213,7 @@ class Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     $ wp doctor checks
+	 *     $ wp doctor list
 	 *     +-------------+---------------------------------------------+
 	 *     | name        | description                                 |
 	 *     +-------------+---------------------------------------------+
