@@ -12,7 +12,7 @@ abstract class File extends Check {
 	/**
 	 * File checks are run as a group
 	 */
-	protected $when = false;
+	protected $_when = false;
 
 	/**
 	 * File extension to check.
