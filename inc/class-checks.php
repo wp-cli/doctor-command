@@ -31,7 +31,11 @@ class Checks {
 		$check_data = spyc_load_file( $file );
 
 		if ( ! empty( $check_data['_']['inherit'] ) ) {
-			$inherited = self::absolutize( $check_data['_']['inherit'], dirname( $file ) );
+			$inherited = $check_data['_']['inherit'];
+			if ( 'default' === $inherited ) {
+				$inherited = dirname( dirname( __FILE__ ) ) . '/doctor.yml';
+			}
+			$inherited = self::absolutize( $inherited, dirname( $file ) );
 			self::register_config( $inherited );
 		}
 
