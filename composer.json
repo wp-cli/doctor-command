@@ -1,6 +1,6 @@
 {
     "name": "runcommand/doctor",
-    "description": "Run a series of checks against WordPress to diagnose issues.",
+    "description": "Diagnose problems within WordPress by running a series of checks for symptoms.",
     "homepage": "https://runcommand.io/wp/doctor/",
     "license": "MIT",
     "authors": [
@@ -24,10 +24,17 @@
                 "[![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)"
             ],
             "sections": [
+                "Overview",
                 "Using",
                 "Installing",
                 "Support"
             ],
+            "overview": {
+                "body": "bin/readme/overview-body.md"
+            },
+            "installing": {
+                "body": "bin/readme/installing-body.md"
+            },
             "support": {
                 "body": "https://raw.githubusercontent.com/runcommand/runcommand-theme/master/bin/readme-partials/support-premium.md"
             },

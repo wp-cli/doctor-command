@@ -1,11 +1,30 @@
 runcommand/doctor
 =================
 
-Run a series of checks against WordPress to diagnose issues.
+Diagnose problems within WordPress by running a series of checks for symptoms.
 
 [![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)
 
-Quick links: [Using](#using) | [Installing](#installing) | [Support](#support)
+Quick links: [Overview](#overview) | [Using](#using) | [Installing](#installing) | [Support](#support)
+
+## Overview
+
+`wp doctor` lets you easily run a series of configurable checks to diagnose what's ailing with WordPress.
+
+Save hours identifying the health of your WordPress installs by codifying diagnosis procedures as a series of checks to run with WP-CLI. `wp doctor` comes with tens of checks out of the box, with more being added all of the time. You can also create your own `doctor.yml` file to define the checks that are most important to you.
+
+At its core, each check includes a name, status (either "success", "warning", or "error"), and a human-readable message:
+
+```
+$ wp doctor check cron-count
++------------+---------+--------------------------------------------------------------------+
+| name       | status  | message                                                            |
++------------+---------+--------------------------------------------------------------------+
+| cron-count | success | Total number of cron jobs is within normal operating expectations. |
++------------+---------+--------------------------------------------------------------------+
+```
+
+Run together, `wp doctor` checks give you a high-level overview to the health of your WordPress installs.
 
 ## Using
 
@@ -23,8 +42,7 @@ wp doctor check [<checks>...] [--all] [--spotlight] [--config=<file>] [--fields=
 
 A check is a routine run against some scope of WordPress that reports
 a 'status' and a 'message'. The status can be 'success', 'warning', or
-'error'. The message should be a human-readable explanation of the
-status.
+'error'. The message is a human-readable explanation of the status.
 
 	[<checks>...]
 		Names of one or more checks to run.
@@ -39,7 +57,7 @@ status.
 		Use checks registered in a specific configuration file.
 
 	[--fields=<fields>]
-		Display one or more fields.
+		Display one or more fields for each check. Default is name,status,message.
 
 	[--format=<format>]
 		Render results in a particular format.
@@ -54,12 +72,21 @@ status.
 
 **EXAMPLES**
 
-    $ wp doctor diagnose core-update
+    # Verify WordPress core is up to date.
+    $ wp doctor check core-update
     +-------------+---------+-----------------------------------------------------------+
     | name        | status  | message                                                   |
     +-------------+---------+-----------------------------------------------------------+
     | core-update | warning | A new major version of WordPress is available for update. |
     +-------------+---------+-----------------------------------------------------------+
+
+    # Verify the site is public as expected.
+    $ wp doctor check option-blog-public
+    +--------------------+--------+--------------------------------------------+
+    | name               | status | message                                    |
+    +--------------------+--------+--------------------------------------------+
+    | option-blog-public | error  | Site is private but expected to be public. |
+    +--------------------+--------+--------------------------------------------+
 
 
 
@@ -87,6 +114,7 @@ wp doctor list [--config=<file>] [--fields=<fields>] [--format=<format>]
 		  - table
 		  - json
 		  - csv
+		  - count
 		---
 
 **EXAMPLES**
@@ -100,9 +128,7 @@ wp doctor list [--config=<file>] [--fields=<fields>] [--format=<format>]
 
 ## Installing
 
-Installing this package requires WP-CLI v0.23.0 or greater. Update to the latest stable release with `wp cli update`.
-
-Once you've done so, you can install this package with `wp package install runcommand/doctor`.
+[Sign up to receive an email when `wp doctor` is available](https://runcommand.io/newsletter-signup/).
 
 ## Support
 
