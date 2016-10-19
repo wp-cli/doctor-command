@@ -59,11 +59,11 @@ class Plugin_Status extends Plugin {
 		}
 
 		if ( $erred ) {
-			$this->status = 'error';
-			$this->message = "Plugin '{$this->plugin_name}' is '{$current_status}' but expected to be '{$this->plugin_status}'.";
+			$this->set_status( 'error' );
+			$this->set_message( "Plugin '{$this->plugin_name}' is '{$current_status}' but expected to be '{$this->plugin_status}'." );
 		} else {
-			$this->status = 'success';
-			$this->message = "Plugin '{$this->plugin_name}' is '{$current_status}' as expected.";
+			$this->set_status( 'success' );
+			$this->set_message( "Plugin '{$this->plugin_name}' is '{$current_status}' as expected." );
 		}
 	}
 

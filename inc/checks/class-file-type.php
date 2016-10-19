@@ -21,13 +21,13 @@ class File_Type extends File {
 		if ( isset( $this->symlink ) ) {
 			$symlink = $this->symlink ? 'true' : 'false';
 			if ( ! empty( $this->matches ) ) {
-				$this->status = 'error';
+				$this->set_status( 'error' );
 				$count = count( $this->matches );
 				$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
-				$this->message = "{$message} failed assertion that symlink is '{$symlink}'.";
+				$this->set_message( "{$message} failed assertion that symlink is '{$symlink}'." );
 			} else {
-				$this->status = 'success';
-				$this->message = "All '{$this->extension}' files passed assertion that symlink is '{$symlink}'.";
+				$this->set_status( 'success' );
+				$this->set_message( "All '{$this->extension}' files passed assertion that symlink is '{$symlink}'." );
 			}
 		}
 

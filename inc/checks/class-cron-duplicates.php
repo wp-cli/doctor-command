@@ -30,11 +30,11 @@ class Cron_Duplicates extends Cron {
 			}
 		}
 		if ( $excess_duplicates ) {
-			$this->status = 'error';
-			$this->message = "Detected {$this->threshold_count} or more of the same cron job.";
+			$this->set_status( 'error' );
+			$this->set_message( "Detected {$this->threshold_count} or more of the same cron job." );
 		} else {
-			$this->status = 'success';
-			$this->message = "All cron job counts are within normal operating expectations.";
+			$this->set_status( 'success' );
+			$this->set_message( "All cron job counts are within normal operating expectations." );
 		}
 	}
 
