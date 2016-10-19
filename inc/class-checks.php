@@ -35,9 +35,11 @@ class Checks {
 			self::register_config( $inherited );
 		}
 
+		unset( $check_data['_'] );
+
 		foreach( $check_data as $check_name => $check_args ) {
 			if ( empty( $check_args['class'] ) && empty( $check_args['check'] ) ) {
-				continue;
+				WP_CLI::error( "Check '{$check_name}' is missing 'class' or 'check'. Verify check registration." );
 			}
 
 			$class = ! empty( $check_args['check'] ) ? 'runcommand\Doctor\Checks\\' . $check_args['check'] : $check_args['class'];
