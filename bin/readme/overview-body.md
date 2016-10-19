@@ -19,8 +19,8 @@ $ wp doctor check cron-count
 plugin-w3-total-cache:
   check: Plugin_Status
   options:
-    plugin_name: w3-total-cache
-    plugin_status: uninstalled
+    name: w3-total-cache
+    status: uninstalled
 ```
 
 Then, run the custom `doctor.yml` file using the `--config=<file>` parameter:
