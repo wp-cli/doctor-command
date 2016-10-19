@@ -83,3 +83,22 @@ Feature: Configure the Doctor
       """
       2
       """
+
+  Scenario: Support inheriting the default doctor.yml
+    Given an empty directory
+    And a first-config.yml file:
+      """
+      _:
+        inherit: default
+      constant-custom:
+        check: Constant_Definition
+        options:
+          constant: CUSTOM
+          defined: true
+      """
+
+    When I run `wp doctor list --config=first-config.yml --fields=name`
+    Then STDOUT should be a table containing rows:
+      | name                        |
+      | constant-custom             |
+      | constant-savequeries-falsy  |
