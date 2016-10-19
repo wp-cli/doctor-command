@@ -19,11 +19,11 @@ class Cron_Count extends Cron {
 	public function run() {
 		$crons = self::get_crons();
 		if ( count( $crons ) >= $this->threshold_count ) {
-			$this->status = 'error';
-			$this->message = 'Total number of cron jobs exceeds expected threshold.';
+			$this->set_status( 'error' );
+			$this->set_message( 'Total number of cron jobs exceeds expected threshold.' );
 		} else {
-			$this->status = 'success';
-			$this->message = 'Total number of cron jobs is within normal operating expectations.';
+			$this->set_status( 'success' );
+			$this->set_message( 'Total number of cron jobs is within normal operating expectations.' );
 		}
 	}
 

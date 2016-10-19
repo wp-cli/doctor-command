@@ -22,14 +22,14 @@ class Theme_Update extends Check {
 		}
 
 		if ( 1 === $update_count ) {
-			$this->status = 'warning';
-			$this->message = "1 theme has an update available.";
+			$this->set_status( 'warning' );
+			$this->set_message( "1 theme has an update available." );
 		} else if ( $update_count ) {
-			$this->status = 'warning';
-			$this->message = "{$update_count} themes have updates available.";
+			$this->set_status( 'warning' );
+			$this->set_message( "{$update_count} themes have updates available." );
 		} else {
-			$this->status = 'success';
-			$this->message = 'Themes are up to date.';
+			$this->set_status( 'success' );
+			$this->set_message( 'Themes are up to date.' );
 		}
 
 	}
