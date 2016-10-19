@@ -9,7 +9,7 @@ abstract class Check {
 	 *
 	 * @var string
 	 */
-	 protected $when = 'after_wp_load';
+	 protected $_when = 'after_wp_load';
 
 	/**
 	 * Status of this check after being run.
@@ -18,22 +18,22 @@ abstract class Check {
 	 *
 	 * @var string
 	 */
-	protected $status;
+	protected $_status;
 
 	/**
 	 * Message of this check after being run.
 	 *
 	 * @var integer
 	 */
-	protected $message;
+	protected $_message;
 
 	/**
 	 * Initialize the check.
 	 */
 	public function __construct( $options = array() ) {
-		$skipped = array( 'when', 'status', 'message' );
 		foreach( $options as $k => $v ) {
-			if ( in_array( $k, $skipped, true ) ) {
+			// Don't permit direct access to private class vars
+			if ( '_' === $k[0] ) {
 				continue;
 			}
 			$this->$k = $v;
@@ -44,7 +44,25 @@ abstract class Check {
 	 * Get when the check is expected to run.
 	 */
 	public function get_when() {
-		return $this->when;
+		return $this->_when;
+	}
+
+	/**
+	 * Set the status of the check.
+	 *
+	 * @param string $status
+	 */
+	protected function set_status( $status ) {
+		$this->_status = $status;
+	}
+
+	/**
+	 * Set the message of the check.
+	 *
+	 * @param string $message
+	 */
+	protected function set_message( $message ) {
+		$this->_message = $message;
 	}
 
 	/**
@@ -62,8 +80,8 @@ abstract class Check {
 	 */
 	public function get_results() {
 		return array(
-			'status'    => $this->status,
-			'message'   => $this->message,
+			'status'    => $this->_status,
+			'message'   => $this->_message,
 		);
 	}
 

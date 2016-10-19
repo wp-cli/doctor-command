@@ -25,11 +25,11 @@ class Autoload_Options_Size extends Check {
 		$human_threshold = self::format_bytes( $threshold_bytes );
 		$human_total = self::format_bytes( $total_bytes );
 		if ( $threshold_bytes < $total_bytes ) {
-			$this->status = 'warning';
-			$this->message = "Autoloaded options size ({$human_total}) exceeds threshold ({$human_threshold})";
+			$this->set_status( 'warning' );
+			$this->set_message( "Autoloaded options size ({$human_total}) exceeds threshold ({$human_threshold})" );
 		} else {
-			$this->status = 'success';
-			$this->message = "Autoloaded options size ({$human_total}) is less than threshold ({$human_threshold}).";
+			$this->set_status( 'success' );
+			$this->set_message( "Autoloaded options size ({$human_total}) is less than threshold ({$human_threshold})." );
 		}
 
 	}

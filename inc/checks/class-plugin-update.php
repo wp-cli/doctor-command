@@ -19,14 +19,14 @@ class Plugin_Update extends Plugin {
 		}
 
 		if ( 1 === $update_count ) {
-			$this->status = 'warning';
-			$this->message = "1 plugin has an update available.";
+			$this->set_status( 'warning' );
+			$this->set_message( "1 plugin has an update available." );
 		} else if ( $update_count ) {
-			$this->status = 'warning';
-			$this->message = "{$update_count} plugins have updates available.";
+			$this->set_status( 'warning' );
+			$this->set_message( "{$update_count} plugins have updates available." );
 		} else {
-			$this->status = 'success';
-			$this->message = 'Plugins are up to date.';
+			$this->set_status( 'success' );
+			$this->set_message( 'Plugins are up to date.' );
 		}
 
 	}

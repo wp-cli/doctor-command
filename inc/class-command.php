@@ -237,10 +237,9 @@ class Command {
 			$reflection = new \ReflectionClass( $class );
 			$description = self::remove_decorations( $reflection->getDocComment() );
 			$tokens = array();
-			$skipped = array( 'when', 'status', 'message' );
 			foreach( $reflection->getProperties() as $prop ) {
 				$prop_name = $prop->getName();
-				if ( in_array( $prop_name, $skipped, true ) ) {
+				if ( '_' === $prop_name[0] ) {
 					continue;
 				}
 				$prop->setAccessible( true );
