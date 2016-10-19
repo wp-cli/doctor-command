@@ -51,6 +51,23 @@ Feature: Configure the Doctor
       Error: Check name 'check space' is invalid. Verify check registration.
       """
 
+  Scenario: Error when a check is missing its 'check' or 'class'
+    Given an empty directory
+    And a config.yml file:
+      """
+      constant-custom:
+        constant: Constant_Definition
+        options:
+          constant: CUSTOM
+          defined: true
+      """
+
+    When I try `wp doctor list --config=config.yml`
+    Then STDERR should be:
+      """
+      Error: Check 'constant-custom' is missing 'class' or 'check'. Verify check registration.
+      """
+
   Scenario: Support inheriting another config file
     Given an empty directory
     And a first-config.yml file:
