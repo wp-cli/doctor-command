@@ -52,30 +52,30 @@ class Constant_Definition extends Check {
 		if ( isset( $this->falsy ) ) {
 			if ( ! defined( $this->constant ) ) {
 				if ( $this->falsy ) {
-					$this->status = 'success';
-					$this->message = "Constant '{$this->constant}' is undefined.";
+					$this->set_status( 'success' );
+					$this->set_message( "Constant '{$this->constant}' is undefined." );
 				} else {
-					$this->status = 'error';
-					$this->message = "Constant '{$this->constant}' is undefined but expected to not be falsy.";
+					$this->set_status( 'error' );
+					$this->set_message( "Constant '{$this->constant}' is undefined but expected to not be falsy." );
 				}
 			} else {
 				$actual_value = constant( $this->constant );
 				$human_actual = self::human_value( $actual_value );
 				if ( ! $actual_value ) {
 					if ( $this->falsy ) {
-						$this->status = 'success';
-						$this->message = "Constant '{$this->constant}' is defined falsy.";
+						$this->set_status( 'success' );
+						$this->set_message( "Constant '{$this->constant}' is defined falsy." );
 					} else {
-						$this->status = 'error';
-						$this->message = "Constant '{$this->constant}' is defined '{$human_actual}' but expected to not be falsy.";
+						$this->set_status( 'error' );
+						$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to not be falsy." );
 					}
 				} else {
 					if ( ! $this->falsy ) {
-						$this->status = 'success';
-						$this->message = "Constant '{$this->constant}' is not defined falsy.";
+						$this->set_status( 'success' );
+						$this->set_message( "Constant '{$this->constant}' is not defined falsy." );
 					} else {
-						$this->status = 'error';
-						$this->message = "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be falsy.";
+						$this->set_status( 'error' );
+						$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be falsy." );
 					}
 				}
 			}
@@ -84,26 +84,26 @@ class Constant_Definition extends Check {
 
 		if ( ! defined( $this->constant ) ) {
 			if ( $this->defined ) {
-				$this->status = 'error';
+				$this->set_status( 'error' );
 				if ( isset( $this->expected_value ) ) {
 					$human_expected = self::human_value( $this->expected_value );
-					$this->message = "Constant '{$this->constant}' is undefined but expected to be '{$human_expected}'.";
+					$this->set_message( "Constant '{$this->constant}' is undefined but expected to be '{$human_expected}'." );
 				} else {
-					$this->message = "Constant '{$this->constant}' is undefined but expected to be.";
+					$this->set_message( "Constant '{$this->constant}' is undefined but expected to be." );
 				}
 			}
 			return;
 		}
 
 		if ( ! $this->defined ) {
-			$this->status = 'error';
-			$this->message = "Constant '{$this->constant}' is defined but expected not to be.";
+			$this->set_status( 'error' );
+			$this->set_message( "Constant '{$this->constant}' is defined but expected not to be." );
 			return;
 		}
 
 		if ( $this->defined && ! isset( $this->expected_value ) ) {
-			$this->status = 'success';
-			$this->message = "Constant '{$this->constant}' is defined.";
+			$this->set_status( 'success' );
+			$this->set_message( "Constant '{$this->constant}' is defined." );
 			return;
 		}
 
@@ -111,12 +111,12 @@ class Constant_Definition extends Check {
 		$human_actual = self::human_value( $actual_value );
 
 		if ( $actual_value === $this->expected_value ) {
-			$this->status = 'success';
-			$this->message = "Constant '{$this->constant}' is defined '{$human_actual}'.";
+			$this->set_status( 'success' );
+			$this->set_status( "Constant '{$this->constant}' is defined '{$human_actual}'." );
 		} else {
-			$this->status = 'error';
+			$this->set_status( 'error' );
 			$human_expected = self::human_value( $this->expected_value );
-			$this->message = "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be '{$human_expected}'.";
+			$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be '{$human_expected}'." );
 		}
 
 	}

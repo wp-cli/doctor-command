@@ -28,11 +28,11 @@ class Plugin_Active_Count extends Plugin {
 
 		$threshold = (int) $this->threshold_count;
 		if ( $active > $threshold ) {
-			$this->status = 'warning';
-			$this->message = "Number of active plugins ({$active}) exceeds threshold ({$threshold}).";
+			$this->set_status( 'warning' );
+			$this->set_message( "Number of active plugins ({$active}) exceeds threshold ({$threshold})." );
 		} else {
-			$this->status = 'success';
-			$this->message = "Number of active plugins ({$active}) is less than threshold ({$threshold}).";
+			$this->set_status( 'success' );
+			$this->set_message( "Number of active plugins ({$active}) is less than threshold ({$threshold})." );
 		}
 
 	}

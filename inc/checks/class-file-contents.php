@@ -20,13 +20,13 @@ class File_Contents extends File {
 
 		if ( isset( $this->regex ) ) {
 			if ( ! empty( $this->matches ) ) {
-				$this->status = 'error';
+				$this->set_status( 'error' );
 				$count = count( $this->matches );
 				$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
-				$this->message = "{$message} failed check for '{$this->regex}'.";
+				$this->set_message( "{$message} failed check for '{$this->regex}'." );
 			} else {
-				$this->status = 'success';
-				$this->message = "All '{$this->extension}' files passed check for '{$this->regex}'.";
+				$this->set_status( 'success' );
+				$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
 			}
 		}
 

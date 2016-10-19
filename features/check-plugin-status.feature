@@ -7,8 +7,8 @@ Feature: Check the status of a plugin
       plugin-akismet-active:
         class: runcommand\Doctor\Checks\Plugin_Status
         options:
-          plugin_name: akismet
-          plugin_status: active
+          name: akismet
+          status: active
       """
 
     When I run `wp doctor list --fields=name,description --config=config.yml`
@@ -23,13 +23,13 @@ Feature: Check the status of a plugin
       plugin-akismet-active:
         class: runcommand\Doctor\Checks\Plugin_Status
         options:
-          plugin_name: akismet
-          plugin_status: active
+          name: akismet
+          status: active
       plugin-hello-uninstalled:
         class: runcommand\Doctor\Checks\Plugin_Status
         options:
-          plugin_name: hello
-          plugin_status: uninstalled
+          name: hello
+          status: uninstalled
       """
 
     When I run `wp doctor check --all --config=config.yml`
@@ -63,8 +63,8 @@ Feature: Check the status of a plugin
       plugin-akismet-active-network:
         class: runcommand\Doctor\Checks\Plugin_Status
         options:
-          plugin_name: akismet
-          plugin_status: active-network
+          name: akismet
+          status: active-network
       """
 
     When I try `wp doctor check plugin-akismet-active-network --config=config.yml`
