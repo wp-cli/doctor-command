@@ -16,18 +16,18 @@ abstract class Check {
 	/**
 	 * Status of this check after being run.
 	 *
-	 * Can be one of 'success', 'warning', 'error'.
+	 * Can be one of 'success', 'warning', 'error', 'incomplete'.
 	 *
 	 * @var string
 	 */
-	protected $_status;
+	protected $_status = 'incomplete';
 
 	/**
 	 * Message of this check after being run.
 	 *
 	 * @var integer
 	 */
-	protected $_message;
+	protected $_message = '';
 
 	/**
 	 * Initialize the check.
