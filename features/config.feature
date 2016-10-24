@@ -136,3 +136,25 @@ Feature: Configure the Doctor
       | name                        |
       | constant-custom             |
       | constant-savequeries-falsy  |
+
+  Scenario: Permit checks to be skipped when inheriting
+    Given an empty directory
+    And a skipped-checks.yml file:
+      """
+      _:
+        inherit: default
+        skipped_checks:
+          - constant-savequeries-falsy
+      """
+
+    When I run `wp doctor list --fields=name`
+    Then STDOUT should contain:
+      """
+      constant-savequeries-falsy
+      """
+
+    When I run `wp doctor list --config=skipped-checks.yml --fields=name`
+    Then STDOUT should not contain:
+      """
+      constant-savequeries-falsy
+      """
