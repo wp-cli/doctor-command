@@ -10,6 +10,7 @@ class Checks {
 	private static $instance;
 
 	private $checks = array();
+	private $skipped = array();
 
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
@@ -36,11 +37,15 @@ class Checks {
 				$inherited = dirname( dirname( __FILE__ ) ) . '/doctor.yml';
 			}
 			$inherited = self::absolutize( $inherited, dirname( $file ) );
+			if ( isset( $check_data['_']['skipped_checks'] ) ) {
+				self::get_instance()->skipped_checks[ $inherited ] = $check_data['_']['skipped_checks'];
+			}
 			self::register_config( $inherited );
 		}
 
 		unset( $check_data['_'] );
 
+		$skipped_checks = isset( self::get_instance()->skipped_checks[ $file ] ) ? self::get_instance()->skipped_checks[ $file ] : array();
 		foreach( $check_data as $check_name => $check_args ) {
 			if ( empty( $check_args['class'] ) && empty( $check_args['check'] ) ) {
 				WP_CLI::error( "Check '{$check_name}' is missing 'class' or 'check'. Verify check registration." );
@@ -49,6 +54,9 @@ class Checks {
 			$class = ! empty( $check_args['check'] ) ? 'runcommand\Doctor\Checks\\' . $check_args['check'] : $check_args['class'];
 			if ( ! class_exists( $class ) ) {
 				WP_CLI::error( "Class '{$class}' for check '{$check_name}' doesn't exist. Verify check registration." );
+			}
+			if ( $skipped_checks && in_array( $check_name, $skipped_checks, true ) ) {
+				continue;
 			}
 			$options = ! empty( $check_args['options'] ) ? $check_args['options'] : array();
 			$obj = new $class( $options );
