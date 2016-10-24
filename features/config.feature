@@ -68,6 +68,23 @@ Feature: Configure the Doctor
       Error: Check 'constant-custom' is missing 'class' or 'check'. Verify check registration.
       """
 
+  Scenario: Error when a check has been provided an unsupported option
+    Given an empty directory
+    And a config.yml file:
+      """
+      constant-invalid-option:
+        check: Constant_Definition
+        options:
+          constant_name: CUSTOM
+          defined: true
+      """
+
+    When I try `wp doctor list --config=config.yml`
+    Then STDERR should be:
+      """
+      Error: Cannot set invalid property 'constant_name'.
+      """
+
   Scenario: Support inheriting another config file
     Given an empty directory
     And a first-config.yml file:
