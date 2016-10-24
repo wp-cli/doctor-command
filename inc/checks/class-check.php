@@ -2,6 +2,8 @@
 
 namespace runcommand\Doctor\Checks;
 
+use WP_CLI;
+
 abstract class Check {
 
 	/**
@@ -31,10 +33,14 @@ abstract class Check {
 	 * Initialize the check.
 	 */
 	public function __construct( $options = array() ) {
+
 		foreach( $options as $k => $v ) {
 			// Don't permit direct access to private class vars
 			if ( '_' === $k[0] ) {
 				continue;
+			}
+			if ( ! property_exists( $this, $k ) ) {
+				WP_CLI::error( "Cannot set invalid property '{$k}'." );
 			}
 			$this->$k = $v;
 		}
