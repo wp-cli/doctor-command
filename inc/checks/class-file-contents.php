@@ -5,7 +5,7 @@ namespace runcommand\Doctor\Checks;
 use SplFileInfo;
 
 /**
- * Checks files on the filesystem for regex pattern '%regex%'.
+ * Checks files on the filesystem for regex pattern `%regex%`.
  */
 class File_Contents extends File {
 
