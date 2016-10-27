@@ -6,7 +6,7 @@ Feature: Check files in a WordPress install
     When I run `wp doctor list --fields=name,description`
     Then STDOUT should be a table containing rows:
       | name                       | description                                                                    |
-      | file-eval                  | Checks files on the filesystem for regex pattern 'eval\(.*base64_decode\(.*'.  |
+      | file-eval                  | Checks files on the filesystem for regex pattern `eval\(.*base64_decode\(.*`.  |
 
   Scenario: Check for use of eval(base64_decode()) in files
     Given a WP install
