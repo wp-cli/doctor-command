@@ -35,14 +35,14 @@ class Constant_Definition extends Check {
 	 *
 	 * @var mixed
 	 */
-	protected $expected_value;
+	protected $value;
 
 	/**
 	 * Initialize the constant check
 	 */
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );
-		if ( isset( $this->expected_value ) ) {
+		if ( isset( $this->value ) ) {
 			$this->defined = true;
 		}
 	}
@@ -85,8 +85,8 @@ class Constant_Definition extends Check {
 		if ( ! defined( $this->constant ) ) {
 			if ( $this->defined ) {
 				$this->set_status( 'error' );
-				if ( isset( $this->expected_value ) ) {
-					$human_expected = self::human_value( $this->expected_value );
+				if ( isset( $this->value ) ) {
+					$human_expected = self::human_value( $this->value );
 					$this->set_message( "Constant '{$this->constant}' is undefined but expected to be '{$human_expected}'." );
 				} else {
 					$this->set_message( "Constant '{$this->constant}' is undefined but expected to be." );
@@ -101,7 +101,7 @@ class Constant_Definition extends Check {
 			return;
 		}
 
-		if ( $this->defined && ! isset( $this->expected_value ) ) {
+		if ( $this->defined && ! isset( $this->value ) ) {
 			$this->set_status( 'success' );
 			$this->set_message( "Constant '{$this->constant}' is defined." );
 			return;
@@ -110,12 +110,12 @@ class Constant_Definition extends Check {
 		$actual_value = constant( $this->constant );
 		$human_actual = self::human_value( $actual_value );
 
-		if ( $actual_value === $this->expected_value ) {
+		if ( $actual_value === $this->value ) {
 			$this->set_status( 'success' );
 			$this->set_status( "Constant '{$this->constant}' is defined '{$human_actual}'." );
 		} else {
 			$this->set_status( 'error' );
-			$human_expected = self::human_value( $this->expected_value );
+			$human_expected = self::human_value( $this->value );
 			$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be '{$human_expected}'." );
 		}
 
