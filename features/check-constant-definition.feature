@@ -86,3 +86,24 @@ Feature: Check the values of defined constants
     Then STDOUT should be a table containing rows:
       | name                 | status  | message                                                   |
       | constant-foobar-true | error   | Constant 'FOOBAR' is undefined but expected to be 'true'. |
+
+  Scenario: Expected constant is defined as the correct value
+    Given a WP install
+    And a config.yml file:
+      """
+      constant-foobar-true:
+        class: runcommand\Doctor\Checks\Constant_Definition
+        options:
+          constant: FOOBAR
+          value: true
+      """
+    And a wp-content/mu-plugins/constant.php file:
+      """
+      <?php
+      define( 'FOOBAR', true );
+      """
+
+    When I run `wp doctor check constant-foobar-true --config=config.yml`
+    Then STDOUT should be a table containing rows:
+      | name                 | status  | message                               |
+      | constant-foobar-true | success | Constant 'FOOBAR' is defined 'true'.  |
