@@ -1,6 +1,6 @@
 `wp doctor` lets you easily run a series of configurable checks to diagnose what's ailing with WordPress.
 
-Save hours identifying the health of your WordPress installs by codifying diagnosis procedures as a series of checks to run with WP-CLI. `wp doctor` comes with dozens of checks out of the box, and you can also create your own `doctor.yml` file to define the checks that are most important to you.
+Without `wp doctor`, your team has to rely on their memory to manually debug problems. With `wp doctor`, your team saves hours identifying the health of your WordPress installs by codifying diagnosis procedures as a series of checks to run with WP-CLI. `wp doctor` [comes with dozens of checks out of the box](https://runcommand.io/to/doctor-default-checks/), and [supports customized `doctor.yml` files](https://runcommand.io/to/customize-doctor-config/) to define the checks that are most important to you.
 
 Each check includes a name, status (either "success", "warning", or "error"), and a human-readable message. For example, `cron-count` is a check to ensure WP Cron hasn't exploded with jobs:
 
