@@ -44,17 +44,7 @@ abstract class File extends Check {
 	 *
 	 * @var array
 	 */
-	protected $matches = array();
-
-	/**
-	 * Initialize the check.
-	 */
-	public function __construct( $options = array() ) {
-		if ( isset( $options['matches'] ) ) {
-			unset( $options['matches'] );
-		}
-		parent::__construct( $options );
-	}
+	protected $_matches = array();
 
 	/**
 	 * Get the options for this check
