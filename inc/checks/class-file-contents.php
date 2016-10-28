@@ -19,9 +19,9 @@ class File_Contents extends File {
 	public function run() {
 
 		if ( isset( $this->regex ) ) {
-			if ( ! empty( $this->matches ) ) {
+			if ( ! empty( $this->_matches ) ) {
 				$this->set_status( 'error' );
-				$count = count( $this->matches );
+				$count = count( $this->_matches );
 				$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 				$this->set_message( "{$message} failed check for '{$this->regex}'." );
 			} else {
@@ -36,7 +36,7 @@ class File_Contents extends File {
 		if ( isset( $this->regex ) ) {
 			$contents = file_get_contents( $file->getPathname() );
 			if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
-				$this->matches[] = $file;
+				$this->_matches[] = $file;
 			}
 		}
 	}
