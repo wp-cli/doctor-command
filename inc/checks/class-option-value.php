@@ -28,7 +28,7 @@ class Option_Value extends Check {
 		$actual_value = get_option( $this->option );
 		if ( $actual_value == $this->value ) {
 			$status = 'success';
-			$message = "Option '{$this->option}' is '{$actual_value}' as expected.";
+			$message = "Option '{$this->option}' is '{$this->value}' as expected.";
 		} else {
 			$status = 'error';
 			$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->value}'.";
