@@ -21,17 +21,17 @@ class Option_Value extends Check {
 	 *
 	 * @var mixed
 	 */
-	protected $expected_value;
+	protected $value;
 
 	public function run() {
 
 		$actual_value = get_option( $this->option );
-		if ( $actual_value == $this->expected_value ) {
+		if ( $actual_value == $this->value ) {
 			$status = 'success';
 			$message = "Option '{$this->option}' is '{$actual_value}' as expected.";
 		} else {
 			$status = 'error';
-			$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->expected_value}'.";
+			$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->value}'.";
 		}
 
 		$this->set_status( $status );
