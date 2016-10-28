@@ -16,7 +16,7 @@ Feature: Check the value of a given option
         check: Option_Value
         options:
           option: blog_public
-          expected_value: 0
+          value: 0
       """
     And a blog-public.yml file:
       """
@@ -24,7 +24,7 @@ Feature: Check the value of a given option
         check: Option_Value
         options:
           option: blog_public
-          expected_value: 1
+          value: 1
       """
 
     When I run `wp option update blog_public 1`
@@ -67,7 +67,7 @@ Feature: Check the value of a given option
         check: Option_Value
         options:
           option: admin_email
-          expected_value: foo@example.org
+          value: foo@example.org
       """
 
     When I run `wp doctor check --config=config.yml option-admin-email`

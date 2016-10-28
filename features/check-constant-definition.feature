@@ -79,7 +79,7 @@ Feature: Check the values of defined constants
         class: runcommand\Doctor\Checks\Constant_Definition
         options:
           constant: FOOBAR
-          expected_value: true
+          value: true
       """
 
     When I run `wp doctor check constant-foobar-true --config=config.yml`
