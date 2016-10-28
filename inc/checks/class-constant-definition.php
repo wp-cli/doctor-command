@@ -112,7 +112,7 @@ class Constant_Definition extends Check {
 
 		if ( $actual_value === $this->value ) {
 			$this->set_status( 'success' );
-			$this->set_status( "Constant '{$this->constant}' is defined '{$human_actual}'." );
+			$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}'." );
 		} else {
 			$this->set_status( 'error' );
 			$human_expected = self::human_value( $this->value );
