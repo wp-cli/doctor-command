@@ -85,3 +85,31 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                                  |
       | option-admin-email    | success   | Option 'admin_email' is 'foo@example.org' as expected. |
+
+  Scenario: Check the value of users_can_register
+    Given a WP install
+    And a config.yml file:
+      """
+      option-users-can-register:
+        check: Option_Value
+        options:
+          option: users_can_register
+          value: 0
+      """
+    And I run `wp option update users_can_register 1`
+
+    When I run `wp doctor check --config=config.yml option-users-can-register`
+    Then STDOUT should be a table containing rows:
+      | name                      | status  | message                                                    |
+      | option-users-can-register | error   | Option 'users_can_register' is '1' but expected to be '0'. |
+
+    When I run `wp option update users_can_register 0`
+    Then STDOUT should contain:
+      """
+      Success:
+      """
+
+    When I run `wp doctor check --config=config.yml option-users-can-register`
+    Then STDOUT should be a table containing rows:
+      | name                      | status  | message                                         |
+      | option-users-can-register | success | Option 'users_can_register' is '0' as expected. |
