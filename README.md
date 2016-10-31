@@ -3,6 +3,7 @@ runcommand/doctor
 
 Diagnose problems within WordPress by running a series of checks for symptoms.
 
+[![runcommand premium](https://runcommand.io/wp-content/themes/runcommand-theme/bin/shields/runcommand-premium.svg)](https://runcommand.io/pricing/)
 [![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)
 
 Quick links: [Overview](#overview) | [Using](#using) | [Installing](#installing) | [Support](#support)
