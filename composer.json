@@ -4,6 +4,7 @@
     "type": "wp-cli-package",
     "homepage": "https://runcommand.io/wp/doctor/",
     "license": "MIT",
+    "version": "0.1.0-alpha",
     "authors": [
         {
             "name": "Daniel Bachhuber",
