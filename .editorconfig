@@ -13,9 +13,13 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = tab
 
-[{.jshintrc,*.json,*.yml}]
+[{.jshintrc,*.json,*.yml,*.feature}]
 indent_style = space
 indent_size = 2
 
 [{*.txt,wp-config-sample.php}]
 end_of_line = crlf
+
+[composer.json]
+indent_style = space
+indent_size = 4
