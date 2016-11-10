@@ -3,8 +3,7 @@ runcommand/doctor
 
 Diagnose problems within WordPress by running a series of checks for symptoms.
 
-[![runcommand premium](https://runcommand.io/wp-content/themes/runcommand-theme/bin/shields/runcommand-premium.svg)](https://runcommand.io/pricing/)
-[![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)
+[![runcommand premium](https://runcommand.io/wp-content/themes/runcommand-theme/bin/shields/runcommand-premium.svg)](https://runcommand.io/pricing/) [![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)
 
 Quick links: [Overview](#overview) | [Using](#using) | [Installing](#installing) | [Support](#support)
 
@@ -154,7 +153,7 @@ wp doctor list [--config=<file>] [--fields=<fields>] [--format=<format>]
 
 `wp doctor` is available to [runcommand gold and silver subscribers](https://runcommand.io/pricing/).
 
-Once you've signed up, you can install `wp doctor` with:
+Once you've signed up, you can [download the latest version](https://runcommand.memberful.com/account/downloads) from your account dashboard. Then, install `wp doctor` with:
 
 ```
 $ wp package install doctor.zip
@@ -168,14 +167,14 @@ $ wp package install git@github.com:runcommand/doctor.git
 
 ## Support
 
-Support is available to paying [runcommand](https://runcommand.io/) customers.
+Support (either through Github issues or via email) is available to paying [runcommand](https://runcommand.io/) customers.
 
-Have access to [Sparks](https://github.com/runcommand/sparks/), the runcommand issue tracker? Feel free to [open a new issue](https://github.com/runcommand/sparks/issues/new).
+Have access to [Sparks](https://github.com/runcommand/sparks/), the runcommand Github issue tracker? Feel free to [open a new issue](https://github.com/runcommand/sparks/issues/new). Keep in mind Sparks is semi-public (multiple companies have access to it); please use email support for anything that needs to be kept private.
 
 Think you’ve found a bug? Before you create a new issue, you should [search existing issues](https://github.com/runcommand/sparks/issues?q=label%3Abug%20) to see if there’s an existing resolution to it, or if it’s already been fixed in a newer version. Once you’ve done a bit of searching and discovered there isn’t an open or fixed issue for your bug, please [create a new issue](https://github.com/runcommand/sparks/issues/new) with description of what you were doing, what you saw, and what you expected to see.
 
 Want to contribute a new feature? Please first [open a new issue](https://github.com/runcommand/sparks/issues/new) to discuss whether the feature is a good fit for the project. Once you've decided to work on a pull request, please include [functional tests](https://wp-cli.org/docs/pull-requests/#functional-tests) and follow the [WordPress Coding Standards](http://make.wordpress.org/core/handbook/coding-standards/).
 
-Don't have access to Sparks? You can also email [support@runcommand.io](mailto:support@runcommand.io) with general questions, bug reports, and feature suggestions.
+Don't have access to Sparks, or need to keep the discussion private? You can also email [support@runcommand.io](mailto:support@runcommand.io) with general questions, bug reports, and feature suggestions.
 
 
