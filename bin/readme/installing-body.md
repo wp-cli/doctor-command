@@ -1,6 +1,6 @@
 `wp doctor` is available to [runcommand gold and silver subscribers](https://runcommand.io/pricing/).
 
-Once you've signed up, you can install `wp doctor` with:
+Once you've signed up, you can [download the latest version](https://runcommand.memberful.com/account/downloads) from your account dashboard. Then, install `wp doctor` with:
 
 ```
 $ wp package install doctor.zip
