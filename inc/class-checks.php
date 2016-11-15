@@ -48,7 +48,12 @@ class Checks {
 		$skipped_checks = isset( self::get_instance()->skipped_checks[ $file ] ) ? self::get_instance()->skipped_checks[ $file ] : array();
 		foreach( $check_data as $check_name => $check_args ) {
 			if ( ! empty( $check_args['require'] ) ) {
-				require_once self::absolutize( $check_args['require'], dirname( $file ) );
+				$required_file = self::absolutize( $check_args['require'], dirname( $file ) );
+				if ( ! file_exists( $required_file ) ) {
+					$required_file = basename( $required_file );
+					WP_CLI::error( "Required file '{$required_file}' doesn't exist (from '{$check_name}')." );
+				}
+				require_once $required_file;
 			}
 
 			if ( empty( $check_args['class'] ) && empty( $check_args['check'] ) ) {
