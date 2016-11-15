@@ -47,6 +47,10 @@ class Checks {
 
 		$skipped_checks = isset( self::get_instance()->skipped_checks[ $file ] ) ? self::get_instance()->skipped_checks[ $file ] : array();
 		foreach( $check_data as $check_name => $check_args ) {
+			if ( ! empty( $check_args['require'] ) ) {
+				require_once self::absolutize( $check_args['require'], dirname( $file ) );
+			}
+
 			if ( empty( $check_args['class'] ) && empty( $check_args['check'] ) ) {
 				WP_CLI::error( "Check '{$check_name}' is missing 'class' or 'check'. Verify check registration." );
 			}
