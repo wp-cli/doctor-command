@@ -158,3 +158,69 @@ Feature: Configure the Doctor
       """
       constant-savequeries-falsy
       """
+
+  Scenario: Use the 'require' attribute to require an arbitrary path
+    Given a WP install
+    And a config.yml file:
+      """
+      plugin-akismet-valid-api-key:
+        class: Akismet_Valid_API_Key
+        require: akismet-valid-api-key.php
+      """
+    And a akismet-valid-api-key.php file:
+      """
+      <?php
+      /**
+       * Ensures Akismet is activated with the appropriate credentials.
+       */
+      class Akismet_Valid_API_Key extends runcommand\Doctor\Checks\Check {
+
+        public function run() {
+          // If the Akismet isn't activated, bail early.
+          if ( ! class_exists( 'Akismet' ) ) {
+            $this->set_status( 'error' );
+            $this->set_message( "Akismet doesn't appear to be activated." );
+            return;
+          }
+          // Verify that the API exists.
+          $api_key = Akismet::get_api_key();
+          if ( empty( $api_key ) ) {
+            $this->set_status( 'error' );
+            $this->set_message( 'API key is missing.' );
+            return;
+          }
+          // Verify that the API key is valid.
+          $verification = Akismet::verify_key( $api_key );
+          if ( 'failed' === $verification ) {
+            $this->set_status( 'error' );
+            $this->set_message( 'API key verification failed.' );
+            return;
+          }
+          // Everything looks good, so report a success.
+          $this->set_status( 'success' );
+          $this->set_message( 'Akismet is activated with a verified API key.' );
+        }
+
+      }
+      """
+    And I run `wp plugin activate akismet`
+
+    When I run `wp doctor check --all --config=config.yml`
+    Then STDOUT should be a table containing rows:
+      | name                         | status       | message              |
+      | plugin-akismet-valid-api-key | error        | API key is missing.  |
+
+  Scenario: 'require' attribute fails successfully when the file doesn't exist
+    Given a WP install
+    And a config.yml file:
+      """
+      plugin-akismet-valid-api-key:
+        class: Akismet_Valid_API_Key
+        require: akismet-valid-api-key.php
+      """
+
+    When I try `wp doctor check --all --config=config.yml`
+    Then STDERR should be:
+      """
+      Error: Required file 'akismet-valid-api-key.php' doesn't exist (from 'plugin-akismet-valid-api-key').
+      """
