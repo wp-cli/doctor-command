@@ -10,7 +10,7 @@ use SplFileInfo;
 abstract class File extends Check {
 
 	/**
-	 * File checks are run as a group
+	 * File checks are run as their own group.
 	 */
 	protected $_when = false;
 
