@@ -209,3 +209,18 @@ Feature: Configure the Doctor
     Then STDOUT should be a table containing rows:
       | name                         | status       | message              |
       | plugin-akismet-valid-api-key | error        | API key is missing.  |
+
+  Scenario: 'require' attribute fails successfully when the file doesn't exist
+    Given a WP install
+    And a config.yml file:
+      """
+      plugin-akismet-valid-api-key:
+        class: Akismet_Valid_API_Key
+        require: akismet-valid-api-key.php
+      """
+
+    When I try `wp doctor check --all --config=config.yml`
+    Then STDERR should be:
+      """
+      Error: Required file 'akismet-valid-api-key.php' doesn't exist (from 'plugin-akismet-valid-api-key').
+      """
