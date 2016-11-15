@@ -54,6 +54,15 @@ abstract class Check {
 	}
 
 	/**
+	 * Set when the check is expected to run.
+	 *
+	 * @param string $when
+	 */
+	public function set_when( $when ) {
+		$this->_when = $when;
+	}
+
+	/**
 	 * Set the status of the check.
 	 *
 	 * @param string $status
