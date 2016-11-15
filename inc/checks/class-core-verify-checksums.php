@@ -9,7 +9,10 @@ use WP_CLI;
  */
 class Core_Verify_Checksums extends Check {
 
-	protected $when = 'before_wp_load';
+	public function __construct( $options = array() ) {
+		parent::__construct( $options );
+		$this->set_when( 'before_wp_load' );
+	}
 
 	public function run() {
 		$ret = WP_CLI::launch_self( 'core verify-checksums', array(), array(), false, true );
