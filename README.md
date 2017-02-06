@@ -3,7 +3,7 @@ wp-cli/doctor
 
 Diagnose problems within WordPress by running a series of checks for symptoms.
 
-[![runcommand premium](https://runcommand.io/wp-content/themes/runcommand-theme/bin/shields/runcommand-premium.svg)](https://runcommand.io/pricing/) [![version 0.1.0](https://runcommand.io/wp-content/themes/runcommand-theme/bin/shields/version-0-1-0.svg)](https://runcommand.io/2016/11/15/wp-doctor-v0-1-0/) [![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)
+[![Build Status](https://travis-ci.org/wp-cli/doctor.svg?branch=master)](https://travis-ci.org/wp-cli/doctor)
 
 Quick links: [Overview](#overview) | [Using](#using) | [Installing](#installing) | [Contributing](#contributing)
 
