@@ -1,5 +1,5 @@
 {
-    "name": "runcommand/doctor",
+    "name": "wp-cli/doctor",
     "description": "Diagnose problems within WordPress by running a series of checks for symptoms.",
     "type": "wp-cli-package",
     "homepage": "https://runcommand.io/wp/doctor/",
@@ -30,18 +30,11 @@
                 "Overview",
                 "Using",
                 "Installing",
-                "Support"
+                "Contributing"
             ],
             "overview": {
                 "body": "bin/readme/overview-body.md"
-            },
-            "installing": {
-                "body": "bin/readme/installing-body.md"
-            },
-            "support": {
-                "body": "https://raw.githubusercontent.com/runcommand/runcommand-theme/master/bin/readme-partials/support-premium.md"
-            },
-            "show_powered_by": false
+            }
         },
         "commands": [
             "doctor check",

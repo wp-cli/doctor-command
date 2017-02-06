@@ -1,11 +1,11 @@
-runcommand/doctor
-=================
+wp-cli/doctor
+=============
 
 Diagnose problems within WordPress by running a series of checks for symptoms.
 
 [![runcommand premium](https://runcommand.io/wp-content/themes/runcommand-theme/bin/shields/runcommand-premium.svg)](https://runcommand.io/pricing/) [![version 0.1.0](https://runcommand.io/wp-content/themes/runcommand-theme/bin/shields/version-0-1-0.svg)](https://runcommand.io/2016/11/15/wp-doctor-v0-1-0/) [![CircleCI](https://circleci.com/gh/runcommand/doctor.svg?style=svg&circle-token=383527fb616ce6acb8e7da293c0dfac1cc2a9a10)](https://circleci.com/gh/runcommand/doctor)
 
-Quick links: [Overview](#overview) | [Using](#using) | [Installing](#installing) | [Support](#support)
+Quick links: [Overview](#overview) | [Using](#using) | [Installing](#installing) | [Contributing](#contributing)
 
 ## Overview
 
@@ -151,30 +151,40 @@ wp doctor list [--config=<file>] [--fields=<fields>] [--format=<format>]
 
 ## Installing
 
-`wp doctor` is available to [runcommand gold and silver subscribers](https://runcommand.io/pricing/).
+Installing this package requires WP-CLI v0.23.0 or greater. Update to the latest stable release with `wp cli update`.
 
-Once you've signed up, you can [download the latest version](https://runcommand.memberful.com/account/downloads) from your account dashboard. Then, install `wp doctor` with:
+Once you've done so, you can install this package with `wp package install wp-cli/doctor`.
 
-```
-$ wp package install doctor.zip
-```
+## Contributing
 
-If you have a Github developer seat, you can also run:
+We appreciate you taking the initiative to contribute to this project.
 
-```
-$ wp package install git@github.com:runcommand/doctor.git
-```
+Contributing isn’t limited to just code. We encourage you to contribute in the way that best fits your abilities, by writing tutorials, giving a demo at your local meetup, helping other users with their support questions, or revising our documentation.
 
-## Support
+### Reporting a bug
 
-Support (either through Github issues or via email) is available to paying [runcommand](https://runcommand.io/) customers.
+Think you’ve found a bug? We’d love for you to help us get it fixed.
 
-Have access to [Sparks](https://github.com/runcommand/sparks/), the runcommand Github issue tracker? Feel free to [open a new issue](https://github.com/runcommand/sparks/issues/new). Keep in mind Sparks is semi-public (multiple companies have access to it); please use email support for anything that needs to be kept private.
+Before you create a new issue, you should [search existing issues](https://github.com/wp-cli/doctor/issues?q=label%3Abug%20) to see if there’s an existing resolution to it, or if it’s already been fixed in a newer version.
 
-Think you’ve found a bug? Before you create a new issue, you should [search existing issues](https://github.com/runcommand/sparks/issues?q=label%3Abug%20) to see if there’s an existing resolution to it, or if it’s already been fixed in a newer version. Once you’ve done a bit of searching and discovered there isn’t an open or fixed issue for your bug, please [create a new issue](https://github.com/runcommand/sparks/issues/new) with description of what you were doing, what you saw, and what you expected to see.
+Once you’ve done a bit of searching and discovered there isn’t an open or fixed issue for your bug, please [create a new issue](https://github.com/wp-cli/doctor/issues/new) with the following:
 
-Want to contribute a new feature? Please first [open a new issue](https://github.com/runcommand/sparks/issues/new) to discuss whether the feature is a good fit for the project. Once you've decided to work on a pull request, please include [functional tests](https://wp-cli.org/docs/pull-requests/#functional-tests) and follow the [WordPress Coding Standards](http://make.wordpress.org/core/handbook/coding-standards/).
+1. What you were doing (e.g. "When I run `wp post list`").
+2. What you saw (e.g. "I see a fatal about a class being undefined.").
+3. What you expected to see (e.g. "I expected to see the list of posts.")
 
-Don't have access to Sparks, or need to keep the discussion private? You can also email [support@runcommand.io](mailto:support@runcommand.io) with general questions, bug reports, and feature suggestions.
+Include as much detail as you can, and clear steps to reproduce if possible.
+
+### Creating a pull request
+
+Want to contribute a new feature? Please first [open a new issue](https://github.com/wp-cli/doctor/issues/new) to discuss whether the feature is a good fit for the project.
+
+Once you've decided to commit the time to seeing your pull request through, please follow our guidelines for creating a pull request to make sure it's a pleasant experience:
+
+1. Create a feature branch for each contribution.
+2. Submit your pull request early for feedback.
+3. Include functional tests with your changes. [Read the WP-CLI documentation](https://wp-cli.org/docs/pull-requests/#functional-tests) for an introduction.
+4. Follow the [WordPress Coding Standards](http://make.wordpress.org/core/handbook/coding-standards/).
 
 
+*This README.md is generated dynamically from the project's codebase using `wp scaffold package-readme` ([doc](https://github.com/wp-cli/scaffold-package-command#wp-scaffold-package-readme)). To suggest changes, please submit a pull request against the corresponding part of the codebase.*
