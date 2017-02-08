@@ -1,5 +1,5 @@
 {
-    "name": "wp-cli/doctor",
+    "name": "wp-cli/doctor-command",
     "description": "Diagnose problems within WordPress by running a series of checks for symptoms.",
     "type": "wp-cli-package",
     "homepage": "https://runcommand.io/wp/doctor/",
