@@ -134,7 +134,7 @@ class Command {
 						}
 					}
 				} catch( Exception $e ) {
-					WP_CLI::error( $e->getMessage() );
+					WP_CLI::warning( $e->getMessage() );
 				}
 				foreach( $file_checks as $name => $check ) {
 					$check->run();
