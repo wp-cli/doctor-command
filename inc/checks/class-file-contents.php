@@ -27,7 +27,7 @@ class File_Contents extends File {
 					$this->set_status( 'success' );
 					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
 				}else{
-					//Falsy set so we should report error if something is found (default functionlaity)
+					//Falsy is not set so we should report error if something is found (default functionlaity)
 					$this->set_status( 'error' );
 					$count = count( $this->_matches );
 					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
@@ -36,13 +36,13 @@ class File_Contents extends File {
 			} else {
 				//No Matches Found
 				if ( isset( $this->falsy ) ) {
-					//Falsy set so we should we report error if regex is not found
+					//Falsy set so we should report error if regex is not found
 					$this->set_status( 'error' );
 					$count = count( $this->_matches );
 					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 					$this->set_message( "{$message} failed check for '{$this->regex}'." );
 				}else{
-					//Falsy set so we should we report success if regex is not found (default functionlaity)
+					//Falsy is not set so we should report success if regex is not found (default functionlaity)
 					$this->set_status( 'success' );
 					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
 				}
