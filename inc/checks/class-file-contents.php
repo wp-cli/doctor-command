@@ -15,18 +15,38 @@ class File_Contents extends File {
 	 * @var string
 	 */
 	protected $regex;
+	protected $falsy;
 
 	public function run() {
 
 		if ( isset( $this->regex ) ) {
 			if ( ! empty( $this->_matches ) ) {
-				$this->set_status( 'error' );
-				$count = count( $this->_matches );
-				$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
-				$this->set_message( "{$message} failed check for '{$this->regex}'." );
+				//if matches are found
+				if ( isset( $this->falsy ) ) {
+					//Falsy set so we should report true if something is found
+					$this->set_status( 'success' );
+					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
+				}else{
+					//Falsy set so we should report error if something is found (default functionlaity)
+					$this->set_status( 'error' );
+					$count = count( $this->_matches );
+					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
+					$this->set_message( "{$message} failed check for '{$this->regex}'." );
+				}
 			} else {
-				$this->set_status( 'success' );
-				$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
+				//No Matches Found
+				if ( isset( $this->falsy ) ) {
+					//Falsy set so we should we report error if regex is not found
+					$this->set_status( 'error' );
+					$count = count( $this->_matches );
+					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
+					$this->set_message( "{$message} failed check for '{$this->regex}'." );
+				}else{
+					//Falsy set so we should we report success if regex is not found (default functionlaity)
+					$this->set_status( 'success' );
+					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
+				}
+
 			}
 		}
 
