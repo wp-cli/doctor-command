@@ -15,19 +15,19 @@ class File_Contents extends File {
 	 * @var string
 	 */
 	protected $regex;
-	protected $falsy;
+	protected $exists;
 
 	public function run() {
 
 		if ( isset( $this->regex ) ) {
 			if ( ! empty( $this->_matches ) ) {
 				//if matches are found
-				if ( isset( $this->falsy ) ) {
-					//Falsy set so we should report true if something is found
+				if ( $this->exists == true ) {
+					//$exists set to true so we should report true if something is found
 					$this->set_status( 'success' );
 					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
 				}else{
-					//Falsy is not set so we should report error if something is found (default functionlaity)
+					//$exists is not set to true so we should report error if something is found (default functionlaity)
 					$this->set_status( 'error' );
 					$count = count( $this->_matches );
 					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
@@ -35,14 +35,14 @@ class File_Contents extends File {
 				}
 			} else {
 				//No Matches Found
-				if ( isset( $this->falsy ) ) {
-					//Falsy set so we should report error if regex is not found
+				if ( $this->exists == true ) {
+					//$exists set to true so we should report error if regex is not found
 					$this->set_status( 'error' );
 					$count = count( $this->_matches );
 					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 					$this->set_message( "{$message} failed check for '{$this->regex}'." );
 				}else{
-					//Falsy is not set so we should report success if regex is not found (default functionlaity)
+					//$exists is not set to true so we should report success if regex is not found (default functionlaity)
 					$this->set_status( 'success' );
 					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
 				}
