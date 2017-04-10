@@ -42,7 +42,7 @@ class File_Contents extends File {
 					$this->set_status( 'error' );
 					$count = count( $this->_matches );
 					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
-					$this->set_message( "{$message} failed check for '{$this->regex}'." );
+					$this->set_message( "{$message} passed check for '{$this->regex}'." );
 				}else{
 					//$exists is not set to true so we should report success if regex is not found
 					$this->set_status( 'success' );
