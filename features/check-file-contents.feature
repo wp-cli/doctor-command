@@ -107,3 +107,33 @@ Feature: Check files in a WordPress install
       """
       [{"name":"file-server-name-wp-config","status":"error","message":"1 'php' file failed check for 'define\\(.+WP_(HOME|SITEURL).+\\$_SERVER.+SERVER_NAME'."}]
       """
+
+  Scenario: Check for the successful use of the exist flag
+    Given a WP install
+    And a config.yml file:
+      """
+      file-content-exist:
+        check: File_Contents
+        options:
+          regex: .*wp-doctor-exists-test.*
+          only_wp_content: true
+          exists: true
+      """
+
+    When I run `wp doctor check file-content-exist --config=config.yml --format=json`
+    Then STDOUT should be JSON containing:
+      """
+      [{"name":"file-content-exist","status":"error","message":"0 'php' files passed check for '.*wp-doctor-exists-test.*'."}]
+      """
+
+    Given a wp-content/mu-plugins/wp-doctor-exist-test.php file:
+      """
+      <?php
+      //wp-doctor-exists-test
+      """
+
+    When I run `wp doctor check file-content-exist --config=config.yml --format=json`
+    Then STDOUT should be JSON containing:
+      """
+      [{"name":"file-content-exist","status":"success","message":"1 'php' file passed check for '.*wp-doctor-exists-test.*'."}]
+      """
