@@ -17,7 +17,10 @@ class File_Contents extends File {
 	protected $regex;
 
 	/**
-	 * Variable that allows you to report a successful check return if the regex pattern is found.
+	 * Assert existence or absence of the regex pattern.
+	 *
+	 * Asserting existence of regex pattern requires match to be found. Asserting absense requires
+	 * match to not be found.
 	 *
 	 * @var bool
 	 */
