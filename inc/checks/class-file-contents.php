@@ -15,6 +15,12 @@ class File_Contents extends File {
 	 * @var string
 	 */
 	protected $regex;
+
+	/**
+	 * Variable that allows you to report a successful check return if the regex pattern is found.
+	 *
+	 * @var bool
+	 */
 	protected $exists = false;
 
 	public function run() {
@@ -22,28 +28,26 @@ class File_Contents extends File {
 		if ( isset( $this->regex ) ) {
 			if ( ! empty( $this->_matches ) ) {
 				//if matches are found
-				if ( $this->exists == true ) {
+				if ( true == $this->exists ) {
 					//$exists set to true so we should report true if something is found
 					$this->set_status( 'success' );
 					$count = count( $this->_matches );
-					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
+					$message = 1 === $count ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 					$this->set_message( "{$message} passed check for '{$this->regex}'." );
-				}else{
+				} else {
 					//$exists is not set to true so we should report error if something is found
 					$this->set_status( 'error' );
 					$count = count( $this->_matches );
-					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
+					$message = 1 === $count ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 					$this->set_message( "{$message} failed check for '{$this->regex}'." );
 				}
 			} else {
 				//No Matches Found
-				if ( $this->exists == true ) {
+				if ( true == $this->exists ) {
 					//$exists set to true so we should report error if regex is not found
 					$this->set_status( 'error' );
-					$count = count( $this->_matches );
-					$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
-					$this->set_message( "{$message} passed check for '{$this->regex}'." );
-				}else{
+					$this->set_message( "0 '{$this->extension}' files passed check for '{$this->regex}'." );
+				} else {
 					//$exists is not set to true so we should report success if regex is not found
 					$this->set_status( 'success' );
 					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );

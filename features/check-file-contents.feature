@@ -123,7 +123,7 @@ Feature: Check files in a WordPress install
     When I run `wp doctor check file-content-exist --config=config.yml --format=json`
     Then STDOUT should be JSON containing:
       """
-      [{"name":"file-content-exist","status":"error","message":"0 'php' files failed check for '.*wp-doctor-exists-test.*'."}]
+      [{"name":"file-content-exist","status":"error","message":"0 'php' files passed check for '.*wp-doctor-exists-test.*'."}]
       """
 
     Given a wp-content/mu-plugins/wp-doctor-exist-test.php file:
