@@ -3,6 +3,7 @@ Feature: Basic check usage
   Scenario: Use --spotlight to focus on warnings and errors
     Given a WP install
     And I run `wp plugin activate --all`
+    And I run `wp plugin update --all`
 
     When I run `wp doctor list --format=count`
     Then save STDOUT as {CHECK_COUNT}
