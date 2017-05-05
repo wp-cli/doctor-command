@@ -10,8 +10,10 @@ use \WP_CLI;
 use \WP_CLI\Dispatcher;
 use \WP_CLI\Iterators\Transform;
 
+const PHAR_STREAM_PREFIX = 'phar://';
+
 function inside_phar() {
-	return 0 === strpos( WP_CLI_ROOT, 'phar://' );
+	return 0 === strpos( WP_CLI_ROOT, PHAR_STREAM_PREFIX );
 }
 
 // Files that need to be read by external programs have to be extracted from the Phar archive.
@@ -84,19 +86,6 @@ function load_command( $name ) {
 
 	if ( is_readable( $path ) ) {
 		include_once $path;
-	}
-}
-
-function load_all_commands() {
-	$cmd_dir = WP_CLI_ROOT . '/php/commands';
-
-	$iterator = new \DirectoryIterator( $cmd_dir );
-
-	foreach ( $iterator as $filename ) {
-		if ( '.php' != substr( $filename, -4 ) )
-			continue;
-
-		include_once "$cmd_dir/$filename";
 	}
 }
 
@@ -197,10 +186,15 @@ function assoc_args_to_str( $assoc_args ) {
 	$str = '';
 
 	foreach ( $assoc_args as $key => $value ) {
-		if ( true === $value )
+		if ( true === $value ) {
 			$str .= " --$key";
-		else
+		} elseif( is_array( $value ) ) {
+			foreach( $value as $_ => $v ) {
+				$str .= assoc_args_to_str( array( $key => $v ) );
+			}
+		} else {
 			$str .= " --$key=" . escapeshellarg( $value );
+		}
 	}
 
 	return $str;
@@ -453,6 +447,19 @@ function run_mysql_command( $cmd, $assoc_args, $descriptors = null ) {
  * IMPORTANT: Automatic HTML escaping is disabled!
  */
 function mustache_render( $template_name, $data = array() ) {
+	// Transform absolute path to relative path inside of Phar
+	if ( inside_phar() && 0 === stripos( $template_name, PHAR_STREAM_PREFIX ) ) {
+		$search = '';
+		$replace = '';
+		if ( file_exists( WP_CLI_ROOT . '/vendor/autoload.php' ) ) {
+			$search = dirname( __DIR__ );
+			$replace = WP_CLI_ROOT;
+		} elseif ( file_exists( dirname( dirname( WP_CLI_ROOT ) ) . '/autoload.php' ) ) {
+			$search = dirname( dirname( dirname( __DIR__ ) ) );
+			$replace = dirname( dirname( dirname( WP_CLI_ROOT ) ) );
+		}
+		$template_name = str_replace( $search, $replace, $template_name );
+	}
 	if ( ! file_exists( $template_name ) )
 		$template_name = WP_CLI_ROOT . "/templates/$template_name";
 
@@ -839,4 +846,81 @@ function parse_str_to_argv( $arguments ) {
  */
 function basename( $path, $suffix = '' ) {
 	return urldecode( \basename( str_replace( array( '%2F', '%5C' ), '/', urlencode( $path ) ), $suffix ) );
+}
+
+/**
+ * Checks whether the output of the current script is a TTY or a pipe / redirect
+ *
+ * Returns true if STDOUT output is being redirected to a pipe or a file; false is
+ * output is being sent directly to the terminal.
+ *
+ * If an env variable SHELL_PIPE exists, returned result depends it's
+ * value. Strings like 1, 0, yes, no, that validate to booleans are accepted.
+ *
+ * To enable ASCII formatting even when shell is piped, use the
+ * ENV variable SHELL_PIPE=0
+ *
+ * @access public
+ *
+ * @return bool
+ */
+function isPiped() {
+	$shellPipe = getenv('SHELL_PIPE');
+
+	if ($shellPipe !== false) {
+		return filter_var($shellPipe, FILTER_VALIDATE_BOOLEAN);
+	} else {
+		return (function_exists('posix_isatty') && !posix_isatty(STDOUT));
+	}
+}
+
+/**
+ * Expand within paths to their matching paths.
+ *
+ * Has no effect on paths which do not use glob patterns.
+ *
+ * @param string|array $paths Single path as a string, or an array of paths.
+ * @param int          $flags Flags to pass to glob.
+ *
+ * @return array Expanded paths.
+ */
+function expand_globs( $paths, $flags = GLOB_BRACE ) {
+	$expanded = array();
+
+	foreach ( (array) $paths as $path ) {
+		$matching = array( $path );
+
+		if ( preg_match( '/[' . preg_quote( '*?[]{}!', '/' ) . ']/', $path ) ) {
+			$matching = glob( $path, $flags ) ?: array();
+		}
+
+		$expanded = array_merge( $expanded, $matching );
+	}
+
+	return array_unique( $expanded );
+}
+
+/**
+ * Get a Phar-safe version of a path.
+ *
+ * For paths inside a Phar, this strips the outer filesystem's location to
+ * reduce the path to what it needs to be within the Phar archive.
+ *
+ * Use the __FILE__ or __DIR__ constants as a starting point.
+ *
+ * @param string $path An absolute path that might be within a Phar.
+ *
+ * @return string A Phar-safe version of the path.
+ */
+function phar_safe_path( $path ) {
+
+	if ( ! inside_phar() ) {
+		return $path;
+	}
+
+	return str_replace(
+		PHAR_STREAM_PREFIX . WP_CLI_PHAR_PATH . '/',
+		PHAR_STREAM_PREFIX,
+		$path
+	);
 }

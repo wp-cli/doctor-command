@@ -29,7 +29,7 @@ class Checks {
 			WP_CLI::error( 'Invalid configuration file.' );
 		}
 
-		$check_data = spyc_load_file( $file );
+		$check_data = \Mustangostang\Spyc::YAMLLoad( file_get_contents( $file ) );
 
 		if ( ! empty( $check_data['_']['inherit'] ) ) {
 			$inherited = $check_data['_']['inherit'];

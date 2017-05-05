@@ -10,6 +10,7 @@ Feature: Check whether plugins are up to date
 
   Scenario: Plugins are up to date
     Given a WP install
+    And I run `wp plugin update --all`
 
     When I run `wp doctor check plugin-update`
     Then STDOUT should be a table containing rows:
