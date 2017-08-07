@@ -34,4 +34,4 @@ Feature: Check whether WordPress is up to date
     When I run `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                             |
-      | core-update   | warning | A new major version of WordPress is available for update. |
+      | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
