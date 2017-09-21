@@ -3,7 +3,7 @@ Feature: Check if wp_cache_flush() function is used inside wp-content directory
   Scenario: Detect wp_cache_flush()
     Given a WP install
       And a custom wp-content directory
-      And a single.php file:
+      And a Given a wp-content/plugins/sample.php file:
       """
       wp_cache_flush();
       """
