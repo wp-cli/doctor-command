@@ -10,5 +10,5 @@ Feature: Check if wp_cache_flush() function is used inside wp-content directory
 
     When I run `wp doctor check cache-flush`
     Then STDOUT should be a table containing rows:
-      | name        | status  | message                                 |
-      | cache-flush | success | 1 occurrence of wp_cache_flush() found. |
+      | name        | status  | message                                    |
+      | cache-flush | success | 1 occurrence of wp_cache_flush() detected. |
