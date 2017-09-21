@@ -13,4 +13,4 @@ Feature: Check if wp_cache_flush() function is used inside wp-content directory
       """
       | name        | status  | message                                 |
       | cache-flush | success | 1 occurrence of wp_cache_flush() found. |
-    """
+      """
