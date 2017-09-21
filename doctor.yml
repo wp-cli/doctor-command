@@ -36,3 +36,5 @@ plugin-update:
   check: Plugin_Update
 theme-update:
   check: Theme_Update
+cache-flush:
+  check: Cache_Flush
