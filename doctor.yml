@@ -36,3 +36,5 @@ plugin-update:
   check: Plugin_Update
 theme-update:
   check: Theme_Update
+php-in-upload:
+  check: PHP_In_Upload
