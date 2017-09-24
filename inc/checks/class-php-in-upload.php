@@ -21,8 +21,8 @@ class PHP_In_Upload extends Check {
 	public function run() {
 
 		// Path to the uploads folder.
-		$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR . '/uploads/' : ABSPATH . 'wp-content/uploads/';
-		$directory = new RecursiveDirectoryIterator( $wp_content_dir, RecursiveDirectoryIterator::SKIP_DOTS );
+		$wp_content_dir = wp_upload_dir();
+		$directory = new RecursiveDirectoryIterator( $wp_content_dir['basedir'], RecursiveDirectoryIterator::SKIP_DOTS );
 		$iterator = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 
 		foreach ( $iterator as $file ) {
@@ -32,11 +32,11 @@ class PHP_In_Upload extends Check {
 		}
 
 		if ( ! empty( $this->php_files_array ) ) {
-			$this->set_status( 'success' );
-			$this->set_message( 'PHP files detected.' );
+			$this->set_status( 'warning' );
+			$this->set_message( 'PHP files detected in the Uploads folder.' );
 		} else {
 			$this->set_status( 'success' );
-			$this->set_message( 'No PHP files found.' );
+			$this->set_message( 'No PHP files found in the Uploads folder.' );
 		}
 	}
 }
