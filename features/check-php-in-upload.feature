@@ -10,4 +10,4 @@ Feature: Check for presence of .php files in the uploads folder
     When I run `wp doctor check php-in-upload`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
-      | php-in-upload | success | PHP files detected in the Uploads folder. |
+      | php-in-upload | warning | PHP files detected in the Uploads folder. |
