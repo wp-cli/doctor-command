@@ -38,3 +38,5 @@ theme-update:
   check: Theme_Update
 php-in-upload:
   check: PHP_In_Upload
+validate-mime:
+  check: Validate_Mime
