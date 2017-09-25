@@ -1270,9 +1270,10 @@ class Validate_Mime extends Check {
 		if ( ! empty( $this->php_files_array ) ) {
 			$this->set_status( 'warning' );
 			$this->set_message( 'Files detected with different MIME type.' );
-		} else {
-			$this->set_status( 'success' );
-			$this->set_message( 'All files have valid MIMEs' );
+			return;
 		}
+
+		$this->set_status( 'success' );
+		$this->set_message( 'All files have valid MIMEs' );
 	}
 }
