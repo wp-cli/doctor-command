@@ -13,10 +13,10 @@ class Language_Update extends Check {
 		ob_start();
 		WP_CLI::run_command( array( 'language', 'core', 'list' ), array( 'format' => 'json' ) );
 		$ret = ob_get_clean();
-		$themes = ! empty( $ret ) ? json_decode( $ret, true ) : array();
+		$languages = ! empty( $ret ) ? json_decode( $ret, true ) : array();
 		$update_count = 0;
-		foreach ( $themes as $theme ) {
-			if ( 'available' === $theme['update'] ) {
+		foreach ( $languages as $language ) {
+			if ( 'available' === $language['update'] ) {
 				$update_count++;
 			}
 		}
