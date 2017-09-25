@@ -10,26 +10,36 @@ use WP_CLI;
 class Language_Update extends Check {
 
 	public function run() {
-		ob_start();
-		WP_CLI::run_command( array( 'language', 'core', 'list' ), array( 'format' => 'json' ) );
-		$ret = ob_get_clean();
-		$languages = ! empty( $ret ) ? json_decode( $ret, true ) : array();
-		$update_count = 0;
-		foreach ( $languages as $language ) {
-			if ( 'available' === $language['update'] ) {
-				$update_count++;
-			}
-		}
 
-		if ( 1 === $update_count ) {
-			$this->set_status( 'warning' );
-			$this->set_message( '1 language has an update available.' );
-		} else if ( $update_count ) {
-			$this->set_status( 'warning' );
-			$this->set_message( "{$update_count} languages have updates available." );
-		} else {
+		// Runs the `wp language core list --format=json` command and returns the output in JSON format.
+		$languages = WP_CLI::runcommand(
+			'language core list --format=json',
+			array(
+				'return' => true,
+				'parse'  => 'json',
+				'launch' => false,
+			)
+		);
+
+		// Returns the count of each value that the key 'update' is mapped to.
+		$counts       = array_count_values( array_column( $languages, 'update' ) );
+
+		// Returns the count of 'update' of type 'available'.
+		$update_count = array_key_exists( 'available', $counts ) ? $counts['available'] : 0;
+
+		// If there are no updates available.
+		if ( ! $update_count ) {
 			$this->set_status( 'success' );
 			$this->set_message( 'Languages are up to date.' );
+			return;
 		}
+
+		// Singular/Plural message depending on $update_count.
+		$message = ( 1 === $update_count )
+		? '1 language has an update available.'
+		: "{$update_count} languages have updates available.";
+
+		$this->set_status( 'warning' );
+		$this->set_message( $message );
 	}
 }
