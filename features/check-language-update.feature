@@ -13,8 +13,8 @@ Feature: Check whether languages are up to date
 
     When I run `wp doctor check language-update`
     Then STDOUT should be a table containing rows:
-      | name         | status  | message                   |
-      | theme-update | success | Languages are up to date. |
+      | name            | status  | message                   |
+      | language-update | success | Languages are up to date. |
 
   Scenario: One language has an update available
     Given a WP install
@@ -39,5 +39,5 @@ Feature: Check whether languages are up to date
 
       When I run `wp doctor check language-update`
       Then STDOUT should be a table containing rows:
-        | name         | status  | message                             |
-        | theme-update | warning | 1 language has an update available. |
+        | name            | status  | message                             |
+        | language-update | warning | 1 language has an update available. |
