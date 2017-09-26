@@ -38,3 +38,5 @@ theme-update:
   check: Theme_Update
 cache-flush:
   check: Cache_Flush
+php-in-upload:
+  check: PHP_In_Upload
