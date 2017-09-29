@@ -40,3 +40,5 @@ php-in-upload:
   check: PHP_In_Upload
 validate-mime:
   check: Validate_Mime
+language-update:
+  check: Language_Update
