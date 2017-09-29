@@ -4,6 +4,8 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 	return;
 }
 
+require 'vendor/autoload.php';
+
 spl_autoload_register( function( $class ) {
 	$class = ltrim( $class, '\\' );
 	if ( 0 !== stripos( $class, 'runcommand\\Doctor\\' ) ) {
