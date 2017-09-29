@@ -7,7 +7,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 /**
- * Errors when new WordPress minor release is available; warns for major release.
+ * Warns when a PHP file is present in the Uploads folder.
  */
 class PHP_In_Upload extends Check {
 
