@@ -4,7 +4,10 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 	return;
 }
 
-require 'vendor/autoload.php';
+$autoload = dirname( __FILE__ ) . '/vendor/autoload.php';
+if ( file_exists( $autoload ) ) {
+	require_once $autoload;
+}
 
 spl_autoload_register( function( $class ) {
 	$class = ltrim( $class, '\\' );
