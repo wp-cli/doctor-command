@@ -4,6 +4,11 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 	return;
 }
 
+$autoload = dirname( __FILE__ ) . '/vendor/autoload.php';
+if ( file_exists( $autoload ) ) {
+	require_once $autoload;
+}
+
 spl_autoload_register( function( $class ) {
 	$class = ltrim( $class, '\\' );
 	if ( 0 !== stripos( $class, 'runcommand\\Doctor\\' ) ) {
