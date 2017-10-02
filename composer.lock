@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "70743b1c15cec88f585dcc0c66eefabb",
+    "content-hash": "65274d4b5141a301388b8c29bb0fefa3",
     "packages": [
         {
             "name": "brightnucleus/mime-types",
-            "version": "v0.1.1",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brightnucleus/mime-types.git",
-                "reference": "3fc00de9f3a79a66c450180ce612f360313716ed"
+                "reference": "2c345401ef3697af19adfcab7c0ac168ce911866"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brightnucleus/mime-types/zipball/3fc00de9f3a79a66c450180ce612f360313716ed",
-                "reference": "3fc00de9f3a79a66c450180ce612f360313716ed",
+                "url": "https://api.github.com/repos/brightnucleus/mime-types/zipball/2c345401ef3697af19adfcab7c0ac168ce911866",
+                "reference": "2c345401ef3697af19adfcab7c0ac168ce911866",
                 "shasum": ""
             },
             "require": {
@@ -44,7 +44,7 @@
                 }
             ],
             "description": "Automatically updated MIME types database, using the Apache HTTP Server configuration.",
-            "time": "2017-09-26T09:27:50+00:00"
+            "time": "2017-10-02T07:00:43+00:00"
         },
         {
             "name": "composer/ca-bundle",
