@@ -18,7 +18,7 @@
     },
     "require": {
         "wp-cli/wp-cli": "*",
-        "brightnucleus/mime-types": "^0.1.1"
+        "brightnucleus/mime-types": "^0.2.0"
     },
     "require-dev": {
         "behat/behat": "~2.5"
