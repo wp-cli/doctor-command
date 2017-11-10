@@ -32,7 +32,8 @@ Feature: Check whether plugins are up to date
       """
       plugin-update:
         check: Plugin_Update
-        status_for_failure: error
+        options:
+          status_for_failure: error
       """
     And I run `wp plugin install akismet --version=3.1.10 --force`
 
