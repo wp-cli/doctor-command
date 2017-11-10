@@ -26,7 +26,8 @@ Feature: Check total number of cron entries
       }
       """
 
-    When I run `wp doctor check cron-count`
+    When I try `wp doctor check cron-count`
     Then STDOUT should be a table containing rows:
       | name            | status  | message                                                 |
       | cron-count      | error   | Total number of cron jobs exceeds expected threshold.   |
+    And the return code should be 1

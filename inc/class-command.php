@@ -187,6 +187,19 @@ class Command {
 
 		$formatter = new Formatter( $assoc_args, array( 'name', 'status', 'message' ) );
 		$formatter->display_items( $results );
+
+		$results_with_error = array_filter( $results, function( $check ){
+			return 'error' === $check['status'];
+		});
+		if ( ! empty( $results_with_error ) ) {
+			if ( 'table' === $assoc_args['format'] ) {
+				$check_count = count( $results_with_error );
+				$message = 1 === $check_count ? "1 check reports 'error'." : "${check_count} checks report 'error'.";
+				WP_CLI::error( $message );
+			} else {
+				exit( 1 );
+			}
+		}
 	}
 
 	/**

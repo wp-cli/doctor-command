@@ -21,17 +21,19 @@ Feature: Check whether WordPress is up to date
     And I run `wp core download --version=4.5.1 --force`
     And I run `wp theme activate twentyfifteen`
 
-    When I run `wp doctor check core-update`
+    When I try `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
+    And the return code should be 1
 
   Scenario: WordPress has a new major version but no new minor version
     Given a WP install
     And I run `wp core download --version=4.4.9 --force`
     And I run `wp theme activate twentyfifteen`
 
-    When I run `wp doctor check core-update`
+    When I try `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                             |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
+    And the return code should be 1
