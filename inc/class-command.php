@@ -197,7 +197,7 @@ class Command {
 				$message = 1 === $check_count ? "1 check reports 'error'." : "${check_count} checks report 'error'.";
 				WP_CLI::error( $message );
 			} else {
-				exit( 1 );
+				WP_CLI::halt( 1 );
 			}
 		}
 	}
