@@ -32,20 +32,22 @@ Feature: Check the status of a plugin
           status: uninstalled
       """
 
-    When I run `wp doctor check --all --config=config.yml`
+    When I try `wp doctor check --all --config=config.yml`
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                                      |
       | plugin-akismet-active | error   | Plugin 'akismet' is 'inactive' but expected to be 'active'.  |
       | plugin-hello-uninstalled | error   | Plugin 'hello' is 'inactive' but expected to be 'uninstalled'. |
+    And the return code should be 1
 
     When I run `wp plugin activate akismet`
     Then STDOUT should not be empty
 
-    When I run `wp doctor check --all --config=config.yml`
+    When I try `wp doctor check --all --config=config.yml`
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                                      |
       | plugin-akismet-active | success   | Plugin 'akismet' is 'active' as expected.                  |
       | plugin-hello-uninstalled | error   | Plugin 'hello' is 'inactive' but expected to be 'uninstalled'. |
+    And the return code should be 1
 
     When I run `wp plugin delete hello`
     Then STDOUT should not be empty

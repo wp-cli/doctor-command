@@ -33,10 +33,11 @@ Feature: Check the value of a given option
       Success:
       """
 
-    When I run `wp doctor check --config=blog-private.yml option-blog-private`
+    When I try `wp doctor check --config=blog-private.yml option-blog-private`
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                    |
       | option-blog-private   | error   | Site is public but expected to be private. |
+    And the return code should be 1
 
     When I run `wp doctor check --config=blog-public.yml option-blog-public`
     Then STDOUT should be a table containing rows:
@@ -49,10 +50,11 @@ Feature: Check the value of a given option
       Success:
       """
 
-    When I run `wp doctor check --config=blog-public.yml option-blog-public`
+    When I try `wp doctor check --config=blog-public.yml option-blog-public`
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                    |
       | option-blog-public    | error   | Site is private but expected to be public. |
+    And the return code should be 1
 
     When I run `wp doctor check --config=blog-private.yml option-blog-private`
     Then STDOUT should be a table containing rows:
@@ -70,10 +72,11 @@ Feature: Check the value of a given option
           value: foo@example.org
       """
 
-    When I run `wp doctor check --config=config.yml option-admin-email`
+    When I try `wp doctor check --config=config.yml option-admin-email`
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                                                           |
       | option-admin-email    | error   | Option 'admin_email' is 'admin@example.com' but expected to be 'foo@example.org'. |
+    And the return code should be 1
 
     When I run `wp option update admin_email foo@example.org`
     Then STDOUT should contain:
@@ -98,10 +101,11 @@ Feature: Check the value of a given option
       """
     And I run `wp option update users_can_register 1`
 
-    When I run `wp doctor check --config=config.yml option-users-can-register`
+    When I try `wp doctor check --config=config.yml option-users-can-register`
     Then STDOUT should be a table containing rows:
       | name                      | status  | message                                                    |
       | option-users-can-register | error   | Option 'users_can_register' is '1' but expected to be '0'. |
+    And the return code should be 1
 
     When I run `wp option update users_can_register 0`
     Then STDOUT should contain:
