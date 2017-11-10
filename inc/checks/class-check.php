@@ -23,6 +23,15 @@ abstract class Check {
 	protected $_status = 'incomplete';
 
 	/**
+	 * A user-definable status to return if the check fails.
+	 *
+	 * Can be one of 'success', 'warning', 'error'.
+	 *
+	 * @var string
+	 */
+	protected $status_for_failure = 'error';
+
+	/**
 	 * Message of this check after being run.
 	 *
 	 * @var integer
@@ -69,6 +78,13 @@ abstract class Check {
 	 */
 	protected function set_status( $status ) {
 		$this->_status = $status;
+	}
+
+	/**
+	 * Set the status of the check for a failure.
+	 */
+	protected function set_status_for_failure() {
+		$this->_status = $this->status_for_failure;
 	}
 
 	/**
