@@ -47,6 +47,7 @@ class Command {
 	 *   - json
 	 *   - csv
 	 *   - yaml
+	 *   - count
 	 * ---
 	 *
 	 * ## EXAMPLES
