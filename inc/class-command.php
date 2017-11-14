@@ -20,8 +20,9 @@ class Command {
 	 * ## OPTIONS
 	 *
 	 * A check is a routine run against some scope of WordPress that reports
-	 * a 'status' and a 'message'. The status can be 'success', 'warning', or
-	 * 'error'. The message is a human-readable explanation of the status.
+	 * a 'status', 'message' and a 'recommendation'. The status can be 'success',
+	 * 'warning', or 'error'. The message is a human-readable explanation of the
+	 * status.
 	 *
 	 * [<checks>...]
 	 * : Names of one or more checks to run.

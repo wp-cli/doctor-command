@@ -25,3 +25,12 @@ Feature: Check whether plugins are up to date
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                 |
       | plugin-update | warning | 1 plugin has an update available.       |
+
+  Scenario: One plugin has an update available with recommendation field
+    Given a WP install
+    And I run `wp plugin install akismet --version=3.1.10 --force`
+
+    When I run `wp doctor check --fields=name,status,message,recommendation plugin-update`
+    Then STDOUT should be a table containing rows:
+      | name          | status  | message                                 | recommendation  |
+      | plugin-update | warning | 1 plugin has an update available.       | Update the akismet plugin. |
