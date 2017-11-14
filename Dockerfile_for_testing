@@ -1,0 +1,34 @@
+FROM ubuntu:16.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    mysql-server \
+    php7.0 \
+	php7.0-curl \
+    php7.0-cli \
+    php7.0-xml \
+    php7.0-mysql \
+    curl \
+    git \
+    zip \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sS https://getcomposer.org/installer -o composer_installer && \
+    php composer_installer --install-dir=/usr/local/bin --filename=composer && \
+    rm composer_installer
+
+RUN mkdir /repo
+COPY composer.json /repo
+
+WORKDIR /repo
+RUN composer require wp-cli/wp-cli:dev-master && composer install
+ENV PATH="/repo/vendor/bin:${PATH}"
+
+COPY . /repo
+
+RUN service mysql start && bash bin/install-package-tests.sh
+
+RUN useradd -u 9000 app
+CMD service mysql start && su - app -c "export PATH=/repo/vendor/bin:${PATH} && cd /repo && bash bin/test.sh"
