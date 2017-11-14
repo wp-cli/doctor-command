@@ -17,8 +17,7 @@
         "files": [ "command.php" ]
     },
     "require": {
-        "wp-cli/wp-cli": "*",
-        "brightnucleus/mime-types": "^0.2.0"
+        "wp-cli/wp-cli": "*"
     },
     "require-dev": {
         "behat/behat": "~2.5"
