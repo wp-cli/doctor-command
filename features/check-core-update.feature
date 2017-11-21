@@ -25,7 +25,7 @@ Feature: Check whether WordPress is up to date
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
@@ -40,7 +40,7 @@ Feature: Check whether WordPress is up to date
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                             |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """

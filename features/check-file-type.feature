@@ -26,7 +26,7 @@ Feature: Check the type of file
     Then STDOUT should be a table containing rows:
       | name                      | status    | message                                                       |
       | file-object-cache-symlink | error     | 1 'php' file failed assertion that symlink is 'false'.        |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
@@ -52,7 +52,7 @@ Feature: Check the type of file
     Then STDOUT should be a table containing rows:
       | name                      | status    | message                                                       |
       | file-object-cache-symlink | error     | 1 'php' file failed assertion that symlink is 'true'.         |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """

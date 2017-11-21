@@ -37,7 +37,7 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                    |
       | option-blog-private   | error   | Site is public but expected to be private. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
@@ -58,7 +58,7 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                    |
       | option-blog-public    | error   | Site is private but expected to be public. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
@@ -84,7 +84,7 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                                                           |
       | option-admin-email    | error   | Option 'admin_email' is 'admin@example.com' but expected to be 'foo@example.org'. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
@@ -117,7 +117,7 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                      | status  | message                                                    |
       | option-users-can-register | error   | Option 'users_can_register' is '1' but expected to be '0'. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """

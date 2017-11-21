@@ -30,7 +30,7 @@ Feature: Check total number of cron entries
     Then STDOUT should be a table containing rows:
       | name            | status  | message                                                 |
       | cron-count      | error   | Total number of cron jobs exceeds expected threshold.   |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
