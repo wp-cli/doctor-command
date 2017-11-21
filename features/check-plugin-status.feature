@@ -37,7 +37,7 @@ Feature: Check the status of a plugin
       | name                  | status  | message                                                      |
       | plugin-akismet-active | error   | Plugin 'akismet' is 'inactive' but expected to be 'active'.  |
       | plugin-hello-uninstalled | error   | Plugin 'hello' is 'inactive' but expected to be 'uninstalled'. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 2 checks report 'error'.
       """
@@ -51,7 +51,7 @@ Feature: Check the status of a plugin
       | name                  | status  | message                                                      |
       | plugin-akismet-active | success   | Plugin 'akismet' is 'active' as expected.                  |
       | plugin-hello-uninstalled | error   | Plugin 'hello' is 'inactive' but expected to be 'uninstalled'. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """

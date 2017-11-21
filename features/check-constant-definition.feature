@@ -26,7 +26,7 @@ Feature: Check the values of defined constants
     Then STDOUT should be a table containing rows:
       | name                       | status  | message                                    |
       | constant-wp-debug-falsy    | error   | Constant 'WP_DEBUG' is defined 'true' but expected to be falsy.  |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
@@ -60,7 +60,7 @@ Feature: Check the values of defined constants
     Then STDOUT should be a table containing rows:
       | name                        | status  | message                                                    |
       | constant-savequeries-falsy  | error   | Constant 'SAVEQUERIES' is defined 'true' but expected to be falsy. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
@@ -97,7 +97,7 @@ Feature: Check the values of defined constants
     Then STDOUT should be a table containing rows:
       | name                 | status  | message                                                   |
       | constant-foobar-true | error   | Constant 'FOOBAR' is undefined but expected to be 'true'. |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """

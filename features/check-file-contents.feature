@@ -26,7 +26,7 @@ Feature: Check files in a WordPress install
     Then STDOUT should be a table containing rows:
       | name          | status    | message                                                      |
       | file-eval     | error     | 1 'php' file failed check for 'eval\(.*base64_decode\(.*'.   |
-    And STDERR should be:
+    And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
