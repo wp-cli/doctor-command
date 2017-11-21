@@ -26,4 +26,8 @@ Feature: Check whether WordPress core verifies against its checksums
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                         |
       | core-verify-checksums | error   | WordPress doesn't verify against its checksums. |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1

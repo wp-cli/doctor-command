@@ -37,6 +37,10 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                    |
       | option-blog-private   | error   | Site is public but expected to be private. |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1
 
     When I run `wp doctor check --config=blog-public.yml option-blog-public`
@@ -54,6 +58,10 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                    |
       | option-blog-public    | error   | Site is private but expected to be public. |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1
 
     When I run `wp doctor check --config=blog-private.yml option-blog-private`
@@ -76,6 +84,10 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                                                           |
       | option-admin-email    | error   | Option 'admin_email' is 'admin@example.com' but expected to be 'foo@example.org'. |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1
 
     When I run `wp option update admin_email foo@example.org`
@@ -105,6 +117,10 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                      | status  | message                                                    |
       | option-users-can-register | error   | Option 'users_can_register' is '1' but expected to be '0'. |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1
 
     When I run `wp option update users_can_register 0`

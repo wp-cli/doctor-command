@@ -209,6 +209,10 @@ Feature: Configure the Doctor
     Then STDOUT should be a table containing rows:
       | name                         | status       | message              |
       | plugin-akismet-valid-api-key | error        | API key is missing.  |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1
 
   Scenario: 'require' attribute fails successfully when the file doesn't exist
