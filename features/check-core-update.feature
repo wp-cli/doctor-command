@@ -25,6 +25,10 @@ Feature: Check whether WordPress is up to date
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1
 
   Scenario: WordPress has a new major version but no new minor version
@@ -36,4 +40,8 @@ Feature: Check whether WordPress is up to date
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                             |
       | core-update   | error   | Updating to WordPress' newest minor version is strongly recommended. |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
     And the return code should be 1
