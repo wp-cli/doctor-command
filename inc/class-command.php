@@ -189,7 +189,7 @@ class Command {
 		$results_with_error = array_filter( $results, function( $check ){
 			return 'error' === $check['status'];
 		});
-		$should_error = ! empty( $results_with_error );
+		$should_error = !empty( $results_with_error );
 		if ( $should_error && 'table' === $assoc_args['format'] ) {
 			$check_count = count( $results_with_error );
 			$error_message = 1 === $check_count ? "1 check reports 'error'." : "${check_count} checks report 'error'.";
