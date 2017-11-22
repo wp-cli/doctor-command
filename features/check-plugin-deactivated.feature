@@ -22,10 +22,10 @@ Feature: Check whether a high percentage of plugins are deactivated
     Given a WP install
     And I run `wp plugin install user-switching rewrite-rules-inspector`
 
-    When I run `wp doctor check plugin-deactivated`
+    When I run `wp doctor check plugin-deactivated --fields=name,status,message,recommendation_message,recommendation_command`
     Then STDOUT should be a table containing rows:
-      | name               | status  | message                                          |
-      | plugin-deactivated | warning | Greater than 40 percent of plugins are deactivated. |
+      | name               | status  | message                                          | recommendation_message | recommendation_command |
+      | plugin-deactivated | warning | Greater than 40 percent of plugins are deactivated. | Activate or delete the following plugins: user-switching, rewrite-rules-inspector | |
 
   Scenario: Custom percentage of deactivated plugins
     Given a WP install
