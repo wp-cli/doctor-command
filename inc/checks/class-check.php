@@ -25,7 +25,7 @@ abstract class Check {
 	/**
 	 * Message of this check after being run.
 	 *
-	 * @var integer
+	 * @var string
 	 */
 	protected $_message = '';
 

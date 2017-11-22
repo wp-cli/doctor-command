@@ -23,15 +23,39 @@ class Option_Value extends Check {
 	 */
 	protected $value;
 
+	/**
+	 * Value that the option is expected not to be.
+	 *
+	 * @var mixed
+	 */
+	protected $value_is_not;
+
 	public function run() {
 
+		if ( isset( $this->value ) && isset( $this->value_is_not ) ) {
+			$this->set_status( 'error' );
+			$this->set_message( 'You must use either "value" or "value_is_not".' );
+			return;
+		}
+
 		$actual_value = get_option( $this->option );
-		if ( $actual_value == $this->value ) {
-			$status = 'success';
-			$message = "Option '{$this->option}' is '{$this->value}' as expected.";
-		} else {
-			$status = 'error';
-			$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->value}'.";
+
+		if ( isset( $this->value ) ) {
+			if ( $actual_value == $this->value ) {
+				$status = 'success';
+				$message = "Option '{$this->option}' is '{$this->value}' as expected.";
+			} else {
+				$status = 'error';
+				$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->value}'.";
+			}
+		} else if ( isset ( $this->value_is_not ) ) {
+			if ( $actual_value == $this->value_is_not ) {
+				$status = 'error';
+				$message = "Option '{$this->option}' is '{$actual_value}' and expected not to be.";
+			} else {
+				$status = 'success';
+				$message = "Option '{$this->option}' is not '{$this->value_is_not}' as expected.";
+			}
 		}
 
 		$this->set_status( $status );
