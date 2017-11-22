@@ -17,12 +17,12 @@ class Command {
 	/**
 	 * Run a series of checks against WordPress to diagnose issues.
 	 *
-	 * ## OPTIONS
-	 *
 	 * A check is a routine run against some scope of WordPress that reports
 	 * a 'status' and a 'message'. The status can be 'success', 'warning', or
 	 * 'error'. The message is a human-readable explanation of the status. If
 	 * any of the checks fail, then the command will exit with the code `1`.
+	 *
+	 * ## OPTIONS
 	 *
 	 * [<checks>...]
 	 * : Names of one or more checks to run.
@@ -48,6 +48,7 @@ class Command {
 	 *   - json
 	 *   - csv
 	 *   - yaml
+	 *   - count
 	 * ---
 	 *
 	 * ## EXAMPLES
