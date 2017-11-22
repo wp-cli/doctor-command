@@ -86,6 +86,34 @@ Feature: Check the value of a given option
       | name                  | status  | message                                                  |
       | option-admin-email    | success   | Option 'admin_email' is 'foo@example.org' as expected. |
 
+  Scenario: Check the value_is_not of admin_email
+    Given a WP install
+    And a config.yml file:
+      """
+      option-admin-email:
+        check: Option_Value
+        options:
+          option: admin_email
+          value_is_not: foo@example.org
+      """
+
+    When I run `wp doctor check --config=config.yml option-admin-email`
+    Then STDOUT should be a table containing rows:
+      | name                  | status  | message                                                                           |
+      | option-admin-email    | success | Option 'admin_email' is not 'foo@example.org' as expected. |
+
+    When I run `wp option update admin_email foo@example.org`
+    Then STDOUT should contain:
+      """
+      Success:
+      """
+
+    When I run `wp doctor check --config=config.yml option-admin-email`
+    Then STDOUT should be a table containing rows:
+      | name                  | status  | message                                                  |
+      | option-admin-email    | error   | Option 'admin_email' is 'foo@example.org' and expected not to be. |
+
+
   Scenario: Check the value of users_can_register
     Given a WP install
     And a config.yml file:
@@ -113,3 +141,20 @@ Feature: Check the value of a given option
     Then STDOUT should be a table containing rows:
       | name                      | status  | message                                         |
       | option-users-can-register | success | Option 'users_can_register' is '0' as expected. |
+
+  Scenario: Error if value and value_is_not are both used
+    Given a WP install
+    And a config.yml file:
+      """
+      option-users-can-register:
+        check: Option_Value
+        options:
+          option: users_can_register
+          value: 0
+          value_is_not: 1
+      """
+
+    When I run `wp doctor check --config=config.yml option-users-can-register`
+    Then STDOUT should be a table containing rows:
+      | name                      | status  | message                                        |
+      | option-users-can-register | error   | You must use either "value" or "value_is_not". |
