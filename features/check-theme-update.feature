@@ -16,11 +16,11 @@ Feature: Check whether themes are up to date
       | name          | status  | message                                 |
       | theme-update  | success | Themes are up to date.                  |
 
-  Scenario: One theme has an update available
+  Scenario: One theme has an update available with recommendations
     Given a WP install
     And I run `wp theme install p2 --version=1.5.1`
 
-    When I run `wp doctor check theme-update`
+    When I run `wp doctor check theme-update --fields=name,status,message,recommendation_message,recommendation_command`
     Then STDOUT should be a table containing rows:
-      | name          | status  | message                                 |
-      | theme-update  | warning | 1 theme has an update available.       |
+      | name          | status  | message                                | recommendation_message | recommendation_command |
+      | theme-update  | warning | 1 theme has an update available.       | Update the p2 theme.   | wp theme update p2     |
