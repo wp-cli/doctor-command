@@ -186,7 +186,7 @@ class Command {
 			}
 		}
 
-		$results_with_error = array_filter( $results, function( $check ){
+		$results_with_error = array_filter( $results, function( $check ) {
 			return 'error' === $check['status'];
 		});
 		$should_error = !empty( $results_with_error );
