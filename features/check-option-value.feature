@@ -123,10 +123,15 @@ Feature: Check the value of a given option
       Success:
       """
 
-    When I run `wp doctor check --config=config.yml option-admin-email`
+    When I try `wp doctor check --config=config.yml option-admin-email`
     Then STDOUT should be a table containing rows:
       | name                  | status  | message                                                  |
       | option-admin-email    | error   | Option 'admin_email' is 'foo@example.org' and expected not to be. |
+    And STDERR should contain:
+      """
+      Error: 1 check reports 'error'.
+      """
+    And the return code should be 1
 
 
   Scenario: Check the value of users_can_register
@@ -174,7 +179,12 @@ Feature: Check the value of a given option
           value_is_not: 1
       """
 
-    When I run `wp doctor check --config=config.yml option-users-can-register`
+    When I try `wp doctor check --config=config.yml option-users-can-register`
     Then STDOUT should be a table containing rows:
       | name                      | status  | message                                        |
       | option-users-can-register | error   | You must use either "value" or "value_is_not". |
+    And STDERR should contain:
+      """
+      Error: 1 check reports 'error'.
+      """
+    And the return code should be 1
