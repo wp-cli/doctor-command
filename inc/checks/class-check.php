@@ -30,6 +30,13 @@ abstract class Check {
 	protected $_message = '';
 
 	/**
+	 * Recommendation of this check after being run.
+	 *
+	 * @var string
+	 */
+	protected $_recommendation = '';
+
+	/**
 	 * Initialize the check.
 	 */
 	public function __construct( $options = array() ) {
@@ -81,6 +88,15 @@ abstract class Check {
 	}
 
 	/**
+	 * Set the recommendation of the check.
+	 *
+	 * @param string $recommendation
+	 */
+	protected function set_recommendation( $recommendation ) {
+		$this->_recommendation = $recommendation;
+	}
+
+	/**
 	 * Run the check.
 	 *
 	 * Because each check checks for something different, this method must be
@@ -95,8 +111,9 @@ abstract class Check {
 	 */
 	public function get_results() {
 		return array(
-			'status'    => $this->_status,
-			'message'   => $this->_message,
+			'status'         => $this->_status,
+			'message'        => $this->_message,
+			'recommendation' => $this->_recommendation,
 		);
 	}
 
