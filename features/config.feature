@@ -205,10 +205,15 @@ Feature: Configure the Doctor
       """
     And I run `wp plugin activate akismet`
 
-    When I run `wp doctor check --all --config=config.yml`
+    When I try `wp doctor check --all --config=config.yml`
     Then STDOUT should be a table containing rows:
       | name                         | status       | message              |
       | plugin-akismet-valid-api-key | error        | API key is missing.  |
+    And STDERR should contain:
+      """
+      Error: 1 check reports 'error'.
+      """
+    And the return code should be 1
 
   Scenario: 'require' attribute fails successfully when the file doesn't exist
     Given a WP install
