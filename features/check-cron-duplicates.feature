@@ -37,8 +37,12 @@ Feature: Check for excess duplicate cron entries
       }
       """
 
-    When I run `wp doctor check cron-duplicates`
+    When I try `wp doctor check cron-duplicates`
     Then STDOUT should be a table containing rows:
       | name            | status  | message                                          |
       | cron-duplicates | error   | Detected 10 or more of the same cron job.        |
-    And STDERR should be empty
+    And STDERR should contain:
+      """
+      Error: 1 check reports 'error'.
+      """
+    And the return code should be 1

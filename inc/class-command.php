@@ -19,7 +19,8 @@ class Command {
 	 *
 	 * A check is a routine run against some scope of WordPress that reports
 	 * a 'status' and a 'message'. The status can be 'success', 'warning', or
-	 * 'error'. The message is a human-readable explanation of the status.
+	 * 'error'. The message is a human-readable explanation of the status. If
+	 * any of the checks fail, then the command will exit with the code `1`.
 	 *
 	 * ## OPTIONS
 	 *
@@ -186,8 +187,27 @@ class Command {
 			}
 		}
 
+		$results_with_error = array_filter( $results, function( $check ) {
+			return 'error' === $check['status'];
+		});
+		$should_error = !empty( $results_with_error );
+		if ( $should_error && 'table' === $assoc_args['format'] ) {
+			$check_count = count( $results_with_error );
+			$error_message = 1 === $check_count ? "1 check reports 'error'." : "${check_count} checks report 'error'.";
+		} else {
+			$error_message = null;
+		}
+
 		$formatter = new Formatter( $assoc_args, array( 'name', 'status', 'message' ) );
 		$formatter->display_items( $results );
+
+		if ( $should_error ) {
+			if ( $error_message ) {
+				WP_CLI::error( $error_message );
+			} else {
+				WP_CLI::halt( 1 );
+			}
+		}
 	}
 
 	/**
