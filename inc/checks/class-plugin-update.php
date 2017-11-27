@@ -9,6 +9,8 @@ use WP_CLI;
  */
 class Plugin_Update extends Plugin {
 
+	protected $status_for_failure = 'warning';
+
 	public function run() {
 		$plugins = self::get_plugins();
 		$update_count = 0;
@@ -19,10 +21,10 @@ class Plugin_Update extends Plugin {
 		}
 
 		if ( 1 === $update_count ) {
-			$this->set_status( 'warning' );
+			$this->set_status( $this->status_for_failure );
 			$this->set_message( "1 plugin has an update available." );
 		} else if ( $update_count ) {
-			$this->set_status( 'warning' );
+			$this->set_status( $this->status_for_failure );
 			$this->set_message( "{$update_count} plugins have updates available." );
 		} else {
 			$this->set_status( 'success' );
