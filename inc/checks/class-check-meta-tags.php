@@ -25,7 +25,7 @@ class Check_Meta_Tags extends Plugin {
 			$meta_tags = $this->getMetaTags( $body );
 
 		}
-		error_log( print_r( $meta_tags, true ) );
+
 		$this->set_status( 'success' );
 		$this->set_message( 'Meta tags checking initiated.' );
 
