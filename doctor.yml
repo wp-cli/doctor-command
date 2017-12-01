@@ -42,3 +42,5 @@ php-in-upload:
   check: PHP_In_Upload
 language-update:
   check: Language_Update
+meta-tags:
+  check: Check_Meta_Tags
