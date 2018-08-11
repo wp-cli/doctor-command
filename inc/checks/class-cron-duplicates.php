@@ -17,10 +17,10 @@ class Cron_Duplicates extends Cron {
 	protected $threshold_count = 10;
 
 	public function run() {
-		$crons = self::get_crons();
-		$job_counts = array();
+		$crons             = self::get_crons();
+		$job_counts        = array();
 		$excess_duplicates = false;
-		foreach( $crons as $job ) {
+		foreach ( $crons as $job ) {
 			if ( ! isset( $job_counts[ $job['hook'] ] ) ) {
 				$job_counts[ $job['hook'] ] = 0;
 			}
@@ -34,7 +34,7 @@ class Cron_Duplicates extends Cron {
 			$this->set_message( "Detected {$this->threshold_count} or more of the same cron job." );
 		} else {
 			$this->set_status( 'success' );
-			$this->set_message( "All cron job counts are within normal operating expectations." );
+			$this->set_message( 'All cron job counts are within normal operating expectations.' );
 		}
 	}
 

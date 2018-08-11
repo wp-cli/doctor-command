@@ -42,18 +42,18 @@ class Option_Value extends Check {
 
 		if ( isset( $this->value ) ) {
 			if ( $actual_value == $this->value ) {
-				$status = 'success';
+				$status  = 'success';
 				$message = "Option '{$this->option}' is '{$this->value}' as expected.";
 			} else {
-				$status = 'error';
+				$status  = 'error';
 				$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->value}'.";
 			}
-		} else if ( isset ( $this->value_is_not ) ) {
+		} elseif ( isset( $this->value_is_not ) ) {
 			if ( $actual_value == $this->value_is_not ) {
-				$status = 'error';
+				$status  = 'error';
 				$message = "Option '{$this->option}' is '{$actual_value}' and expected not to be.";
 			} else {
-				$status = 'success';
+				$status  = 'success';
 				$message = "Option '{$this->option}' is not '{$this->value_is_not}' as expected.";
 			}
 		}
@@ -64,7 +64,7 @@ class Option_Value extends Check {
 		// Message translation for options
 		switch ( $this->option ) {
 			case 'blog_public':
-				$public_actual = $actual_value ? 'public' : 'private';
+				$public_actual   = $actual_value ? 'public' : 'private';
 				$public_expected = 'public' === $public_actual ? 'private' : 'public';
 				if ( 'success' === $status ) {
 					$this->set_message( "Site is {$public_actual} as expected." );

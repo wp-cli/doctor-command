@@ -22,8 +22,8 @@ class PHP_In_Upload extends Check {
 
 		// Path to the uploads folder.
 		$wp_content_dir = wp_upload_dir();
-		$directory = new RecursiveDirectoryIterator( $wp_content_dir['basedir'], RecursiveDirectoryIterator::SKIP_DOTS );
-		$iterator = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
+		$directory      = new RecursiveDirectoryIterator( $wp_content_dir['basedir'], RecursiveDirectoryIterator::SKIP_DOTS );
+		$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 
 		foreach ( $iterator as $file ) {
 			if ( 'php' === $file->getExtension() ) {

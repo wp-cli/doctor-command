@@ -19,7 +19,7 @@ class Cache_Flush extends File_Contents {
 		$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 
 		// Regex to match.
-		$this->regex    = 'wp_cache_flush\(\)';
+		$this->regex = 'wp_cache_flush\(\)';
 
 		foreach ( $iterator as $file ) {
 			$this->check_file( $file );
