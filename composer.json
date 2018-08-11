@@ -17,6 +17,7 @@
         "files": [ "command.php" ]
     },
     "require": {
+        "ext-json":"*",
         "wp-cli/wp-cli": "2",
         "wp-cli/entity-command": "2",
         "wp-cli/extension-command": "2",
