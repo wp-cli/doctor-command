@@ -4,8 +4,70 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e9ae6fcadf017f120ef7bda50cff809",
+    "content-hash": "3c5471361349cb1329761cdc40945e99",
     "packages": [
+        {
+            "name": "composer/semver",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/semver.git",
+                "reference": "c7cb9a2095a074d131b65a8a0cd294479d785573"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/semver/zipball/c7cb9a2095a074d131b65a8a0cd294479d785573",
+                "reference": "c7cb9a2095a074d131b65a8a0cd294479d785573",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.2 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.5 || ^5.0.5",
+                "phpunit/phpunit-mock-objects": "2.3.0 || ^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Semver\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nils Adermann",
+                    "email": "naderman@naderman.de",
+                    "homepage": "http://www.naderman.de"
+                },
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                },
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com",
+                    "homepage": "http://robbast.nl"
+                }
+            ],
+            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "keywords": [
+                "semantic",
+                "semver",
+                "validation",
+                "versioning"
+            ],
+            "time": "2016-08-30T16:08:34+00:00"
+        },
         {
             "name": "mustache/mustache",
             "version": "v2.12.0",
@@ -194,6 +256,298 @@
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
             "time": "2018-07-26T11:13:39+00:00"
+        },
+        {
+            "name": "wp-cli/entity-command",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-cli/entity-command.git",
+                "reference": "e3f3d244ae5e88c2ef347966e4b74872c8fe6408"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wp-cli/entity-command/zipball/e3f3d244ae5e88c2ef347966e4b74872c8fe6408",
+                "reference": "e3f3d244ae5e88c2ef347966e4b74872c8fe6408",
+                "shasum": ""
+            },
+            "require": {
+                "wp-cli/wp-cli": "^2"
+            },
+            "require-dev": {
+                "wp-cli/cache-command": "^1 || ^2",
+                "wp-cli/db-command": "^1.3 || ^2",
+                "wp-cli/extension-command": "^1.2 || ^2",
+                "wp-cli/media-command": "^1.1 || ^2",
+                "wp-cli/wp-cli-tests": "^2"
+            },
+            "type": "wp-cli-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                },
+                "bundled": true,
+                "commands": [
+                    "comment",
+                    "comment approve",
+                    "comment count",
+                    "comment create",
+                    "comment delete",
+                    "comment exists",
+                    "comment generate",
+                    "comment get",
+                    "comment list",
+                    "comment meta",
+                    "comment meta add",
+                    "comment meta delete",
+                    "comment meta get",
+                    "comment meta list",
+                    "comment meta patch",
+                    "comment meta pluck",
+                    "comment meta update",
+                    "comment recount",
+                    "comment spam",
+                    "comment status",
+                    "comment trash",
+                    "comment unapprove",
+                    "comment unspam",
+                    "comment untrash",
+                    "comment update",
+                    "menu",
+                    "menu create",
+                    "menu delete",
+                    "menu item",
+                    "menu item add-custom",
+                    "menu item add-post",
+                    "menu item add-term",
+                    "menu item delete",
+                    "menu item list",
+                    "menu item update",
+                    "menu list",
+                    "menu location",
+                    "menu location assign",
+                    "menu location list",
+                    "menu location remove",
+                    "network meta",
+                    "network meta add",
+                    "network meta delete",
+                    "network meta get",
+                    "network meta list",
+                    "network meta patch",
+                    "network meta pluck",
+                    "network meta update",
+                    "option",
+                    "option add",
+                    "option delete",
+                    "option get",
+                    "option list",
+                    "option patch",
+                    "option pluck",
+                    "option update",
+                    "post",
+                    "post create",
+                    "post delete",
+                    "post edit",
+                    "post generate",
+                    "post get",
+                    "post list",
+                    "post meta",
+                    "post meta add",
+                    "post meta delete",
+                    "post meta get",
+                    "post meta list",
+                    "post meta patch",
+                    "post meta pluck",
+                    "post meta update",
+                    "post term",
+                    "post term add",
+                    "post term list",
+                    "post term remove",
+                    "post term set",
+                    "post update",
+                    "post-type",
+                    "post-type get",
+                    "post-type list",
+                    "site",
+                    "site activate",
+                    "site archive",
+                    "site create",
+                    "site deactivate",
+                    "site delete",
+                    "site empty",
+                    "site list",
+                    "site mature",
+                    "site option",
+                    "site private",
+                    "site public",
+                    "site spam",
+                    "site unarchive",
+                    "site unmature",
+                    "site unspam",
+                    "taxonomy",
+                    "taxonomy get",
+                    "taxonomy list",
+                    "term",
+                    "term create",
+                    "term delete",
+                    "term generate",
+                    "term get",
+                    "term list",
+                    "term meta",
+                    "term meta add",
+                    "term meta delete",
+                    "term meta get",
+                    "term meta list",
+                    "term meta patch",
+                    "term meta pluck",
+                    "term meta update",
+                    "term recount",
+                    "term update",
+                    "user",
+                    "user add-cap",
+                    "user add-role",
+                    "user create",
+                    "user delete",
+                    "user generate",
+                    "user get",
+                    "user import-csv",
+                    "user list",
+                    "user list-caps",
+                    "user meta",
+                    "user meta add",
+                    "user meta delete",
+                    "user meta get",
+                    "user meta list",
+                    "user meta patch",
+                    "user meta pluck",
+                    "user meta update",
+                    "user remove-cap",
+                    "user remove-role",
+                    "user reset-password",
+                    "user session",
+                    "user session destroy",
+                    "user session list",
+                    "user set-role",
+                    "user spam",
+                    "user term",
+                    "user term add",
+                    "user term list",
+                    "user term remove",
+                    "user term set",
+                    "user unspam",
+                    "user update"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "": "src/",
+                    "WP_CLI\\": "src/WP_CLI"
+                },
+                "files": [
+                    "entity-command.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Bachhuber",
+                    "email": "daniel@runcommand.io",
+                    "homepage": "https://runcommand.io"
+                }
+            ],
+            "description": "Manage WordPress core entities.",
+            "homepage": "https://github.com/wp-cli/entity-command",
+            "time": "2018-08-05T18:29:31+00:00"
+        },
+        {
+            "name": "wp-cli/extension-command",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-cli/extension-command.git",
+                "reference": "4fed9eeb946229ce4f611752433e942a9f49edc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wp-cli/extension-command/zipball/4fed9eeb946229ce4f611752433e942a9f49edc2",
+                "reference": "4fed9eeb946229ce4f611752433e942a9f49edc2",
+                "shasum": ""
+            },
+            "require": {
+                "composer/semver": "^1.4",
+                "wp-cli/wp-cli": "^2"
+            },
+            "require-dev": {
+                "wp-cli/entity-command": "^1.3 || ^2",
+                "wp-cli/scaffold-command": "^1.2 || ^2",
+                "wp-cli/wp-cli-tests": "^2"
+            },
+            "type": "wp-cli-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                },
+                "bundled": true,
+                "commands": [
+                    "plugin",
+                    "plugin activate",
+                    "plugin deactivate",
+                    "plugin delete",
+                    "plugin get",
+                    "plugin install",
+                    "plugin is-installed",
+                    "plugin list",
+                    "plugin path",
+                    "plugin search",
+                    "plugin status",
+                    "plugin toggle",
+                    "plugin uninstall",
+                    "plugin update",
+                    "theme",
+                    "theme activate",
+                    "theme delete",
+                    "theme disable",
+                    "theme enable",
+                    "theme get",
+                    "theme install",
+                    "theme is-installed",
+                    "theme list",
+                    "theme mod",
+                    "theme mod get",
+                    "theme mod set",
+                    "theme mod remove",
+                    "theme path",
+                    "theme search",
+                    "theme status",
+                    "theme update",
+                    "theme mod list"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                },
+                "files": [
+                    "extension-command.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Bachhuber",
+                    "email": "daniel@runcommand.io",
+                    "homepage": "https://runcommand.io"
+                }
+            ],
+            "description": "Manages plugins and themes, including installs, activations, and updates.",
+            "homepage": "https://github.com/wp-cli/extension-command",
+            "time": "2018-08-05T15:59:47+00:00"
         },
         {
             "name": "wp-cli/mustangostang-spyc",
