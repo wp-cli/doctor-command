@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b7dd23888825de248e508c168d393f4",
+    "content-hash": "c7be6dd81cd4ef1a6f5cf9079d6652c2",
     "packages": [
         {
             "name": "composer/semver",
@@ -258,6 +258,61 @@
             "time": "2018-07-26T11:13:39+00:00"
         },
         {
+            "name": "wp-cli/checksum-command",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-cli/checksum-command.git",
+                "reference": "6e0b5f6b3a8c7d25ea1aba17405ad87d9b1d36df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wp-cli/checksum-command/zipball/6e0b5f6b3a8c7d25ea1aba17405ad87d9b1d36df",
+                "reference": "6e0b5f6b3a8c7d25ea1aba17405ad87d9b1d36df",
+                "shasum": ""
+            },
+            "require": {
+                "wp-cli/wp-cli": "^2"
+            },
+            "require-dev": {
+                "wp-cli/extension-command": "^1.2 || ^2",
+                "wp-cli/wp-cli-tests": "^2"
+            },
+            "type": "wp-cli-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                },
+                "bundled": true,
+                "commands": [
+                    "core verify-checksums",
+                    "plugin verify-checksums"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                },
+                "files": [
+                    "checksum-command.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Bachhuber",
+                    "email": "daniel@runcommand.io",
+                    "homepage": "https://runcommand.io"
+                }
+            ],
+            "description": "Verifies file integrity by comparing to published checksums.",
+            "homepage": "https://github.com/wp-cli/checksum-command",
+            "time": "2018-08-05T13:27:33+00:00"
+        },
+        {
             "name": "wp-cli/core-command",
             "version": "v1.0.12",
             "source": {
@@ -316,68 +371,6 @@
             "description": "Downloads, installs, updates, and manages a WordPress installation.",
             "homepage": "https://github.com/wp-cli/core-command",
             "time": "2018-07-25T15:55:02+00:00"
-        },
-        {
-            "name": "wp-cli/cron-command",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wp-cli/cron-command.git",
-                "reference": "69097794fedbde914687dfd1b43b222931a272f1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/cron-command/zipball/69097794fedbde914687dfd1b43b222931a272f1",
-                "reference": "69097794fedbde914687dfd1b43b222931a272f1",
-                "shasum": ""
-            },
-            "require": {
-                "wp-cli/wp-cli": "^2"
-            },
-            "require-dev": {
-                "wp-cli/entity-command": "^1.3 || ^2",
-                "wp-cli/wp-cli-tests": "^2"
-            },
-            "type": "wp-cli-package",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                },
-                "bundled": true,
-                "commands": [
-                    "cron",
-                    "cron test",
-                    "cron event",
-                    "cron event delete",
-                    "cron event list",
-                    "cron event run",
-                    "cron event schedule",
-                    "cron schedule",
-                    "cron schedule list"
-                ]
-            },
-            "autoload": {
-                "psr-4": {
-                    "": "src/"
-                },
-                "files": [
-                    "cron-command.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Bachhuber",
-                    "email": "daniel@runcommand.io",
-                    "homepage": "https://runcommand.io"
-                }
-            ],
-            "description": "Tests, runs, and deletes WP-Cron events; manages WP-Cron schedules.",
-            "homepage": "https://github.com/wp-cli/cron-command",
-            "time": "2018-08-05T13:26:12+00:00"
         },
         {
             "name": "wp-cli/entity-command",
@@ -3639,29 +3632,30 @@
         },
         {
             "name": "wp-cli/config-command",
-            "version": "v1.2.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/config-command.git",
-                "reference": "7bec9b4685b4022ab511630422dd6acccadfca9b"
+                "reference": "e6f9ae208f85efe65e13ffaf433ba9d418076edb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/config-command/zipball/7bec9b4685b4022ab511630422dd6acccadfca9b",
-                "reference": "7bec9b4685b4022ab511630422dd6acccadfca9b",
+                "url": "https://api.github.com/repos/wp-cli/config-command/zipball/e6f9ae208f85efe65e13ffaf433ba9d418076edb",
+                "reference": "e6f9ae208f85efe65e13ffaf433ba9d418076edb",
                 "shasum": ""
             },
             "require": {
+                "wp-cli/wp-cli": "^2",
                 "wp-cli/wp-config-transformer": "^1.2.1"
             },
             "require-dev": {
-                "behat/behat": "~2.5",
-                "wp-cli/wp-cli": "*"
+                "wp-cli/db-command": "^1.3 || ^2",
+                "wp-cli/wp-cli-tests": "^2"
             },
             "type": "wp-cli-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 },
                 "bundled": true,
                 "commands": [
@@ -3673,7 +3667,8 @@
                     "config has",
                     "config list",
                     "config path",
-                    "config set"
+                    "config set",
+                    "config shuffle-salts"
                 ]
             },
             "autoload": {
@@ -3702,32 +3697,32 @@
             ],
             "description": "Generates and reads the wp-config.php file.",
             "homepage": "https://github.com/wp-cli/config-command",
-            "time": "2018-04-20T08:03:51+00:00"
+            "time": "2018-08-05T12:28:47+00:00"
         },
         {
             "name": "wp-cli/eval-command",
-            "version": "v1.0.5",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/eval-command.git",
-                "reference": "9640d40ab28cd86590396f08f8c382e659f57321"
+                "reference": "4a53bbf192ab7baa1fe4aa442c02801aa17ed6f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/eval-command/zipball/9640d40ab28cd86590396f08f8c382e659f57321",
-                "reference": "9640d40ab28cd86590396f08f8c382e659f57321",
+                "url": "https://api.github.com/repos/wp-cli/eval-command/zipball/4a53bbf192ab7baa1fe4aa442c02801aa17ed6f4",
+                "reference": "4a53bbf192ab7baa1fe4aa442c02801aa17ed6f4",
                 "shasum": ""
             },
             "require": {
-                "wp-cli/wp-cli": "*"
+                "wp-cli/wp-cli": "^2"
             },
             "require-dev": {
-                "behat/behat": "~2.5"
+                "wp-cli/wp-cli-tests": "^2"
             },
             "type": "wp-cli-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 },
                 "bundled": true,
                 "commands": [
@@ -3756,20 +3751,20 @@
             ],
             "description": "Executes arbitrary PHP code or files.",
             "homepage": "https://github.com/wp-cli/eval-command",
-            "time": "2017-12-08T14:33:34+00:00"
+            "time": "2018-08-05T09:25:28+00:00"
         },
         {
             "name": "wp-cli/wp-cli-tests",
-            "version": "v2.0.0",
+            "version": "v2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli-tests.git",
-                "reference": "d774a7b5ae4476a00dce74c5ad90b88b399f7399"
+                "reference": "894c76528a5a33d7856785cfeb99bd3fa21cafec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli-tests/zipball/d774a7b5ae4476a00dce74c5ad90b88b399f7399",
-                "reference": "d774a7b5ae4476a00dce74c5ad90b88b399f7399",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli-tests/zipball/894c76528a5a33d7856785cfeb99bd3fa21cafec",
+                "reference": "894c76528a5a33d7856785cfeb99bd3fa21cafec",
                 "shasum": ""
             },
             "require": {
@@ -3781,9 +3776,9 @@
                 "phpcompatibility/phpcompatibility-wp": "^1",
                 "phpunit/phpunit": ">=4.8 <7",
                 "roave/security-advisories": "dev-master",
-                "wp-cli/config-command": "^1.0",
-                "wp-cli/core-command": "^1.0",
-                "wp-cli/eval-command": "^1.0",
+                "wp-cli/config-command": "^1 || ^2",
+                "wp-cli/core-command": "^1 || ^2",
+                "wp-cli/eval-command": "^1 || ^2",
                 "wp-coding-standards/wpcs": "^1"
             },
             "require-dev": {
@@ -3792,6 +3787,7 @@
             },
             "bin": [
                 "bin/install-package-tests",
+                "bin/rerun-behat-tests",
                 "bin/run-behat-tests",
                 "bin/run-linter-tests",
                 "bin/run-php-unit-tests",
@@ -3821,7 +3817,7 @@
                 "cli",
                 "wordpress"
             ],
-            "time": "2018-08-05T08:19:16+00:00"
+            "time": "2018-08-09T10:25:09+00:00"
         },
         {
             "name": "wp-cli/wp-config-transformer",
