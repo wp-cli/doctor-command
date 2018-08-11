@@ -20,10 +20,10 @@ class Plugin_Deactivated extends Plugin {
 		$plugins = self::get_plugins();
 
 		$active = $inactive = 0;
-		foreach( self::get_plugins() as $plugin ) {
+		foreach ( self::get_plugins() as $plugin ) {
 			if ( 'active' === $plugin['status'] ) {
 				$active++;
-			} else if ( 'inactive' === $plugin['status'] ) {
+			} elseif ( 'inactive' === $plugin['status'] ) {
 				$inactive++;
 			}
 		}

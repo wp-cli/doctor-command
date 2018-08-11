@@ -124,7 +124,7 @@ class Constant_Definition extends Check {
 	private static function human_value( $value ) {
 		if ( true === $value ) {
 			$value = 'true';
-		} else if ( false === $value ) {
+		} elseif ( false === $value ) {
 			$value = 'false';
 		}
 		return $value;

@@ -34,13 +34,13 @@ class File_Contents extends File {
 				if ( true == $this->exists ) {
 					//$exists set to true so we should report true if something is found
 					$this->set_status( 'success' );
-					$count = count( $this->_matches );
+					$count   = count( $this->_matches );
 					$message = 1 === $count ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 					$this->set_message( "{$message} passed check for '{$this->regex}'." );
 				} else {
 					//$exists is not set to true so we should report error if something is found
 					$this->set_status( 'error' );
-					$count = count( $this->_matches );
+					$count   = count( $this->_matches );
 					$message = 1 === $count ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 					$this->set_message( "{$message} failed check for '{$this->regex}'." );
 				}
@@ -55,7 +55,6 @@ class File_Contents extends File {
 					$this->set_status( 'success' );
 					$this->set_message( "All '{$this->extension}' files passed check for '{$this->regex}'." );
 				}
-
 			}
 		}
 

@@ -11,7 +11,7 @@ abstract class Check {
 	 *
 	 * @var string
 	 */
-	 protected $_when = 'after_wp_load';
+	protected $_when = 'after_wp_load';
 
 	/**
 	 * Status of this check after being run.
@@ -34,7 +34,7 @@ abstract class Check {
 	 */
 	public function __construct( $options = array() ) {
 
-		foreach( $options as $k => $v ) {
+		foreach ( $options as $k => $v ) {
 			// Don't permit direct access to private class vars
 			if ( '_' === $k[0] ) {
 				continue;
@@ -95,8 +95,8 @@ abstract class Check {
 	 */
 	public function get_results() {
 		return array(
-			'status'    => $this->_status,
-			'message'   => $this->_message,
+			'status'  => $this->_status,
+			'message' => $this->_message,
 		);
 	}
 
