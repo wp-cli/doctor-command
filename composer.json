@@ -21,13 +21,18 @@
         "wp-cli/wp-cli": "^2",
         "wp-cli/entity-command": "^2",
         "wp-cli/extension-command": "^2",
-        "wp-cli/core-command": "2.0.0",
+        "wp-cli/core-command": "1.0.12",
         "wp-cli/language-command": "^2",
         "wp-cli/checksum-command": "^2"
     },
     "require-dev": {
         "behat/behat": "~2.5",
         "wp-cli/wp-cli-tests": "^2"
+    },
+    "config": {
+        "platform": {
+            "php": "5.4"
+        }
     },
     "scripts": {
       "lint": "run-linter-tests",
