@@ -1,7 +1,7 @@
 {
     "name": "wp-cli/doctor-command",
-    "description": "Diagnose problems within WordPress by running a series of checks for symptoms.",
     "type": "wp-cli-package",
+    "description": "Diagnose problems within WordPress by running a series of checks for symptoms.",
     "homepage": "https://runcommand.io/wp/doctor/",
     "license": "MIT",
     "authors": [
@@ -11,20 +11,15 @@
             "homepage": "https://runcommand.io"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload": {
-        "files": [ "command.php" ]
-    },
     "require": {
-        "ext-json":"*",
-        "wp-cli/wp-cli": "^2",
+        "ext-json": "*",
+        "wp-cli/checksum-command": "^2",
+        "wp-cli/core-command": "2",
+        "wp-cli/cron-command": "2",
         "wp-cli/entity-command": "^2",
         "wp-cli/extension-command": "^2",
-        "wp-cli/core-command": "2",
         "wp-cli/language-command": "^2",
-        "wp-cli/checksum-command": "^2",
-        "wp-cli/cron-command": "2"
+        "wp-cli/wp-cli": "^2"
     },
     "require-dev": {
         "behat/behat": "~2.5",
@@ -35,23 +30,14 @@
             "php": "5.4"
         }
     },
-    "scripts": {
-      "lint": "run-linter-tests",
-      "phpcs": "run-phpcs-tests",
-      "phpunit": "run-php-unit-tests",
-      "behat": "run-behat-tests",
-      "prepare-tests": "install-package-tests",
-      "test": [
-          "@lint",
-          "@phpcs",
-          "@phpunit",
-          "@behat"
-      ]
-    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.x-dev"
         },
+        "commands": [
+            "doctor check",
+            "doctor list"
+        ],
         "readme": {
             "sections": [
                 "Overview",
@@ -62,10 +48,26 @@
             "overview": {
                 "body": "bin/readme/overview-body.md"
             }
-        },
-        "commands": [
-            "doctor check",
-            "doctor list"
+        }
+    },
+    "autoload": {
+        "files": [
+            "command.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "behat": "run-behat-tests",
+        "lint": "run-linter-tests",
+        "phpcs": "run-phpcs-tests",
+        "phpunit": "run-php-unit-tests",
+        "prepare-tests": "install-package-tests",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit",
+            "@behat"
         ]
     }
 }
