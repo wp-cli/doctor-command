@@ -23,7 +23,8 @@
         "wp-cli/extension-command": "^2",
         "wp-cli/core-command": "2",
         "wp-cli/language-command": "^2",
-        "wp-cli/checksum-command": "^2"
+        "wp-cli/checksum-command": "^2",
+        "wp-cli/cron-command": "2"
     },
     "require-dev": {
         "behat/behat": "~2.5",
