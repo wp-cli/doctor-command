@@ -1,7 +1,7 @@
 {
     "name": "wp-cli/doctor-command",
-    "description": "Diagnose problems within WordPress by running a series of checks for symptoms.",
     "type": "wp-cli-package",
+    "description": "Diagnose problems within WordPress by running a series of checks for symptoms.",
     "homepage": "https://runcommand.io/wp/doctor/",
     "license": "MIT",
     "authors": [
@@ -11,21 +11,34 @@
             "homepage": "https://runcommand.io"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload": {
-        "files": [ "command.php" ]
-    },
     "require": {
-        "wp-cli/wp-cli": "*"
+        "ext-json": "*",
+        "wp-cli/checksum-command": "^2",
+        "wp-cli/core-command": "2",
+        "wp-cli/cron-command": "2",
+        "wp-cli/entity-command": "^2",
+        "wp-cli/extension-command": "^2",
+        "wp-cli/language-command": "^2",
+        "wp-cli/wp-cli": "dev-master"
     },
     "require-dev": {
-        "behat/behat": "~2.5"
+        "wp-cli/wp-cli-tests": "^2.0.7"
+    },
+    "config": {
+        "platform": {
+            "php": "5.4"
+        },
+        "process-timeout": 7200,
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.x-dev"
+            "dev-master": "2.x-dev"
         },
+        "commands": [
+            "doctor check",
+            "doctor list"
+        ],
         "readme": {
             "sections": [
                 "Overview",
@@ -36,10 +49,27 @@
             "overview": {
                 "body": "bin/readme/overview-body.md"
             }
-        },
-        "commands": [
-            "doctor check",
-            "doctor list"
+        }
+    },
+    "autoload": {
+        "files": [
+            "command.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "behat": "run-behat-tests",
+        "behat-rerun": "rerun-behat-tests",
+        "lint": "run-linter-tests",
+        "phpcs": "run-phpcs-tests",
+        "phpunit": "run-php-unit-tests",
+        "prepare-tests": "install-package-tests",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit",
+            "@behat"
         ]
     }
 }

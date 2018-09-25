@@ -9,7 +9,7 @@ class Checks {
 
 	private static $instance;
 
-	private $checks = array();
+	private $checks  = array();
 	private $skipped = array();
 
 	public static function get_instance() {
@@ -46,7 +46,7 @@ class Checks {
 		unset( $check_data['_'] );
 
 		$skipped_checks = isset( self::get_instance()->skipped_checks[ $file ] ) ? self::get_instance()->skipped_checks[ $file ] : array();
-		foreach( $check_data as $check_name => $check_args ) {
+		foreach ( $check_data as $check_name => $check_args ) {
 			if ( ! empty( $check_args['require'] ) ) {
 				$required_file = self::absolutize( $check_args['require'], dirname( $file ) );
 				if ( ! file_exists( $required_file ) ) {
@@ -68,7 +68,7 @@ class Checks {
 				continue;
 			}
 			$options = ! empty( $check_args['options'] ) ? $check_args['options'] : array();
-			$obj = new $class( $options );
+			$obj     = new $class( $options );
 			self::add_check( $check_name, $obj );
 		}
 	}
@@ -106,8 +106,8 @@ class Checks {
 	public static function get_checks( $args = array() ) {
 		if ( ! empty( $args['name'] ) ) {
 			$checks = array();
-			$names = is_array( $args['name'] ) ? $args['name'] : array( $args['name'] );
-			foreach( $names as $name ) {
+			$names  = is_array( $args['name'] ) ? $args['name'] : array( $args['name'] );
+			foreach ( $names as $name ) {
 				if ( isset( self::$instance->checks[ $name ] ) ) {
 					$checks[ $name ] = self::$instance->checks[ $name ];
 				}
@@ -124,7 +124,7 @@ class Checks {
 	 * @param string $base Base path to prepend.
 	 */
 	private static function absolutize( $path, $base ) {
-		if ( !empty( $path ) && !\WP_CLI\Utils\is_path_absolute( $path ) ) {
+		if ( ! empty( $path ) && ! \WP_CLI\Utils\is_path_absolute( $path ) ) {
 			$path = $base . DIRECTORY_SEPARATOR . $path;
 		}
 		return $path;

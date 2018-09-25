@@ -16,7 +16,7 @@ abstract class Cron extends Check {
 
 		ob_start();
 		WP_CLI::run_command( array( 'cron', 'event', 'list' ), array( 'format' => 'json' ) );
-		$ret = ob_get_clean();
+		$ret         = ob_get_clean();
 		self::$crons = ! empty( $ret ) ? json_decode( $ret, true ) : array();
 		return self::$crons;
 	}

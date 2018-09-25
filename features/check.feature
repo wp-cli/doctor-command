@@ -87,7 +87,7 @@ Feature: Basic check usage
       });
       """
 
-    When I run `wp doctor check autoload-options-size --fields=name,status`
+    When I try `wp doctor check autoload-options-size --fields=name,status`
     Then STDERR should contain:
       """
       Warning: Incomplete check execution. Some code is trying to do a URL redirect. Backtrace:

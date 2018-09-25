@@ -58,7 +58,7 @@ Feature: Check files in a WordPress install
       """
       <?php
       echo '';
-      $_SESSION['foo'] = bar;
+      $_SESSION['foo'] = 'bar';
       """
 
     When I try `wp doctor check file-sessions --config=config.yml --format=json`
