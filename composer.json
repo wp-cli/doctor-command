@@ -22,17 +22,18 @@
         "wp-cli/wp-cli": "^2"
     },
     "require-dev": {
-        "behat/behat": "~2.5",
-        "wp-cli/wp-cli-tests": "^2"
+        "wp-cli/wp-cli-tests": "^2.0.7"
     },
     "config": {
         "platform": {
             "php": "5.4"
-        }
+        },
+        "process-timeout": 7200,
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.x-dev"
+            "dev-master": "2.x-dev"
         },
         "commands": [
             "doctor check",
@@ -59,6 +60,7 @@
     "prefer-stable": true,
     "scripts": {
         "behat": "run-behat-tests",
+        "behat-rerun": "rerun-behat-tests",
         "lint": "run-linter-tests",
         "phpcs": "run-phpcs-tests",
         "phpunit": "run-php-unit-tests",
