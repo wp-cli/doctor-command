@@ -98,7 +98,8 @@ class Command {
 		foreach ( $checks as $name => $check ) {
 			if ( $when = $check->get_when() ) {
 				WP_CLI::add_hook(
-					$when, function() use ( $name, $check, &$completed, &$progress ) {
+					$when,
+					function() use ( $name, $check, &$completed, &$progress ) {
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
@@ -115,7 +116,8 @@ class Command {
 		}
 		if ( ! empty( $file_checks ) ) {
 			WP_CLI::add_hook(
-				'after_wp_config_load', function() use ( $file_checks, &$completed, &$progress ) {
+				'after_wp_config_load',
+				function() use ( $file_checks, &$completed, &$progress ) {
 					try {
 						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
@@ -154,7 +156,8 @@ class Command {
 
 		if ( ! isset( WP_CLI::get_runner()->config['url'] ) ) {
 			WP_CLI::add_wp_hook(
-				'muplugins_loaded', function() {
+				'muplugins_loaded',
+				function() {
 					WP_CLI::set_url( home_url( '/' ) );
 				}
 			);
@@ -180,7 +183,8 @@ class Command {
 		if ( Utils\get_flag_value( $assoc_args, 'spotlight' ) ) {
 			$check_count = count( $results );
 			$results     = array_filter(
-				$results, function( $check ) {
+				$results,
+				function( $check ) {
 					return in_array( $check['status'], array( 'warning', 'error' ), true );
 				}
 			);
@@ -196,7 +200,8 @@ class Command {
 		}
 
 		$results_with_error = array_filter(
-			$results, function( $check ) {
+			$results,
+			function( $check ) {
 				return 'error' === $check['status'];
 			}
 		);
@@ -259,7 +264,8 @@ class Command {
 		$assoc_args = array_merge(
 			array(
 				'fields' => 'name,description',
-			), $assoc_args
+			),
+			$assoc_args
 		);
 
 		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
@@ -301,12 +307,14 @@ class Command {
 		global $wp_query;
 
 		WP_CLI::add_wp_hook(
-			'wp_redirect', function( $to ) {
+			'wp_redirect',
+			function( $to ) {
 				ob_start();
 				debug_print_backtrace();
 				$message = ob_get_clean();
 				throw new Exception( 'Incomplete check execution. Some code is trying to do a URL redirect. Backtrace:' . PHP_EOL . $message );
-			}, 1
+			},
+			1
 		);
 
 		WP_CLI::get_runner()->load_wordpress();
@@ -325,11 +333,13 @@ class Command {
 		define( 'WP_USE_THEMES', true );
 
 		add_filter(
-			'template_include', function( $template ) {
+			'template_include',
+			function( $template ) {
 				$display_template = str_replace( dirname( get_template_directory() ) . '/', '', $template );
 				WP_CLI::debug( "Theme template: {$display_template}", 'doctor' );
 				return $template;
-			}, 999
+			},
+			999
 		);
 
 		// Template is normally loaded in global scope, so we need to replicate
