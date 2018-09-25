@@ -19,7 +19,8 @@ class Autoload_Options_Size extends Check {
 	public function run() {
 		ob_start();
 		WP_CLI::run_command(
-			array( 'option', 'list' ), array(
+			array( 'option', 'list' ),
+			array(
 				'autoload' => 'on',
 				'format'   => 'total_bytes',
 			)
