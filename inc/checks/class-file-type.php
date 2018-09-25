@@ -22,8 +22,8 @@ class File_Type extends File {
 			$symlink = $this->symlink ? 'true' : 'false';
 			if ( ! empty( $this->_matches ) ) {
 				$this->set_status( 'error' );
-				$count = count( $this->_matches );
-				$message = $count === 1 ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
+				$count   = count( $this->_matches );
+				$message = 1 === $count ? "1 '{$this->extension}' file" : "{$count} '{$this->extension}' files";
 				$this->set_message( "{$message} failed assertion that symlink is '{$symlink}'." );
 			} else {
 				$this->set_status( 'success' );
@@ -37,7 +37,7 @@ class File_Type extends File {
 		if ( isset( $this->symlink ) ) {
 			if ( 'link' === $file->getType() && false === $this->symlink ) {
 				$this->_matches[] = $file;
-			} else if ( 'link' !== $file->getType() && true === $this->symlink ) {
+			} elseif ( 'link' !== $file->getType() && true === $this->symlink ) {
 				$this->_matches[] = $file;
 			}
 		}

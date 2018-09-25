@@ -39,7 +39,7 @@ class Plugin_Status extends Plugin {
 		$plugins = self::get_plugins();
 
 		$current_status = 'uninstalled';
-		foreach( self::get_plugins() as $plugin ) {
+		foreach ( self::get_plugins() as $plugin ) {
 			if ( $plugin['name'] === $this->name ) {
 				$current_status = $plugin['status'];
 				break;
@@ -50,10 +50,10 @@ class Plugin_Status extends Plugin {
 		if ( 'uninstalled' === $this->status
 			&& $current_status !== $this->status ) {
 			$erred = true;
-		} else if ( 'installed' === $this->status
+		} elseif ( 'installed' === $this->status
 			&& 'uninstalled' === $current_status ) {
 			$erred = true;
-		} else if ( 'active' === $this->status
+		} elseif ( 'active' === $this->status
 			&& in_array( $current_status, array( 'uninstalled', 'inactive' ), true ) ) {
 			$erred = true;
 		}

@@ -16,7 +16,7 @@ abstract class Plugin extends Check {
 
 		ob_start();
 		WP_CLI::run_command( array( 'plugin', 'list' ), array( 'format' => 'json' ) );
-		$ret = ob_get_clean();
+		$ret           = ob_get_clean();
 		self::$plugins = ! empty( $ret ) ? json_decode( $ret, true ) : array();
 		return self::$plugins;
 	}

@@ -22,7 +22,7 @@ class Language_Update extends Check {
 		);
 
 		// Returns the count of each value that the key 'update' is mapped to.
-		$counts       = array_count_values( array_column( $languages, 'update' ) );
+		$counts = array_count_values( array_column( $languages, 'update' ) );
 
 		// Returns the count of 'update' of type 'available'.
 		$update_count = array_key_exists( 'available', $counts ) ? $counts['available'] : 0;
