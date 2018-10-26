@@ -14,8 +14,8 @@
     "require": {
         "ext-json": "*",
         "wp-cli/checksum-command": "^2",
-        "wp-cli/core-command": "2",
-        "wp-cli/cron-command": "2",
+        "wp-cli/core-command": "^2",
+        "wp-cli/cron-command": "^2",
         "wp-cli/entity-command": "^2",
         "wp-cli/extension-command": "^2",
         "wp-cli/language-command": "^2",
