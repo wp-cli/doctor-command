@@ -50,7 +50,6 @@ jobs:
             composer validate
             composer install
             composer prepare-tests
-            composer phpunit
             mysql -uroot -e "UPDATE mysql.user SET host = '%' WHERE user = 'wp_cli_test'"
             mysql -uroot -e "UPDATE mysql.db SET host = '%' WHERE user = 'wp_cli_test'"
             mysql -uroot -e "FLUSH PRIVILEGES"
@@ -60,4 +59,6 @@ jobs:
             - vendor
       - run:
           name: "Run Tests"
-          command: composer behat || composer behat-rerun
+          command: |
+            composer phpunit
+            composer behat || composer behat-rerun
