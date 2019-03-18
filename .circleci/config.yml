@@ -81,7 +81,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Prep for testing with PHP v5.4."
+          name: "Prep for testing with PHP v5.4. "
           command: |
             apt-get update && sudo apt-get install -y mysql-client
             docker-php-ext-install mysqli
