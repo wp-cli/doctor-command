@@ -68,7 +68,7 @@ jobs:
     parameters:
       wpVersion:
         type: string
-        default: "latest"
+        default: "5.1"
     docker:
       - image: php:5.4
       - image: circleci/mysql:5.6
