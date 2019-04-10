@@ -68,7 +68,7 @@ jobs:
     parameters:
       wpVersion:
         type: string
-        default: "latest"
+        default: "5.1.1"
     docker:
       - image: php:5.4
       - image: circleci/mysql:5.6
@@ -87,6 +87,9 @@ jobs:
             docker-php-ext-install mysqli
             echo 'export PATH="$CIRCLE_WORKING_DIRECTORY/vendor/bin:$PATH"' >> $BASH_ENV
             echo -e "memory_limit = 2048M" | tee /usr/local/etc/php/php.ini > /dev/null
+      - run:
+          name: "Install git"
+          command: sudo apt-get install -y git
       - run:
           name: "Install Composer"
           command: |
