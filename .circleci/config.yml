@@ -84,12 +84,9 @@ jobs:
           name: "Prep for testing with PHP v5.4."
           command: |
             apt-get update && sudo apt-get install -y mysql-client
-            docker-php-ext-install mysqli
+            docker-php-ext-install mysqli zip
             echo 'export PATH="$CIRCLE_WORKING_DIRECTORY/vendor/bin:$PATH"' >> $BASH_ENV
             echo -e "memory_limit = 2048M" | tee /usr/local/etc/php/php.ini > /dev/null
-      - run:
-          name: "Install PHP zip extension"
-          command: sudo apt-get install -y php-zip
       - run:
           name: "Install git"
           command: sudo apt-get install -y git
