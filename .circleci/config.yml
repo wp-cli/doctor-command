@@ -25,7 +25,7 @@ jobs:
         type: string
         default: "latest"
     docker:
-      - image: circleci/php:<< parameters.php >>-browsers
+      - image: circleci/php:<< parameters.php >>-cli
       - image: circleci/mysql:5.6
     environment:
       MYSQL_HOST: 127.0.0.1
