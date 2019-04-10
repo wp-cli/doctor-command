@@ -70,7 +70,7 @@ jobs:
         type: string
         default: "5.1.1"
     docker:
-      - image: php:5.4
+      - image: devilbox/php-fpm:5.4-work
       - image: circleci/mysql:5.6
     environment:
       MYSQL_HOST: 127.0.0.1
@@ -87,16 +87,6 @@ jobs:
             docker-php-ext-install mysqli zip
             echo 'export PATH="$CIRCLE_WORKING_DIRECTORY/vendor/bin:$PATH"' >> $BASH_ENV
             echo -e "memory_limit = 2048M" | tee /usr/local/etc/php/php.ini > /dev/null
-      - run:
-          name: "Install git"
-          command: sudo apt-get install -y git
-      - run:
-          name: "Install Composer"
-          command: |
-            php -r "copy('https://raw.githubusercontent.com/composer/getcomposer.org/master/web/installer', 'composer-setup.php');" && \
-            php composer-setup.php && \
-            php -r "unlink('composer-setup.php');" && \
-            mv composer.phar /usr/local/bin/composer &&
             composer self-update
       - restore_cache:
           keys:
