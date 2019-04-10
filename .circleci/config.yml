@@ -81,12 +81,19 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Prep for testing with PHP v5.4. "
+          name: "Prep for testing with PHP v5.4."
           command: |
             apt-get update && sudo apt-get install -y mysql-client
             docker-php-ext-install mysqli
             echo 'export PATH="$CIRCLE_WORKING_DIRECTORY/vendor/bin:$PATH"' >> $BASH_ENV
             echo -e "memory_limit = 2048M" | tee /usr/local/etc/php/php.ini > /dev/null
+      - run:
+          name: "Install Composer"
+          command: |
+            php -r "copy('https://raw.githubusercontent.com/composer/getcomposer.org/master/web/installer', 'composer-setup.php');" && \
+            php composer-setup.php && \
+            php -r "unlink('composer-setup.php');" && \
+            mv composer.phar /usr/local/bin/composer
       - restore_cache:
           keys:
             - composer-v1-{{ checksum "composer.json" }}
