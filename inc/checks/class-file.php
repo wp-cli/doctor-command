@@ -2,8 +2,6 @@
 
 namespace runcommand\Doctor\Checks;
 
-use SplFileInfo;
-
 /**
  * Check files on the filesystem.
  */

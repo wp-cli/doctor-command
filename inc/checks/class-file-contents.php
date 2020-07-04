@@ -62,7 +62,12 @@ class File_Contents extends File {
 
 	public function check_file( SplFileInfo $file ) {
 		if ( isset( $this->regex ) ) {
+			if ( $file->isDir() ) {
+				return;
+			}
+
 			$contents = file_get_contents( $file->getPathname() );
+
 			if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
 				$this->_matches[] = $file;
 			}
