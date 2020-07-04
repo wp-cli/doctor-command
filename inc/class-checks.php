@@ -14,7 +14,7 @@ class Checks {
 
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new Checks;
+			self::$instance = new Checks();
 		}
 		return self::$instance;
 	}
@@ -89,7 +89,7 @@ class Checks {
 			if ( ! class_exists( $check ) ) {
 				WP_CLI::error( "Class '{$check}' for check '{$name}' doesn't exist. Verify check registration." );
 			}
-			$check = new $check;
+			$check = new $check();
 		}
 		if ( ! is_subclass_of( $check, 'runcommand\Doctor\Checks\Check' ) ) {
 			$class = get_class( $check );

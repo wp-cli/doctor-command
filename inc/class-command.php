@@ -349,7 +349,7 @@ class Command {
 
 		// Load the theme template.
 		ob_start();
-		require_once( ABSPATH . WPINC . '/template-loader.php' );
+		require_once ABSPATH . WPINC . '/template-loader.php';
 		ob_get_clean();
 	}
 
