@@ -19,7 +19,8 @@ class Plugin_Deactivated extends Plugin {
 	public function run() {
 		$plugins = self::get_plugins();
 
-		$active = $inactive = 0;
+		$active   = 0;
+		$inactive = 0;
 		foreach ( self::get_plugins() as $plugin ) {
 			if ( 'active' === $plugin['status'] ) {
 				$active++;
