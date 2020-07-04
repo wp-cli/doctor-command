@@ -4,6 +4,7 @@ Feature: Basic check usage
     Given a WP install
     And I run `wp plugin activate --all`
     And I run `wp plugin update --all`
+    And I run `wp theme update --all`
 
     When I run `wp doctor list --format=count`
     Then save STDOUT as {CHECK_COUNT}
