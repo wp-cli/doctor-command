@@ -14,7 +14,8 @@ class Core_Update extends Check {
 		WP_CLI::run_command( array( 'core', 'check-update' ), array( 'format' => 'json' ) );
 		$ret       = ob_get_clean();
 		$updates   = ! empty( $ret ) ? json_decode( $ret, true ) : array();
-		$has_minor = $has_major = false;
+		$has_minor = false;
+		$has_major = false;
 		foreach ( $updates as $update ) {
 			switch ( $update['update_type'] ) {
 				case 'minor':

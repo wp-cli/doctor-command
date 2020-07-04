@@ -96,10 +96,11 @@ class Command {
 			$progress = Utils\make_progress_bar( 'Running checks', count( $checks ) );
 		}
 		foreach ( $checks as $name => $check ) {
-			if ( $when = $check->get_when() ) {
+			$when = $check->get_when();
+			if ( $when ) {
 				WP_CLI::add_hook(
 					$when,
-					function() use ( $name, $check, &$completed, &$progress ) {
+					static function () use ( $name, $check, &$completed, &$progress ) {
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
@@ -117,7 +118,7 @@ class Command {
 		if ( ! empty( $file_checks ) ) {
 			WP_CLI::add_hook(
 				'after_wp_config_load',
-				function() use ( $file_checks, &$completed, &$progress ) {
+				static function () use ( $file_checks, &$completed, &$progress ) {
 					try {
 						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
@@ -157,7 +158,7 @@ class Command {
 		if ( ! isset( WP_CLI::get_runner()->config['url'] ) ) {
 			WP_CLI::add_wp_hook(
 				'muplugins_loaded',
-				function() {
+				static function () {
 					WP_CLI::set_url( home_url( '/' ) );
 				}
 			);
@@ -330,11 +331,12 @@ class Command {
 		}
 		WP_CLI::debug( 'Main WP_Query: ' . implode( ', ', $interpreted ), 'doctor' );
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- WordPress Core constant.
 		define( 'WP_USE_THEMES', true );
 
 		add_filter(
 			'template_include',
-			function( $template ) {
+			static function ( $template ) {
 				$display_template = str_replace( dirname( get_template_directory() ) . '/', '', $template );
 				WP_CLI::debug( "Theme template: {$display_template}", 'doctor' );
 				return $template;
@@ -344,12 +346,12 @@ class Command {
 
 		// Template is normally loaded in global scope, so we need to replicate
 		foreach ( $GLOBALS as $key => $value ) {
-			global ${$key}; // phpcs:ignore PHPCompatibility.PHP.ForbiddenGlobalVariableVariable.NonBareVariableFound -- Syntax is updated to compatible with php 5 and 7.
+			global ${$key}; // phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound -- Syntax is updated to compatible with php 5 and 7.
 		}
 
 		// Load the theme template.
 		ob_start();
-		require_once( ABSPATH . WPINC . '/template-loader.php' );
+		require_once ABSPATH . WPINC . '/template-loader.php';
 		ob_get_clean();
 	}
 

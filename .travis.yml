@@ -1,8 +1,11 @@
-sudo: false
-dist: trusty
+os: linux
+dist: xenial
 
 language: php
-php: 7.2
+php: 7.4
+
+services:
+  - mysql
 
 notifications:
   email:
@@ -51,6 +54,12 @@ jobs:
         - composer phpcs
       env: BUILD=sniff
     - stage: test
+      php: 7.4
+      env: WP_VERSION=latest
+    - stage: test
+      php: 7.3
+      env: WP_VERSION=latest
+    - stage: test
       php: 7.2
       env: WP_VERSION=latest
     - stage: test
@@ -65,6 +74,3 @@ jobs:
     - stage: test
       php: 5.6
       env: WP_VERSION=trunk
-    - stage: test
-      php: 5.4
-      env: WP_VERSION=5.1.1
