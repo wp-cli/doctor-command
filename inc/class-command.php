@@ -336,7 +336,7 @@ class Command {
 
 		add_filter(
 			'template_include',
-			function( $template ) {
+			static function ( $template ) {
 				$display_template = str_replace( dirname( get_template_directory() ) . '/', '', $template );
 				WP_CLI::debug( "Theme template: {$display_template}", 'doctor' );
 				return $template;
