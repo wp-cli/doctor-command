@@ -29,8 +29,10 @@
 	-->
 
 	<rule ref="WP_CLI_CS">
-		<!-- Ignoring namespace prefix for now, package should be ported to PSR-4. -->
+		<!-- Ignore namespace prefix for now, package should be ported to PSR-4. -->
 		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound"/>
+		<!-- Ignore underscore prefix for base class members. -->
+		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
 	</rule>
 
 	<!--
