@@ -31,7 +31,7 @@ class File_Contents extends File {
 		if ( isset( $this->regex ) ) {
 			if ( ! empty( $this->_matches ) ) {
 				//if matches are found
-				if ( true == $this->exists ) {
+				if ( $this->exists ) {
 					//$exists set to true so we should report true if something is found
 					$this->set_status( 'success' );
 					$count   = count( $this->_matches );
@@ -46,7 +46,7 @@ class File_Contents extends File {
 				}
 			} else {
 				//No Matches Found
-				if ( true == $this->exists ) {
+				if ( $this->exists ) {
 					//$exists set to true so we should report error if regex is not found
 					$this->set_status( 'error' );
 					$this->set_message( "0 '{$this->extension}' files passed check for '{$this->regex}'." );
