@@ -15,8 +15,14 @@ class Core_Verify_Checksums extends Check {
 	}
 
 	public function run() {
-		$ret = WP_CLI::launch_self( 'core verify-checksums', array(), array(), false, true );
-		if ( 0 === $ret->return_code ) {
+		$return_code = WP_CLI::runcommand(
+			'core verify-checksums',
+			array(
+				'exit_error' => false,
+				'return'     => 'return_code',
+			)
+		);
+		if ( 0 === $return_code ) {
 			$this->set_status( 'success' );
 			$this->set_message( 'WordPress verifies against its checksums.' );
 		} else {
