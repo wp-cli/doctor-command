@@ -3,7 +3,7 @@ wp-cli/doctor-command
 
 Diagnose problems within WordPress by running a series of checks for symptoms.
 
-[![Build Status](https://travis-ci.org/wp-cli/doctor-command.svg?branch=master)](https://travis-ci.org/wp-cli/doctor-command)
+[![Testing](https://github.com/wp-cli/doctor-command/actions/workflows/testing.yml/badge.svg)](https://github.com/wp-cli/doctor-command/actions/workflows/testing.yml)
 
 Quick links: [Overview](#overview) | [Using](#using) | [Installing](#installing) | [Contributing](#contributing)
 
