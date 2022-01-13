@@ -37,7 +37,7 @@ Feature: Check files in a WordPress install
     And a config.yml file:
       """
       file-sessions:
-        check: File_Contents
+        check: FileContents
         options:
           regex: .*(session_start|\$_SESSION).*
           only_wp_content: true
@@ -74,7 +74,7 @@ Feature: Check files in a WordPress install
     And a config.yml file:
       """
       file-server-name-wp-config:
-        check: File_Contents
+        check: FileContents
         options:
           regex: define\(.+WP_(HOME|SITEURL).+\$_SERVER.+SERVER_NAME
           path: wp-config.php
@@ -122,7 +122,7 @@ Feature: Check files in a WordPress install
     And a config.yml file:
       """
       file-content-exist:
-        check: File_Contents
+        check: FileContents
         options:
           regex: .*wp-doctor-exists-test.*
           only_wp_content: true

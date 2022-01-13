@@ -5,7 +5,7 @@ Feature: Check the status of a plugin
     And a config.yml file:
       """
       plugin-akismet-active:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\PluginStatus
         options:
           name: akismet
           status: active
@@ -21,12 +21,12 @@ Feature: Check the status of a plugin
     And a config.yml file:
       """
       plugin-akismet-active:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\PluginStatus
         options:
           name: akismet
           status: active
       plugin-hello-uninstalled:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\PluginStatus
         options:
           name: hello
           status: uninstalled
@@ -71,7 +71,7 @@ Feature: Check the status of a plugin
     And a config.yml file:
       """
       plugin-akismet-active-network:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\PluginStatus
         options:
           name: akismet
           status: active-network
@@ -80,5 +80,5 @@ Feature: Check the status of a plugin
     When I try `wp doctor check plugin-akismet-active-network --config=config.yml`
     Then STDERR should be:
       """
-      Error: Invalid plugin_status. Should be one of: uninstalled, installed, active.
+      Error: Invalid PluginStatus. Should be one of: uninstalled, installed, active.
       """

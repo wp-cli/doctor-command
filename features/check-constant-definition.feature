@@ -71,7 +71,7 @@ Feature: Check the values of defined constants
     And a config.yml file:
       """
       constant-db-host-defined:
-        class: runcommand\Doctor\Checks\Constant_Definition
+        class: WP_CLI\Doctor\Check\ConstantDefinition
         options:
           constant: DB_HOST
           defined: true
@@ -87,7 +87,7 @@ Feature: Check the values of defined constants
     And a config.yml file:
       """
       constant-foobar-true:
-        class: runcommand\Doctor\Checks\Constant_Definition
+        class: WP_CLI\Doctor\Check\ConstantDefinition
         options:
           constant: FOOBAR
           value: true
@@ -108,7 +108,7 @@ Feature: Check the values of defined constants
     And a config.yml file:
       """
       constant-foobar-true:
-        class: runcommand\Doctor\Checks\Constant_Definition
+        class: WP_CLI\Doctor\Check\ConstantDefinition
         options:
           constant: FOOBAR
           value: true

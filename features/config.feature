@@ -14,13 +14,13 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       undefined-class:
-        class: Class_Undefined
+        class: ClassUndefined
       """
 
     When I try `wp doctor check --all --config=config.yml`
     Then STDERR should be:
       """
-      Error: Class 'Class_Undefined' for check 'undefined-class' doesn't exist. Verify check registration.
+      Error: Class 'ClassUndefined' for check 'undefined-class' doesn't exist. Verify check registration.
       """
 
   Scenario: Error when a check class doesn't extend our base class
@@ -42,7 +42,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       check space:
-        class: runcommand\Doctor\Checks\Constant_Definition
+        class: WP_CLI\Doctor\Check\ConstantDefinition
       """
 
     When I try `wp doctor check --all --config=config.yml`
@@ -56,7 +56,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       constant-custom:
-        constant: Constant_Definition
+        constant: ConstantDefinition
         options:
           constant: CUSTOM
           defined: true
@@ -73,7 +73,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       constant-invalid-option:
-        check: Constant_Definition
+        check: ConstantDefinition
         options:
           constant_name: CUSTOM
           defined: true
@@ -90,7 +90,7 @@ Feature: Configure the Doctor
     And a first-config.yml file:
       """
       constant-wp-debug:
-        check: Constant_Definition
+        check: ConstantDefinition
         options:
           constant: WP_DEBUG
           falsy: true
@@ -100,7 +100,7 @@ Feature: Configure the Doctor
       _:
         inherit: first-config.yml
       constant-savequeries:
-        check: Constant_Definition
+        check: ConstantDefinition
         options:
           constant: SAVEQUERIES
           falsy: true
@@ -125,7 +125,7 @@ Feature: Configure the Doctor
       _:
         inherit: default
       constant-custom:
-        check: Constant_Definition
+        check: ConstantDefinition
         options:
           constant: CUSTOM
           defined: true
@@ -164,7 +164,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       plugin-akismet-valid-api-key:
-        class: Akismet_Valid_API_Key
+        class: AkismetValidApiKey
         require: akismet-valid-api-key.php
       """
     And a akismet-valid-api-key.php file:
@@ -173,7 +173,7 @@ Feature: Configure the Doctor
       /**
        * Ensures Akismet is activated with the appropriate credentials.
        */
-      class Akismet_Valid_API_Key extends runcommand\Doctor\Checks\Check {
+      class AkismetValidApiKey extends WP_CLI\Doctor\Check {
 
         public function run() {
           // If the Akismet isn't activated, bail early.
@@ -220,7 +220,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       plugin-akismet-valid-api-key:
-        class: Akismet_Valid_API_Key
+        class: AkismetValidApiKey
         require: akismet-valid-api-key.php
       """
 

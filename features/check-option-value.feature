@@ -13,7 +13,7 @@ Feature: Check the value of a given option
     And a blog-private.yml file:
       """
       option-blog-private:
-        check: Option_Value
+        check: OptionValue
         options:
           option: blog_public
           value: 0
@@ -21,7 +21,7 @@ Feature: Check the value of a given option
     And a blog-public.yml file:
       """
       option-blog-public:
-        check: Option_Value
+        check: OptionValue
         options:
           option: blog_public
           value: 1
@@ -74,7 +74,7 @@ Feature: Check the value of a given option
     And a config.yml file:
       """
       option-admin-email:
-        check: Option_Value
+        check: OptionValue
         options:
           option: admin_email
           value: foo@example.org
@@ -106,7 +106,7 @@ Feature: Check the value of a given option
     And a config.yml file:
       """
       option-admin-email:
-        check: Option_Value
+        check: OptionValue
         options:
           option: admin_email
           value_is_not: foo@example.org
@@ -139,7 +139,7 @@ Feature: Check the value of a given option
     And a config.yml file:
       """
       option-users-can-register:
-        check: Option_Value
+        check: OptionValue
         options:
           option: users_can_register
           value: 0
@@ -172,7 +172,7 @@ Feature: Check the value of a given option
     And a config.yml file:
       """
       option-users-can-register:
-        check: Option_Value
+        check: OptionValue
         options:
           option: users_can_register
           value: 0

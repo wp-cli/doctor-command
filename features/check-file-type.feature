@@ -5,7 +5,7 @@ Feature: Check the type of file
     And a config.yml file:
       """
       file-object-cache-symlink:
-        check: File_Type
+        check: FileType
         options:
           path: wp-content/object-cache.php
           symlink: false
@@ -38,7 +38,7 @@ Feature: Check the type of file
     And a config.yml file:
       """
       file-object-cache-symlink:
-        check: File_Type
+        check: FileType
         options:
           path: wp-content/object-cache.php
           symlink: true
