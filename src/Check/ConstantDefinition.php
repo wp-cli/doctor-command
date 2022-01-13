@@ -1,13 +1,14 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
+use WP_CLI\Doctor\Check;
 
 /**
  * Confirms expected state of the %constant% constant.
  */
-class Constant_Definition extends Check {
+class ConstantDefinition extends Check {
 
 	/**
 	 * Name of the constant.

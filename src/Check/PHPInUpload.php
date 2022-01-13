@@ -1,15 +1,16 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
-use WP_CLI;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use WP_CLI;
+use WP_CLI\Doctor\Check;
 
 /**
  * Warns when a PHP file is present in the Uploads folder.
  */
-class PHP_In_Upload extends Check {
+class PHPInUpload extends Check {
 
 	/**
 	 * Array containing list of files found in the uploads folder

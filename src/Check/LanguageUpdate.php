@@ -1,13 +1,14 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
+use WP_CLI\Doctor\Check;
 
 /**
  * Warns when there are language updates available.
  */
-class Language_Update extends Check {
+class LanguageUpdate extends Check {
 
 	public function run() {
 

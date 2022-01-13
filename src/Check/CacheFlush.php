@@ -1,15 +1,15 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
-use WP_CLI;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use WP_CLI;
 
 /**
  * Detects the number of occurrences of the `wp_cache_flush()` function.
  */
-class Cache_Flush extends File_Contents {
+class CacheFlush extends FileContents {
 
 	public function run() {
 

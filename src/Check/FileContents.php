@@ -1,13 +1,13 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use SplFileInfo;
 
 /**
  * Checks files on the filesystem for regex pattern `%regex%`.
  */
-class File_Contents extends File {
+class FileContents extends File {
 
 	/**
 	 * Regex pattern to check against each file’s contents.

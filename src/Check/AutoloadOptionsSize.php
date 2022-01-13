@@ -1,13 +1,14 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
+use WP_CLI\Doctor\Check;
 
 /**
  * Warns when autoloaded options size exceeds threshold of %threshold_kb% kb.
  */
-class Autoload_Options_Size extends Check {
+class AutoloadOptionsSize extends Check {
 
 	/**
 	 * Threshold in kilobytes.

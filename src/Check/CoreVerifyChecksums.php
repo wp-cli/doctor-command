@@ -1,13 +1,14 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
+use WP_CLI\Doctor\Check;
 
 /**
  * Verifies WordPress files against published checksums; errors on failure.
  */
-class Core_Verify_Checksums extends Check {
+class CoreVerifyChecksums extends Check {
 
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );

@@ -1,13 +1,13 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
 
 /**
  * Errors when there's an excess of %threshold_count% duplicate cron jobs registered.
  */
-class Cron_Duplicates extends Cron {
+class CronDuplicates extends Cron {
 
 	/**
 	 * Warn when there are greater than this number of duplicates.

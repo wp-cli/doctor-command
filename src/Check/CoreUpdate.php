@@ -1,13 +1,14 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
+use WP_CLI\Doctor\Check;
 
 /**
  * Errors when new WordPress minor release is available; warns for major release.
  */
-class Core_Update extends Check {
+class CoreUpdate extends Check {
 
 	public function run() {
 		ob_start();

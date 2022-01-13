@@ -1,44 +1,44 @@
 # Default check configuration for `wp doctor`
 autoload-options-size:
-  check: Autoload_Options_Size
+  check: AutoloadOptionsSize
 constant-savequeries-falsy:
-  check: Constant_Definition
+  check: ConstantDefinition
   options:
     constant: SAVEQUERIES
     falsy: true
 constant-wp-debug-falsy:
-  check: Constant_Definition
+  check: ConstantDefinition
   options:
     constant: WP_DEBUG
     falsy: true
 core-update:
-  check: Core_Update
+  check: CoreUpdate
 core-verify-checksums:
-  check: Core_Verify_Checksums
+  check: CoreVerifyChecksums
 cron-count:
-  check: Cron_Count
+  check: CronCount
 cron-duplicates:
-  check: Cron_Duplicates
+  check: CronDuplicates
 file-eval:
-  check: File_Contents
+  check: FileContents
   options:
     regex: eval\(.*base64_decode\(.*
 option-blog-public:
-  check: Option_Value
+  check: OptionValue
   options:
     option: blog_public
     value: 1
 plugin-active-count:
-  check: Plugin_Active_Count
+  check: PluginActiveCount
 plugin-deactivated:
-  check: Plugin_Deactivated
+  check: PluginDeactivated
 plugin-update:
-  check: Plugin_Update
+  check: PluginUpdate
 theme-update:
-  check: Theme_Update
+  check: ThemeUpdate
 cache-flush:
-  check: Cache_Flush
+  check: CacheFlush
 php-in-upload:
-  check: PHP_In_Upload
+  check: PHPInUpload
 language-update:
-  check: Language_Update
+  check: LanguageUpdate

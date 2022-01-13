@@ -1,13 +1,14 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
+use WP_CLI\Doctor\Check;
 
 /**
  * Confirms the expected value of the '%option%' option.
  */
-class Option_Value extends Check {
+class OptionValue extends Check {
 
 	/**
 	 * Name of the option.

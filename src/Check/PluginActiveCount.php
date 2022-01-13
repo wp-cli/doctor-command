@@ -1,13 +1,13 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
 
 /**
  * Warns when there are greater than %threshold_count% plugins activated.
  */
-class Plugin_Active_Count extends Plugin {
+class PluginActiveCount extends Plugin {
 
 	/**
 	 * Threshold as a total number of plugins.

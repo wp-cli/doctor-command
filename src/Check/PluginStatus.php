@@ -1,13 +1,13 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
 
 /**
  * Errors if plugin '%name%' isn't in the expected state '%status%'.
  */
-class Plugin_Status extends Plugin {
+class PluginStatus extends Plugin {
 
 	/**
 	 * Name of the plugin to check.

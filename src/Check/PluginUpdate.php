@@ -1,13 +1,13 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
 
 /**
  * Warns when there are plugin updates available.
  */
-class Plugin_Update extends Plugin {
+class PluginUpdate extends Plugin {
 
 	public function run() {
 		$plugins      = self::get_plugins();

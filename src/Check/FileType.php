@@ -1,13 +1,13 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use SplFileInfo;
 
 /**
  * Checks files on the filesystem to be of a certain type.
  */
-class File_Type extends File {
+class FileType extends File {
 
 	/**
 	 * Assert the file type is or isn't a symlink.

@@ -1,2 +1,2 @@
 require:
-  - command.php
+  - doctor-command.php

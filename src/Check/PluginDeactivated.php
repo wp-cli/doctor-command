@@ -1,13 +1,13 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
 
 /**
  * Warns when greater than %threshold_percentage%% of plugins are deactivated.
  */
-class Plugin_Deactivated extends Plugin {
+class PluginDeactivated extends Plugin {
 
 	/**
 	 * Threshold as a percentage.
