@@ -30,7 +30,7 @@ class Plugin_Deactivated extends Plugin {
 		}
 
 		$threshold = (int) $this->threshold_percentage;
-		if ( ( $inactive / ( $inactive + $active ) ) > ( $threshold / 100 ) ) {
+		if ( $inactive + $active > 0 && ( $inactive / ( $inactive + $active ) ) > ( $threshold / 100 ) ) {
 			$this->set_status( 'warning' );
 			$this->set_message( "Greater than {$threshold} percent of plugins are deactivated." );
 		} else {
