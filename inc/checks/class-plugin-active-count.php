@@ -21,7 +21,7 @@ class Plugin_Active_Count extends Plugin {
 
 		$active = 0;
 		foreach ( self::get_plugins() as $plugin ) {
-			if ( 'active' === $plugin['status'] ) {
+			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {
 				$active++;
 			}
 		}
