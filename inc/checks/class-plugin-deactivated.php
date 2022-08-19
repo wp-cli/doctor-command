@@ -22,7 +22,7 @@ class Plugin_Deactivated extends Plugin {
 		$active   = 0;
 		$inactive = 0;
 		foreach ( self::get_plugins() as $plugin ) {
-			if ( 'active' === $plugin['status'] ) {
+			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {
 				$active++;
 			} elseif ( 'inactive' === $plugin['status'] ) {
 				$inactive++;
@@ -30,7 +30,7 @@ class Plugin_Deactivated extends Plugin {
 		}
 
 		$threshold = (int) $this->threshold_percentage;
-		if ( ( $inactive / ( $inactive + $active ) ) > ( $threshold / 100 ) ) {
+		if ( $inactive + $active > 0 && ( $inactive / ( $inactive + $active ) ) > ( $threshold / 100 ) ) {
 			$this->set_status( 'warning' );
 			$this->set_message( "Greater than {$threshold} percent of plugins are deactivated." );
 		} else {
