@@ -33,3 +33,12 @@ Feature: Check whether a high number of plugins are activated
     Then STDOUT should be a table containing rows:
       | name                | status  | message                                             |
       | plugin-active-count | warning | Number of active plugins (4) exceeds threshold (3). |
+
+  Scenario: Include network-enabled plugins in active plugin count
+    Given a WP multisite installation
+    And I run `wp plugin activate --network --all`
+
+    When I run `wp doctor check plugin-active-count`
+    Then STDOUT should be a table containing rows:
+      | name                | status  | message                                                   |
+      | plugin-active-count | success | Number of active plugins (2) is less than threshold (80). |
