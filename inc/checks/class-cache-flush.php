@@ -7,7 +7,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 /**
- * Detects the number of occurrences of the `wp_cache_flush()` function.
+ * Detects any use of the `wp_cache_flush()` function.
  */
 class Cache_Flush extends File_Contents {
 
