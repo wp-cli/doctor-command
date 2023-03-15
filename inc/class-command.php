@@ -209,7 +209,7 @@ class Command {
 		$should_error       = ! empty( $results_with_error );
 		if ( $should_error && 'table' === $assoc_args['format'] ) {
 			$check_count   = count( $results_with_error );
-			$error_message = 1 === $check_count ? "1 check reports 'error'." : "${check_count} checks report 'error'.";
+			$error_message = 1 === $check_count ? "1 check reports 'error'." : sprintf( "%d checks report 'error'.", $check_count );
 		} else {
 			$error_message = null;
 		}
