@@ -22,7 +22,7 @@
         "wp-cli/wp-cli": "^2.1"
     },
     "require-dev": {
-        "wp-cli/wp-cli-tests": "^3.2"
+        "wp-cli/wp-cli-tests": "^4"
     },
     "config": {
         "platform": {
@@ -66,6 +66,7 @@
         "behat-rerun": "rerun-behat-tests",
         "lint": "run-linter-tests",
         "phpcs": "run-phpcs-tests",
+        "phpcbf": "run-phpcbf-cleanup",
         "phpunit": "run-php-unit-tests",
         "prepare-tests": "install-package-tests",
         "test": [

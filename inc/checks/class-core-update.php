@@ -37,7 +37,5 @@ class Core_Update extends Check {
 			$this->set_status( 'success' );
 			$this->set_message( 'WordPress is at the latest version.' );
 		}
-
 	}
-
 }

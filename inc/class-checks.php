@@ -34,7 +34,7 @@ class Checks {
 		if ( ! empty( $check_data['_']['inherit'] ) ) {
 			$inherited = $check_data['_']['inherit'];
 			if ( 'default' === $inherited ) {
-				$inherited = dirname( dirname( __FILE__ ) ) . '/doctor.yml';
+				$inherited = dirname( __DIR__ ) . '/doctor.yml';
 			}
 			$inherited = self::absolutize( $inherited, dirname( $file ) );
 			if ( isset( $check_data['_']['skipped_checks'] ) ) {
@@ -129,5 +129,4 @@ class Checks {
 		}
 		return $path;
 	}
-
 }

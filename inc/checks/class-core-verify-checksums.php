@@ -30,5 +30,4 @@ class Core_Verify_Checksums extends Check {
 			$this->set_message( "WordPress doesn't verify against its checksums." );
 		}
 	}
-
 }

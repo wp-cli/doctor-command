@@ -14,7 +14,7 @@ class Plugin_Update extends Plugin {
 		$update_count = 0;
 		foreach ( $plugins as $plugin ) {
 			if ( 'available' === $plugin['update'] ) {
-				$update_count++;
+				++$update_count;
 			}
 		}
 
@@ -28,7 +28,5 @@ class Plugin_Update extends Plugin {
 			$this->set_status( 'success' );
 			$this->set_message( 'Plugins are up to date.' );
 		}
-
 	}
-
 }

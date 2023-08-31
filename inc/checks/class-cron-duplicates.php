@@ -24,7 +24,7 @@ class Cron_Duplicates extends Cron {
 			if ( ! isset( $job_counts[ $job['hook'] ] ) ) {
 				$job_counts[ $job['hook'] ] = 0;
 			}
-			$job_counts[ $job['hook'] ]++;
+			++$job_counts[ $job['hook'] ];
 			if ( $job_counts[ $job['hook'] ] >= $this->threshold_count ) {
 				$excess_duplicates = true;
 			}
@@ -37,5 +37,4 @@ class Cron_Duplicates extends Cron {
 			$this->set_message( 'All cron job counts are within normal operating expectations.' );
 		}
 	}
-
 }

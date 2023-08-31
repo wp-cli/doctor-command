@@ -5,19 +5,19 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 }
 
 spl_autoload_register(
-	function( $class ) {
-			$class = ltrim( $class, '\\' );
-		if ( 0 !== stripos( $class, 'runcommand\\Doctor\\' ) ) {
+	function ( $class_name ) {
+			$class_name = ltrim( $class_name, '\\' );
+		if ( 0 !== stripos( $class_name, 'runcommand\\Doctor\\' ) ) {
 			return;
 		}
 
-			$parts = explode( '\\', $class );
+			$parts = explode( '\\', $class_name );
 			array_shift( $parts ); // Don't need "runcommand\Doctor"
 			array_shift( $parts );
 			$last    = array_pop( $parts ); // File should be 'class-[...].php'
 			$last    = 'class-' . $last . '.php';
 			$parts[] = $last;
-			$file    = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( '/', $parts ) ) );
+			$file    = __DIR__ . '/inc/' . str_replace( '_', '-', strtolower( implode( '/', $parts ) ) );
 		if ( file_exists( $file ) ) {
 			require $file;
 		}
