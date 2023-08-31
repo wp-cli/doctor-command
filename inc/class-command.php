@@ -309,7 +309,7 @@ class Command {
 
 		WP_CLI::add_wp_hook(
 			'wp_redirect',
-			function ( $to ) {
+			function ( $to ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
 				ob_start();
 				debug_print_backtrace();
 				$message = ob_get_clean();
