@@ -69,14 +69,12 @@ class Constant_Definition extends Check {
 						$this->set_status( 'error' );
 						$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to not be falsy." );
 					}
-				} else {
-					if ( ! $this->falsy ) {
+				} elseif ( ! $this->falsy ) {
 						$this->set_status( 'success' );
 						$this->set_message( "Constant '{$this->constant}' is not defined falsy." );
-					} else {
-						$this->set_status( 'error' );
-						$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be falsy." );
-					}
+				} else {
+					$this->set_status( 'error' );
+					$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be falsy." );
 				}
 			}
 			return;
@@ -118,7 +116,6 @@ class Constant_Definition extends Check {
 			$human_expected = self::human_value( $this->value );
 			$this->set_message( "Constant '{$this->constant}' is defined '{$human_actual}' but expected to be '{$human_expected}'." );
 		}
-
 	}
 
 	private static function human_value( $value ) {
@@ -129,5 +126,4 @@ class Constant_Definition extends Check {
 		}
 		return $value;
 	}
-
 }

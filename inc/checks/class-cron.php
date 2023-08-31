@@ -20,5 +20,4 @@ abstract class Cron extends Check {
 		self::$crons = ! empty( $ret ) ? json_decode( $ret, true ) : array();
 		return self::$crons;
 	}
-
 }

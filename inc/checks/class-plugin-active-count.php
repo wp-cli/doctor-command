@@ -22,7 +22,7 @@ class Plugin_Active_Count extends Plugin {
 		$active = 0;
 		foreach ( self::get_plugins() as $plugin ) {
 			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {
-				$active++;
+				++$active;
 			}
 		}
 
@@ -34,7 +34,5 @@ class Plugin_Active_Count extends Plugin {
 			$this->set_status( 'success' );
 			$this->set_message( "Number of active plugins ({$active}) is less than threshold ({$threshold})." );
 		}
-
 	}
-
 }

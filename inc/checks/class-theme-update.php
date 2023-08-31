@@ -17,7 +17,7 @@ class Theme_Update extends Check {
 		$update_count = 0;
 		foreach ( $themes as $theme ) {
 			if ( 'available' === $theme['update'] ) {
-				$update_count++;
+				++$update_count;
 			}
 		}
 
@@ -31,7 +31,5 @@ class Theme_Update extends Check {
 			$this->set_status( 'success' );
 			$this->set_message( 'Themes are up to date.' );
 		}
-
 	}
-
 }

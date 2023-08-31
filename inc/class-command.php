@@ -185,7 +185,7 @@ class Command {
 			$check_count = count( $results );
 			$results     = array_filter(
 				$results,
-				function( $check ) {
+				function ( $check ) {
 					return in_array( $check['status'], array( 'warning', 'error' ), true );
 				}
 			);
@@ -202,7 +202,7 @@ class Command {
 
 		$results_with_error = array_filter(
 			$results,
-			function( $check ) {
+			function ( $check ) {
 				return 'error' === $check['status'];
 			}
 		);
@@ -309,7 +309,7 @@ class Command {
 
 		WP_CLI::add_wp_hook(
 			'wp_redirect',
-			function( $to ) {
+			function ( $to ) {
 				ob_start();
 				debug_print_backtrace();
 				$message = ob_get_clean();
@@ -372,7 +372,6 @@ class Command {
 	 * Get the path to the default config file
 	 */
 	private static function get_default_config() {
-		return dirname( dirname( __FILE__ ) ) . '/doctor.yml';
+		return dirname( __DIR__ ) . '/doctor.yml';
 	}
-
 }

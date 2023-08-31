@@ -23,9 +23,9 @@ class Plugin_Deactivated extends Plugin {
 		$inactive = 0;
 		foreach ( self::get_plugins() as $plugin ) {
 			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {
-				$active++;
+				++$active;
 			} elseif ( 'inactive' === $plugin['status'] ) {
-				$inactive++;
+				++$inactive;
 			}
 		}
 
@@ -37,7 +37,5 @@ class Plugin_Deactivated extends Plugin {
 			$this->set_status( 'success' );
 			$this->set_message( "Less than {$threshold} percent of plugins are deactivated." );
 		}
-
 	}
-
 }

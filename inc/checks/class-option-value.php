@@ -77,7 +77,5 @@ class Option_Value extends Check {
 				# code...
 				break;
 		}
-
 	}
-
 }
