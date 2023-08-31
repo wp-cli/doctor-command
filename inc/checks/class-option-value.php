@@ -41,7 +41,7 @@ class Option_Value extends Check {
 		$actual_value = get_option( $this->option );
 
 		if ( isset( $this->value ) ) {
-			if ( $actual_value == $this->value ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison -- Keep existing behavior.
+			if ( $actual_value == $this->value ) { // phpcs:ignore Universal.Operators.StrictComparisons -- Keep existing behavior.
 				$status  = 'success';
 				$message = "Option '{$this->option}' is '{$this->value}' as expected.";
 			} else {
@@ -49,7 +49,7 @@ class Option_Value extends Check {
 				$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->value}'.";
 			}
 		} elseif ( isset( $this->value_is_not ) ) {
-			if ( $actual_value == $this->value_is_not ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison -- Keep existing behavior.
+			if ( $actual_value == $this->value_is_not ) { // phpcs:ignore Universal.Operators.StrictComparisons -- Keep existing behavior.
 				$status  = 'error';
 				$message = "Option '{$this->option}' is '{$actual_value}' and expected not to be.";
 			} else {
