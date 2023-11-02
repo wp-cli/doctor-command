@@ -30,7 +30,6 @@ class FileType extends File {
 				$this->set_message( "All '{$this->extension}' files passed assertion that symlink is '{$symlink}'." );
 			}
 		}
-
 	}
 
 	public function check_file( SplFileInfo $file ) {
@@ -42,5 +41,4 @@ class FileType extends File {
 			}
 		}
 	}
-
 }

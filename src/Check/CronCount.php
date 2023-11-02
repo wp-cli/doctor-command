@@ -26,5 +26,4 @@ class CronCount extends Cron {
 			$this->set_message( 'Total number of cron jobs is within normal operating expectations.' );
 		}
 	}
-
 }

@@ -42,3 +42,21 @@ Feature: Check whether a high percentage of plugins are deactivated
     Then STDOUT should be a table containing rows:
       | name               | status  | message                                          |
       | plugin-deactivated | warning | Greater than 60 percent of plugins are deactivated. |
+
+  Scenario: Gracefully handle no plugins installed
+    Given a WP install
+    And I run `wp plugin uninstall --all`
+
+    When I run `wp doctor check plugin-deactivated`
+    Then STDOUT should be a table containing rows:
+      | name               | status  | message                                          |
+      | plugin-deactivated | success | Less than 40 percent of plugins are deactivated. |
+
+  Scenario: Gracefully handle only network-enabled plugins installed and activated
+    Given a WP multisite installation
+    And I run `wp plugin activate --network --all`
+
+    When I run `wp doctor check plugin-deactivated`
+    Then STDOUT should be a table containing rows:
+      | name               | status  | message                                          |
+      | plugin-deactivated | success | Less than 40 percent of plugins are deactivated. |

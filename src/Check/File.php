@@ -58,5 +58,4 @@ abstract class File extends Check {
 			'path'            => $this->path,
 		);
 	}
-
 }

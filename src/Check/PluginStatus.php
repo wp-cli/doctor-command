@@ -66,5 +66,4 @@ class PluginStatus extends Plugin {
 			$this->set_message( "Plugin '{$this->name}' is '{$current_status}' as expected." );
 		}
 	}
-
 }

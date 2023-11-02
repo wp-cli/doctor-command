@@ -21,5 +21,4 @@ abstract class Plugin extends Check {
 		self::$plugins = ! empty( $ret ) ? json_decode( $ret, true ) : array();
 		return self::$plugins;
 	}
-
 }

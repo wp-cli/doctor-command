@@ -99,5 +99,4 @@ abstract class Check {
 			'message' => $this->_message,
 		);
 	}
-
 }

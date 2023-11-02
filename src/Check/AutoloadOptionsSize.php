@@ -38,7 +38,6 @@ class AutoloadOptionsSize extends Check {
 			$this->set_status( 'success' );
 			$this->set_message( "Autoloaded options size ({$human_total}) is less than threshold ({$human_threshold})." );
 		}
-
 	}
 
 	private static function format_bytes( $size, $precision = 2 ) {
@@ -46,5 +45,4 @@ class AutoloadOptionsSize extends Check {
 		$suffixes = array( '', 'kb', 'mb', 'g', 't' );
 		return round( pow( 1024, $base - floor( $base ) ), $precision ) . $suffixes[ floor( $base ) ];
 	}
-
 }

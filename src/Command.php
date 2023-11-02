@@ -185,7 +185,7 @@ class Command {
 			$check_count = count( $results );
 			$results     = array_filter(
 				$results,
-				function( $check ) {
+				function ( $check ) {
 					return in_array( $check['status'], array( 'warning', 'error' ), true );
 				}
 			);
@@ -202,14 +202,14 @@ class Command {
 
 		$results_with_error = array_filter(
 			$results,
-			function( $check ) {
+			function ( $check ) {
 				return 'error' === $check['status'];
 			}
 		);
 		$should_error       = ! empty( $results_with_error );
 		if ( $should_error && 'table' === $assoc_args['format'] ) {
 			$check_count   = count( $results_with_error );
-			$error_message = 1 === $check_count ? "1 check reports 'error'." : "${check_count} checks report 'error'.";
+			$error_message = 1 === $check_count ? "1 check reports 'error'." : sprintf( "%d checks report 'error'.", $check_count );
 		} else {
 			$error_message = null;
 		}
@@ -309,7 +309,7 @@ class Command {
 
 		WP_CLI::add_wp_hook(
 			'wp_redirect',
-			function( $to ) {
+			function ( $to ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
 				ob_start();
 				debug_print_backtrace();
 				$message = ob_get_clean();
@@ -372,7 +372,6 @@ class Command {
 	 * Get the path to the default config file
 	 */
 	private static function get_default_config() {
-		return dirname( dirname( __FILE__ ) ) . '/doctor.yml';
+		return dirname( __DIR__ ) . '/doctor.yml';
 	}
-
 }
