@@ -80,5 +80,5 @@ Feature: Check the status of a plugin
     When I try `wp doctor check plugin-akismet-active-network --config=config.yml`
     Then STDERR should be:
       """
-      Error: Invalid PluginStatus. Should be one of: uninstalled, installed, active.
+      Error: Invalid plugin_status. Should be one of: uninstalled, installed, active.
       """
