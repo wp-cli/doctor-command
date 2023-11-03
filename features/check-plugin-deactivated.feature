@@ -43,6 +43,8 @@ Feature: Check whether a high percentage of plugins are deactivated
       | name               | status  | message                                          |
       | plugin-deactivated | warning | Greater than 60 percent of plugins are deactivated. |
 
+  # This test deletes all plugins, but SQLite requires an integration plugin to be installed.
+  @require-mysql
   Scenario: Gracefully handle no plugins installed
     Given a WP install
     And I run `wp plugin uninstall --all`

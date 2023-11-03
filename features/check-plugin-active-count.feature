@@ -10,7 +10,9 @@ Feature: Check whether a high number of plugins are activated
 
   Scenario: Less than threshold plugins are active
     Given a WP install
-    And I run `wp plugin activate --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --all`
 
     When I run `wp doctor check plugin-active-count`
     Then STDOUT should be a table containing rows:
@@ -27,7 +29,9 @@ Feature: Check whether a high number of plugins are activated
           threshold_count: 3
       """
     And I run `wp plugin install user-switching rewrite-rules-inspector`
-    And I run `wp plugin activate --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --all`
 
     When I run `wp doctor check plugin-active-count --config=config.yml`
     Then STDOUT should be a table containing rows:
@@ -36,7 +40,9 @@ Feature: Check whether a high number of plugins are activated
 
   Scenario: Include network-enabled plugins in active plugin count
     Given a WP multisite installation
-    And I run `wp plugin activate --network --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --network --all`
 
     When I run `wp doctor check plugin-active-count`
     Then STDOUT should be a table containing rows:

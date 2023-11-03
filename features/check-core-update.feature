@@ -16,9 +16,11 @@ Feature: Check whether WordPress is up to date
       | name          | status  | message                                   |
       | core-update   | success | WordPress is at the latest version.       |
 
+  # This test downgrades to WordPress 5.9.0, but the SQLite plugin requires 6.0+
+  @requires-mysql
   Scenario: WordPress has a new minor version but no new major version
     Given a WP install
-    And I run `wp core download --version=4.5.1 --force`
+    And I run `wp core download --version=5.9.0 --force`
     And I run `wp theme activate twentyfifteen`
 
     When I try `wp doctor check core-update`
@@ -31,6 +33,8 @@ Feature: Check whether WordPress is up to date
       """
     And the return code should be 1
 
+  # This test downgrades to WordPress 5.9.0, but the SQLite plugin requires 6.0+
+  @requires-mysql
   Scenario: WordPress has a new major version but no new minor version
     Given a WP install
     And I run `wp core download --version=4.4.9 --force`

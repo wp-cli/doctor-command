@@ -2,7 +2,9 @@ Feature: Basic check usage
 
   Scenario: Use --spotlight to focus on warnings and errors
     Given a WP install
-    And I run `wp plugin activate --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --all`
     And I run `wp plugin update --all`
     And I run `wp theme update --all`
 
