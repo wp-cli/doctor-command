@@ -50,7 +50,10 @@ Feature: Check whether a high number of plugins are activated
     # See https://github.com/WordPress/sqlite-database-integration/issues/49
     And I try `wp plugin activate --network --all`
 
+    When I run `wp plugin list --status=active --format=count`
+    Then save STDOUT as {PLUGIN_COUNT}
+
     When I run `wp doctor check plugin-active-count`
     Then STDOUT should be a table containing rows:
       | name                | status  | message                                                   |
-      | plugin-active-count | success | Number of active plugins (2) is less than threshold (80). |
+      | plugin-active-count | success | Number of active plugins ({PLUGIN_COUNT}) is less than threshold (80). |
