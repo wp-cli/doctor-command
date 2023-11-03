@@ -1,5 +1,8 @@
 Feature: Basic check usage
 
+  # The SQLite integration plugin uses wp_cache_flush()
+  # which means not all checks report success.
+  @require-mysql
   Scenario: Use --spotlight to focus on warnings and errors
     Given a WP install
     # Uses "try" because the SQLite plugin attempts to do a redirect.
