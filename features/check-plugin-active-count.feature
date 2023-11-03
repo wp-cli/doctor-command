@@ -50,7 +50,7 @@ Feature: Check whether a high number of plugins are activated
     # See https://github.com/WordPress/sqlite-database-integration/issues/49
     And I try `wp plugin activate --network --all`
 
-    When I run `wp plugin list --status=active --format=count`
+    When I run `wp plugin list --status=active-network --format=count`
     Then save STDOUT as {PLUGIN_COUNT}
 
     When I run `wp doctor check plugin-active-count`
