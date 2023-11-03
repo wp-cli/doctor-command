@@ -19,7 +19,7 @@ Feature: Check files in a WordPress install
     Given a wp-content/mu-plugins/exploited.php file:
       """
       <?php
-      eval( base64_decode( $_POST[''] ?? '' ) );
+      eval( base64_decode( isset( $_POST[''] ) ? $_POST[''] : '' ) );
       """
 
     When I try `wp doctor check file-eval`

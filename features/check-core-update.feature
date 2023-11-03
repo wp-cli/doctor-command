@@ -8,6 +8,7 @@ Feature: Check whether WordPress is up to date
       | name                       | description                                                                    |
       | core-update                | Errors when new WordPress minor release is available; warns for major release. |
 
+  @require-wp-latest
   Scenario: WordPress is up to date
     Given a WP install
 
