@@ -11,7 +11,9 @@ Feature: Check whether a high percentage of plugins are deactivated
   Scenario: All plugins are activated
     Given a WP install
     And I run `wp plugin install user-switching rewrite-rules-inspector`
-    And I run `wp plugin activate --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --all`
 
     When I run `wp doctor check plugin-deactivated`
     Then STDOUT should be a table containing rows:
