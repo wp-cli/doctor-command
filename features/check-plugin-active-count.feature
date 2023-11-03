@@ -29,7 +29,7 @@ Feature: Check whether a high number of plugins are activated
       plugin-active-count:
         class: WP_CLI\Doctor\Check\PluginActiveCount
         options:
-          threshold_count: 4
+          threshold_count: 2
       """
     And I run `wp plugin install user-switching rewrite-rules-inspector`
     # Uses "try" because the SQLite plugin attempts to do a redirect.
@@ -42,7 +42,7 @@ Feature: Check whether a high number of plugins are activated
     When I run `wp doctor check plugin-active-count --config=config.yml`
     Then STDOUT should be a table containing rows:
       | name                | status  | message                                             |
-      | plugin-active-count | warning | Number of active plugins ({PLUGIN_COUNT}) exceeds threshold (4). |
+      | plugin-active-count | warning | Number of active plugins ({PLUGIN_COUNT}) exceeds threshold (2). |
 
   Scenario: Include network-enabled plugins in active plugin count
     Given a WP multisite installation
