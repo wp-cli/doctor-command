@@ -37,7 +37,7 @@ Feature: Check whether WordPress is up to date
   @requires-mysql
   Scenario: WordPress has a new major version but no new minor version
     Given a WP install
-    And I run `wp core download --version=4.4.9 --force`
+    And I run `wp core download --version=5.9.1 --force`
     And I run `wp theme activate twentyfifteen`
 
     When I try `wp doctor check core-update`

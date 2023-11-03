@@ -56,7 +56,9 @@ Feature: Check whether a high percentage of plugins are deactivated
 
   Scenario: Gracefully handle only network-enabled plugins installed and activated
     Given a WP multisite installation
-    And I run `wp plugin activate --network --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --network --all`
 
     When I run `wp doctor check plugin-deactivated`
     Then STDOUT should be a table containing rows:
