@@ -10,8 +10,8 @@ class Checks {
 
 	private static $instance;
 
-	private $checks  = array();
-	private $skipped = array();
+	private $checks         = array();
+	private $skipped_checks = array();
 
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
