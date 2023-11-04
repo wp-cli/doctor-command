@@ -7,7 +7,7 @@ use WP_CLI;
 /**
  * Errors if plugin '%name%' isn't in the expected state '%status%'.
  */
-class PluginStatus extends Plugin {
+class Plugin_Status extends Plugin {
 
 	/**
 	 * Name of the plugin to check.

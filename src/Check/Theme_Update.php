@@ -8,7 +8,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Warns when there are theme updates available.
  */
-class ThemeUpdate extends Check {
+class Theme_Update extends Check {
 
 	public function run() {
 		ob_start();

@@ -42,7 +42,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       check space:
-        class: WP_CLI\Doctor\Check\ConstantDefinition
+        class: WP_CLI\Doctor\Check\Constant_Definition
       """
 
     When I try `wp doctor check --all --config=config.yml`
@@ -73,7 +73,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       constant-invalid-option:
-        check: ConstantDefinition
+        check: Constant_Definition
         options:
           constant_name: CUSTOM
           defined: true
@@ -90,7 +90,7 @@ Feature: Configure the Doctor
     And a first-config.yml file:
       """
       constant-wp-debug:
-        check: ConstantDefinition
+        check: Constant_Definition
         options:
           constant: WP_DEBUG
           falsy: true
@@ -100,7 +100,7 @@ Feature: Configure the Doctor
       _:
         inherit: first-config.yml
       constant-savequeries:
-        check: ConstantDefinition
+        check: Constant_Definition
         options:
           constant: SAVEQUERIES
           falsy: true
@@ -125,7 +125,7 @@ Feature: Configure the Doctor
       _:
         inherit: default
       constant-custom:
-        check: ConstantDefinition
+        check: Constant_Definition
         options:
           constant: CUSTOM
           defined: true

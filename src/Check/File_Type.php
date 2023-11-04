@@ -7,7 +7,7 @@ use SplFileInfo;
 /**
  * Checks files on the filesystem to be of a certain type.
  */
-class FileType extends File {
+class File_Type extends File {
 
 	/**
 	 * Assert the file type is or isn't a symlink.

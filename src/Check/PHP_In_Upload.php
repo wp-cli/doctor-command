@@ -10,7 +10,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Warns when a PHP file is present in the Uploads folder.
  */
-class PHPInUpload extends Check {
+class PHP_In_Upload extends Check {
 
 	/**
 	 * Array containing list of files found in the uploads folder

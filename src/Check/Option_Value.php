@@ -8,7 +8,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Confirms the expected value of the '%option%' option.
  */
-class OptionValue extends Check {
+class Option_Value extends Check {
 
 	/**
 	 * Name of the option.

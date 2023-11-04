@@ -7,7 +7,7 @@ use WP_CLI;
 /**
  * Warns when greater than %threshold_percentage%% of plugins are deactivated.
  */
-class PluginDeactivated extends Plugin {
+class Plugin_Deactivated extends Plugin {
 
 	/**
 	 * Threshold as a percentage.

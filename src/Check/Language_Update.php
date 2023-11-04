@@ -8,7 +8,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Warns when there are language updates available.
  */
-class LanguageUpdate extends Check {
+class Language_Update extends Check {
 
 	public function run() {
 

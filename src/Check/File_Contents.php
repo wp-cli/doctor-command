@@ -7,7 +7,7 @@ use SplFileInfo;
 /**
  * Checks files on the filesystem for regex pattern `%regex%`.
  */
-class FileContents extends File {
+class File_Contents extends File {
 
 	/**
 	 * Regex pattern to check against each file’s contents.

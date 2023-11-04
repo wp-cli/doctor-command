@@ -34,7 +34,7 @@ Feature: Check whether a high percentage of plugins are deactivated
     And a custom.yml file:
       """
       plugin-deactivated:
-        class: WP_CLI\Doctor\Check\PluginDeactivated
+        class: WP_CLI\Doctor\Check\Plugin_Deactivated
         options:
           threshold_percentage: 60
       """

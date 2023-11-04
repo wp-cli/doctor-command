@@ -7,7 +7,7 @@ use WP_CLI;
 /**
  * Warns when there are plugin updates available.
  */
-class PluginUpdate extends Plugin {
+class Plugin_Update extends Plugin {
 
 	public function run() {
 		$plugins      = self::get_plugins();

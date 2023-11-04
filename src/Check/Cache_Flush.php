@@ -10,7 +10,7 @@ use WP_CLI;
 /**
  * Detects any use of the `wp_cache_flush()` function.
  */
-class CacheFlush extends FileContents {
+class Cache_Flush extends File_Contents {
 
 	public function run() {
 		// Path to wp-content directory.

@@ -8,7 +8,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Errors when new WordPress minor release is available; warns for major release.
  */
-class CoreUpdate extends Check {
+class Core_Update extends Check {
 
 	public function run() {
 		ob_start();

@@ -7,7 +7,7 @@ use WP_CLI;
 /**
  * Errors when there's an excess of %threshold_count% duplicate cron jobs registered.
  */
-class CronDuplicates extends Cron {
+class Cron_Duplicates extends Cron {
 
 	/**
 	 * Warn when there are greater than this number of duplicates.

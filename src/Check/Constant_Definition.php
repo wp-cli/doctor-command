@@ -8,7 +8,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Confirms expected state of the %constant% constant.
  */
-class ConstantDefinition extends Check {
+class Constant_Definition extends Check {
 
 	/**
 	 * Name of the constant.

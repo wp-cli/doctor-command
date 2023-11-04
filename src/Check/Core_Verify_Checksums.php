@@ -8,7 +8,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Verifies WordPress files against published checksums; errors on failure.
  */
-class CoreVerifyChecksums extends Check {
+class Core_Verify_Checksums extends Check {
 
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );

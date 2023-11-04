@@ -8,7 +8,7 @@ use WP_CLI\Doctor\Check;
 /**
  * Warns when autoloaded options size exceeds threshold of %threshold_kb% kb.
  */
-class AutoloadOptionsSize extends Check {
+class Autoload_Options_Size extends Check {
 
 	/**
 	 * Threshold in kilobytes.

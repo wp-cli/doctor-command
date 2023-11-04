@@ -7,7 +7,7 @@ use WP_CLI;
 /**
  * Warns when there are greater than %threshold_count% plugins activated.
  */
-class PluginActiveCount extends Plugin {
+class Plugin_Active_Count extends Plugin {
 
 	/**
 	 * Threshold as a total number of plugins.
