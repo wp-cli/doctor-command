@@ -5,7 +5,6 @@ Feature: Basic check usage
   @require-wp-latest @require-mysql
   Scenario: Use --spotlight to focus on warnings and errors
     Given a WP install
-    And I run `wp core update`
     # Uses "try" because the SQLite plugin attempts to do a redirect.
     # See https://github.com/WordPress/sqlite-database-integration/issues/49
     And I try `wp plugin activate --all`
