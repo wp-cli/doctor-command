@@ -12,7 +12,8 @@ Feature: Check whether WordPress is up to date
   Scenario: WordPress is up to date
     Given a WP install
 
-    When I run `wp doctor check core-update`
+    When I run `wp core update`
+    And I run `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
       | name          | status  | message                                   |
       | core-update   | success | WordPress is at the latest version.       |
