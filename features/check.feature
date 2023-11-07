@@ -14,7 +14,8 @@ Feature: Basic check usage
     When I run `wp doctor list --format=count`
     Then save STDOUT as {CHECK_COUNT}
 
-    When I run `wp doctor check --all --spotlight`
+    When I try `wp core update`
+    And I run `wp doctor check --all --spotlight`
     Then STDOUT should be:
       """
       Success: All {CHECK_COUNT} checks report 'success'.
