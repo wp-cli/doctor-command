@@ -11,7 +11,9 @@ Feature: Check whether a high percentage of plugins are deactivated
   Scenario: All plugins are activated
     Given a WP install
     And I run `wp plugin install user-switching rewrite-rules-inspector`
-    And I run `wp plugin activate --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --all`
 
     When I run `wp doctor check plugin-deactivated`
     Then STDOUT should be a table containing rows:
@@ -32,7 +34,7 @@ Feature: Check whether a high percentage of plugins are deactivated
     And a custom.yml file:
       """
       plugin-deactivated:
-        class: runcommand\Doctor\Checks\Plugin_Deactivated
+        class: WP_CLI\Doctor\Check\Plugin_Deactivated
         options:
           threshold_percentage: 60
       """
@@ -43,6 +45,8 @@ Feature: Check whether a high percentage of plugins are deactivated
       | name               | status  | message                                          |
       | plugin-deactivated | warning | Greater than 60 percent of plugins are deactivated. |
 
+  # This test deletes all plugins, but SQLite requires an integration plugin to be installed.
+  @require-mysql
   Scenario: Gracefully handle no plugins installed
     Given a WP install
     And I run `wp plugin uninstall --all`
@@ -54,7 +58,9 @@ Feature: Check whether a high percentage of plugins are deactivated
 
   Scenario: Gracefully handle only network-enabled plugins installed and activated
     Given a WP multisite installation
-    And I run `wp plugin activate --network --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --network --all`
 
     When I run `wp doctor check plugin-deactivated`
     Then STDOUT should be a table containing rows:

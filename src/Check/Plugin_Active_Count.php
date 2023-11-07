@@ -1,6 +1,6 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
 
@@ -17,8 +17,6 @@ class Plugin_Active_Count extends Plugin {
 	protected $threshold_count = 80;
 
 	public function run() {
-		$plugins = self::get_plugins();
-
 		$active = 0;
 		foreach ( self::get_plugins() as $plugin ) {
 			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {

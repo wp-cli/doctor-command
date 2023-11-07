@@ -10,35 +10,50 @@ Feature: Check whether a high number of plugins are activated
 
   Scenario: Less than threshold plugins are active
     Given a WP install
-    And I run `wp plugin activate --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --all`
+
+    When I run `wp plugin list --status=active --format=count`
+    Then save STDOUT as {PLUGIN_COUNT}
 
     When I run `wp doctor check plugin-active-count`
     Then STDOUT should be a table containing rows:
-      | name                | status  | message                                                   |
-      | plugin-active-count | success | Number of active plugins (2) is less than threshold (80). |
+      | name                | status  | message                                                                |
+      | plugin-active-count | success | Number of active plugins ({PLUGIN_COUNT}) is less than threshold (80). |
 
   Scenario: Greater than threshold plugins are active
     Given a WP install
     And a config.yml file:
       """
       plugin-active-count:
-        class: runcommand\Doctor\Checks\Plugin_Active_Count
+        class: WP_CLI\Doctor\Check\Plugin_Active_Count
         options:
-          threshold_count: 3
+          threshold_count: 2
       """
     And I run `wp plugin install user-switching rewrite-rules-inspector`
-    And I run `wp plugin activate --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --all`
+
+    When I run `wp plugin list --status=active --format=count`
+    Then save STDOUT as {PLUGIN_COUNT}
 
     When I run `wp doctor check plugin-active-count --config=config.yml`
     Then STDOUT should be a table containing rows:
-      | name                | status  | message                                             |
-      | plugin-active-count | warning | Number of active plugins (4) exceeds threshold (3). |
+      | name                | status  | message                                                          |
+      | plugin-active-count | warning | Number of active plugins ({PLUGIN_COUNT}) exceeds threshold (2). |
 
   Scenario: Include network-enabled plugins in active plugin count
     Given a WP multisite installation
-    And I run `wp plugin activate --network --all`
+    # Uses "try" because the SQLite plugin attempts to do a redirect.
+    # See https://github.com/WordPress/sqlite-database-integration/issues/49
+    And I try `wp plugin activate --network --all`
+
+    When I run `wp plugin list --status=active-network --format=count`
+    Then save STDOUT as {PLUGIN_COUNT}
 
     When I run `wp doctor check plugin-active-count`
     Then STDOUT should be a table containing rows:
       | name                | status  | message                                                   |
-      | plugin-active-count | success | Number of active plugins (2) is less than threshold (80). |
+      | plugin-active-count | success | Number of active plugins ({PLUGIN_COUNT}) is less than threshold (80). |

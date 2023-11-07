@@ -1,10 +1,11 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
-use WP_CLI;
+use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use WP_CLI;
 
 /**
  * Detects any use of the `wp_cache_flush()` function.
@@ -12,10 +13,9 @@ use RecursiveIteratorIterator;
 class Cache_Flush extends File_Contents {
 
 	public function run() {
-
 		// Path to wp-content directory.
 		$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
-		$directory      = new RecursiveDirectoryIterator( $wp_content_dir, RecursiveDirectoryIterator::SKIP_DOTS );
+		$directory      = new RecursiveDirectoryIterator( $wp_content_dir, FilesystemIterator::SKIP_DOTS );
 		$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 
 		// Regex to match.

@@ -1,6 +1,6 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor;
 
 use WP_CLI;
 

@@ -5,7 +5,7 @@ Feature: Check the status of a plugin
     And a config.yml file:
       """
       plugin-akismet-active:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\Plugin_Status
         options:
           name: akismet
           status: active
@@ -21,12 +21,12 @@ Feature: Check the status of a plugin
     And a config.yml file:
       """
       plugin-akismet-active:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\Plugin_Status
         options:
           name: akismet
           status: active
       plugin-hello-uninstalled:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\Plugin_Status
         options:
           name: hello
           status: uninstalled
@@ -71,7 +71,7 @@ Feature: Check the status of a plugin
     And a config.yml file:
       """
       plugin-akismet-active-network:
-        class: runcommand\Doctor\Checks\Plugin_Status
+        class: WP_CLI\Doctor\Check\Plugin_Status
         options:
           name: akismet
           status: active-network

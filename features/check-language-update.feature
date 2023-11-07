@@ -36,6 +36,7 @@ Feature: Check whether languages are up to date
 
       When I run `wp language core install ja`
       And I run `cat wp-content/languages/custom.po > wp-content/languages/ja.po`
+      And I run `cat wp-content/languages/custom.po > wp-content/languages/admin-ja.po`
 
       When I run `wp doctor check language-update`
       Then STDOUT should be a table containing rows:
