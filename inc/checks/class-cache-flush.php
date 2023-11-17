@@ -23,6 +23,10 @@ class Cache_Flush extends File_Contents {
 
 		foreach ( $iterator as $file ) {
 			$this->check_file( $file );
+			if ( ! empty( $this->_matches ) ) {
+				// we are currently interested whether there's a use of wp_cache_flush() or not.
+				break;
+			}
 		}
 
 		if ( empty( $this->_matches ) ) {
