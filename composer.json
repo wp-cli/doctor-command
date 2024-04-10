@@ -39,6 +39,7 @@
             "dev-master": "2.x-dev"
         },
         "commands": [
+            "doctor",
             "doctor check",
             "doctor list"
         ],
