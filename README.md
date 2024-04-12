@@ -53,6 +53,36 @@ Running all checks together, `wp doctor` is the fastest way to get a high-level 
 
 This package implements the following commands:
 
+### wp doctor
+
+Diagnose what ails WordPress.
+
+~~~
+wp doctor
+~~~
+
+**EXAMPLES**
+
+    # Verify WordPress core is up to date.
+    $ wp doctor check core-update
+    +-------------+---------+-----------------------------------------------------------+
+    | name        | status  | message                                                   |
+    +-------------+---------+-----------------------------------------------------------+
+    | core-update | warning | A new major version of WordPress is available for update. |
+    +-------------+---------+-----------------------------------------------------------+
+
+    # List checks to run.
+    $ wp doctor list
+    +----------------------------+--------------------------------------------------------------------------------+
+    | name                       | description                                                                    |
+    +----------------------------+--------------------------------------------------------------------------------+
+    | autoload-options-size      | Warns when autoloaded options size exceeds threshold of 900 kb.                |
+    | constant-savequeries-falsy | Confirms expected state of the SAVEQUERIES constant.                           |
+    | constant-wp-debug-falsy    | Confirms expected state of the WP_DEBUG constant.                              |
+    | core-update                | Errors when new WordPress minor release is available; warns for major release. |
+
+
+
 ### wp doctor check
 
 Run a series of checks against WordPress to diagnose issues.
@@ -81,7 +111,7 @@ any of the checks fail, then the command will exit with the code `1`.
 		Use checks registered in a specific configuration file.
 
 	[--fields=<fields>]
-		Limit the output to specific fields. Default is name,status,message.
+		Limit the output to specific fields.
 
 	[--format=<format>]
 		Render results in a particular format.
@@ -94,6 +124,14 @@ any of the checks fail, then the command will exit with the code `1`.
 		  - yaml
 		  - count
 		---
+
+**AVAILABLE FIELDS**
+
+These fields will be displayed by default for each check:
+
+* name
+* status
+* message
 
 **EXAMPLES**
 
@@ -129,7 +167,7 @@ wp doctor list [--config=<file>] [--fields=<fields>] [--format=<format>]
 		Use checks registered in a specific configuration file.
 
 	[--fields=<fields>]
-		Limit the output to specific fields. Defaults to name,description.
+		Limit the output to specific fields.
 
 	[--format=<format>]
 		Render output in a specific format.
@@ -142,14 +180,24 @@ wp doctor list [--config=<file>] [--fields=<fields>] [--format=<format>]
 		  - count
 		---
 
+**AVAILABLE FIELDS**
+
+These fields will be displayed by default for each check:
+
+* name
+* description
+
 **EXAMPLES**
 
+    # List checks to run.
     $ wp doctor list
-    +-------------+---------------------------------------------+
-    | name        | description                                 |
-    +-------------+---------------------------------------------+
-    | core-update | Check whether WordPress core is up to date. |
-    +-------------+---------------------------------------------+
+    +----------------------------+--------------------------------------------------------------------------------+
+    | name                       | description                                                                    |
+    +----------------------------+--------------------------------------------------------------------------------+
+    | autoload-options-size      | Warns when autoloaded options size exceeds threshold of 900 kb.                |
+    | constant-savequeries-falsy | Confirms expected state of the SAVEQUERIES constant.                           |
+    | constant-wp-debug-falsy    | Confirms expected state of the WP_DEBUG constant.                              |
+    | core-update                | Errors when new WordPress minor release is available; warns for major release. |
 
 ## Installing
 

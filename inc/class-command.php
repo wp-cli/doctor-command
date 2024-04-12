@@ -11,6 +11,28 @@ use WP_CLI\Utils;
 
 /**
  * Diagnose what ails WordPress.
+ *
+ * ## EXAMPLES
+ *
+ *     # Verify WordPress core is up to date.
+ *     $ wp doctor check core-update
+ *     +-------------+---------+-----------------------------------------------------------+
+ *     | name        | status  | message                                                   |
+ *     +-------------+---------+-----------------------------------------------------------+
+ *     | core-update | warning | A new major version of WordPress is available for update. |
+ *     +-------------+---------+-----------------------------------------------------------+
+ *
+ *     # List checks to run.
+ *     $ wp doctor list
+ *     +----------------------------+--------------------------------------------------------------------------------+
+ *     | name                       | description                                                                    |
+ *     +----------------------------+--------------------------------------------------------------------------------+
+ *     | autoload-options-size      | Warns when autoloaded options size exceeds threshold of 900 kb.                |
+ *     | constant-savequeries-falsy | Confirms expected state of the SAVEQUERIES constant.                           |
+ *     | constant-wp-debug-falsy    | Confirms expected state of the WP_DEBUG constant.                              |
+ *     | core-update                | Errors when new WordPress minor release is available; warns for major release. |
+ *
+ * @package wp-cli
  */
 class Command {
 
@@ -37,7 +59,7 @@ class Command {
 	 * : Use checks registered in a specific configuration file.
 	 *
 	 * [--fields=<fields>]
-	 * : Limit the output to specific fields. Default is name,status,message.
+	 * : Limit the output to specific fields.
 	 *
 	 * [--format=<format>]
 	 * : Render results in a particular format.
@@ -50,6 +72,14 @@ class Command {
 	 *   - yaml
 	 *   - count
 	 * ---
+	 *
+	 * ## AVAILABLE FIELDS
+	 *
+	 * These fields will be displayed by default for each check:
+	 *
+	 * * name
+	 * * status
+	 * * message
 	 *
 	 * ## EXAMPLES
 	 *
@@ -235,7 +265,7 @@ class Command {
 	 * : Use checks registered in a specific configuration file.
 	 *
 	 * [--fields=<fields>]
-	 * : Limit the output to specific fields. Defaults to name,description.
+	 * : Limit the output to specific fields.
 	 *
 	 * [--format=<format>]
 	 * : Render output in a specific format.
@@ -248,14 +278,24 @@ class Command {
 	 *   - count
 	 * ---
 	 *
+	 * ## AVAILABLE FIELDS
+	 *
+	 * These fields will be displayed by default for each check:
+	 *
+	 * * name
+	 * * description
+	 *
 	 * ## EXAMPLES
 	 *
+	 *     # List checks to run.
 	 *     $ wp doctor list
-	 *     +-------------+---------------------------------------------+
-	 *     | name        | description                                 |
-	 *     +-------------+---------------------------------------------+
-	 *     | core-update | Check whether WordPress core is up to date. |
-	 *     +-------------+---------------------------------------------+
+	 *     +----------------------------+--------------------------------------------------------------------------------+
+	 *     | name                       | description                                                                    |
+	 *     +----------------------------+--------------------------------------------------------------------------------+
+	 *     | autoload-options-size      | Warns when autoloaded options size exceeds threshold of 900 kb.                |
+	 *     | constant-savequeries-falsy | Confirms expected state of the SAVEQUERIES constant.                           |
+	 *     | constant-wp-debug-falsy    | Confirms expected state of the WP_DEBUG constant.                              |
+	 *     | core-update                | Errors when new WordPress minor release is available; warns for major release. |
 	 *
 	 * @when before_wp_load
 	 * @subcommand list
