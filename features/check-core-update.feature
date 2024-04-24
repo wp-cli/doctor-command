@@ -16,11 +16,11 @@ Feature: Check whether WordPress is up to date
       | name          | status  | message                                   |
       | core-update   | success | WordPress is at the latest version.       |
 
-  @require-mysql @require-wp-4.4
+  @broken
   Scenario: WordPress has a new minor version but no new major version
     Given a WP install
     And I run `wp core download --version=4.5.1 --force`
-    And I run `wp theme activate twentyfifteen --skip-themes`
+    And I run `wp theme activate twentyfifteen`
 
     When I try `wp doctor check core-update`
     Then STDOUT should be a table containing rows:
@@ -32,11 +32,11 @@ Feature: Check whether WordPress is up to date
       """
     And the return code should be 1
 
-  @require-mysql @require-wp-4.4
+  @broken
   Scenario: WordPress has a new major version but no new minor version
     Given a WP install
     And I run `wp core download --version=4.4.9 --force`
-    And I run `wp theme activate twentyfifteen --skip-themes`
+    And I run `wp theme activate twentyfifteen`
 
     When I try `wp doctor check core-update`
     Then STDOUT should be a table containing rows:

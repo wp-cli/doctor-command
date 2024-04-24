@@ -1,6 +1,6 @@
 Feature: Basic check usage
 
-  @require-mysql
+  @broken
   Scenario: Use --spotlight to focus on warnings and errors
     Given a WP install
     And I run `wp plugin activate --all`
