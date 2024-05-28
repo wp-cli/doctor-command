@@ -27,6 +27,32 @@ Feature: Basic check usage
       []
       """
 
+  Scenario: Filter check results
+    Given a WP install
+    And I run `wp plugin activate --all`
+    And I run `wp plugin update --all`
+    And I run `wp theme update --all`
+    And I run `wp option update blog_public 0`
+
+    When I try `wp doctor check option-blog-public cache-flush --fields=name,status`
+    Then STDOUT should be a table containing rows:
+      | name               | status  |
+      | option-blog-public | error   |
+      | cache-flush        | success |
+    And STDERR should be:
+      """
+      Error: 1 check reports 'error'.
+      """
+
+    When I try `wp doctor check option-blog-public cache-flush --fields=name,status --status=error`
+    Then STDOUT should be a table containing rows:
+      | name               | status  |
+      | option-blog-public | error   |
+    And STDOUT should not contain:
+      """
+      cache-flush
+      """
+
   Scenario: Error when no checks nor --all are provided
     Given a WP install
 
