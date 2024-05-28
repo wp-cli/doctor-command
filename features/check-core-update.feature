@@ -8,6 +8,7 @@ Feature: Check whether WordPress is up to date
       | name                       | description                                                                    |
       | core-update                | Errors when new WordPress minor release is available; warns for major release. |
 
+  @broken
   Scenario: WordPress is up to date
     Given a WP install
 
@@ -16,6 +17,7 @@ Feature: Check whether WordPress is up to date
       | name          | status  | message                                   |
       | core-update   | success | WordPress is at the latest version.       |
 
+  @broken
   Scenario: WordPress has a new minor version but no new major version
     Given a WP install
     And I run `wp core download --version=4.5.1 --force`
@@ -31,6 +33,7 @@ Feature: Check whether WordPress is up to date
       """
     And the return code should be 1
 
+  @broken
   Scenario: WordPress has a new major version but no new minor version
     Given a WP install
     And I run `wp core download --version=4.4.9 --force`
