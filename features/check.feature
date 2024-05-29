@@ -1,6 +1,7 @@
 Feature: Basic check usage
 
-  @broken
+  # Message "Updating to WordPress' newest minor version is strongly recommended." of type "error" appears.
+  @broken @require-mysql
   Scenario: Use --spotlight to focus on warnings and errors
     Given a WP install
     And I run `wp plugin activate --all`

@@ -8,7 +8,6 @@ Feature: Check whether languages are up to date
       | name            | description                                      |
       | language-update | Warns when there are language updates available. |
 
-  @broken
   Scenario: Languages are up to date
     Given a WP install
 
@@ -17,7 +16,6 @@ Feature: Check whether languages are up to date
       | name            | status  | message                   |
       | language-update | success | Languages are up to date. |
 
-  @broken
   Scenario: One language has an update available
     Given a WP install
     And a wp-content/languages/custom.po file:
