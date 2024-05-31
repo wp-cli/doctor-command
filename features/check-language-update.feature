@@ -16,27 +16,52 @@ Feature: Check whether languages are up to date
       | name            | status  | message                   |
       | language-update | success | Languages are up to date. |
 
-  Scenario: One language has an update available
-    Given a WP install
-    And a wp-content/languages/custom.po file:
-      """
-      # Translation of WordPress - 4.8.x in Japanese
-      # This file is distributed under the same license as the WordPress - 4.8.x package.
-      msgid ""
-      msgstr ""
-      "PO-Revision-Date: 2016-08-03 23:23:50+0000\n"
-      "MIME-Version: 1.0\n"
-      "Content-Type: text/plain; charset=UTF-8\n"
-      "Content-Transfer-Encoding: 8bit\n"
-      "Plural-Forms: nplurals=1; plural=0;\n"
-      "X-Generator: GlotPress/2.4.0-alpha\n"
-      "Language: ja_JP\n"
-      "Project-Id-Version: WordPress - 4.8.x\n"
-      """
+  @require-php-5.6 @less-than-php-7.0
+  Scenario Outline: Two languages have updates available
+    Given an empty directory
+    And WP files
+    And a database
+    And I run `wp core download --version=<original> --force`
+    And wp-config.php
+    And I run `wp core install --url='localhost:8001' --title='Test' --admin_user=wpcli --admin_email=admin@example.com --admin_password=1`
 
-    When I run `wp language core install ja`
-    And I run `cat wp-content/languages/custom.po > wp-content/languages/ja.po`
-    And I run `wp doctor check language-update`
+    When I run `wp language core list --fields=language,status,update`
+    Then STDOUT should be a table containing rows:
+      | language | status      | update    |
+      | ar       | uninstalled | none      |
+      | en_CA    | uninstalled | none      |
+      | en_US    | active      | none      |
+      | ja       | uninstalled | none      |
+
+    When I run `wp language core install en_CA ja`
+    Then the wp-content/languages/admin-en_CA.po file should exist
+    And the wp-content/languages/en_CA.po file should exist
+    And the wp-content/languages/admin-ja.po file should exist
+    And the wp-content/languages/ja.po file should exist
+    And STDOUT should contain:
+      """
+      Success: Installed 2 of 2 languages.
+      """
+    And STDERR should be empty
+
+    Given I try `wp core download --version=<update> --force`
+    Then the return code should be 0
+    And I run `wp core update-db`
+
+    When I run `wp language core list --fields=language,status,update`
+    Then STDOUT should be a table containing rows:
+      | language | status      | update    |
+      | ar       | uninstalled | none      |
+      | en_CA    | installed   | available |
+      | en_US    | active      | none      |
+      | ja       | installed   | available |
+
+    When I run `wp doctor check language-update`
     Then STDOUT should be a table containing rows:
       | name            | status  | message                             |
-      | language-update | warning | 1 language has an update available. |
+      | language-update | warning | 2 languages have updates available. |
+
+    Examples:
+      | original | update |
+      | 4.8      | 4.9    |
+      | 4.0.1    | 4.2    |
