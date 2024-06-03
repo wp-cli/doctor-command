@@ -1,5 +1,7 @@
 Feature: Basic check usage
 
+  # Message "Updating to WordPress' newest minor version is strongly recommended." of type "error" appears.
+  @broken @require-mysql
   Scenario: Use --spotlight to focus on warnings and errors
     Given a WP install
     And I run `wp plugin activate --all`
@@ -26,6 +28,57 @@ Feature: Basic check usage
       """
       []
       """
+
+  Scenario: Use --spotlight to view warnings and errors
+    Given a WP install
+    And I run `wp option update blog_public 0`
+    And a wp-content/plugins/foo.php file:
+      """
+      <?php
+      // Plugin Name: Foo Plugin
+
+      wp_cache_flush();
+      """
+
+    When I try `wp doctor check option-blog-public php-in-upload cache-flush --format=csv --fields=name,status`
+    Then STDOUT should be:
+      """
+      name,status
+      cache-flush,warning
+      option-blog-public,error
+      php-in-upload,success
+      """
+    And the return code should be 1
+
+    When I run `wp doctor check php-in-upload plugin-active-count --spotlight`
+    Then STDOUT should be:
+      """
+      Success: All 2 checks report 'success'.
+      """
+    And the return code should be 0
+
+    When I run `wp doctor check plugin-active-count --spotlight`
+    Then STDOUT should be:
+      """
+      Success: The check reports 'success'.
+      """
+    And the return code should be 0
+
+    When I try `wp doctor check option-blog-public php-in-upload cache-flush --spotlight --format=csv --fields=name,status`
+    Then STDOUT should be:
+      """
+      name,status
+      cache-flush,warning
+      option-blog-public,error
+      """
+    And the return code should be 1
+
+    When I run `wp doctor check php-in-upload --spotlight --format=json`
+    Then STDOUT should be:
+      """
+      []
+      """
+    And the return code should be 0
 
   Scenario: Error when no checks nor --all are provided
     Given a WP install

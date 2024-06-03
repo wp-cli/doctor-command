@@ -10,7 +10,7 @@ Feature: Check whether a high percentage of plugins are deactivated
 
   Scenario: All plugins are activated
     Given a WP install
-    And I run `wp plugin install user-switching rewrite-rules-inspector`
+    And I run `wp plugin install debug-bar wp-author-widget`
     And I run `wp plugin activate --all`
 
     When I run `wp doctor check plugin-deactivated`
@@ -20,7 +20,7 @@ Feature: Check whether a high percentage of plugins are deactivated
 
   Scenario: Too many plugins are deactivated
     Given a WP install
-    And I run `wp plugin install user-switching rewrite-rules-inspector`
+    And I run `wp plugin install debug-bar wp-author-widget`
 
     When I run `wp doctor check plugin-deactivated`
     Then STDOUT should be a table containing rows:
@@ -36,7 +36,7 @@ Feature: Check whether a high percentage of plugins are deactivated
         options:
           threshold_percentage: 60
       """
-    And I run `wp plugin install user-switching rewrite-rules-inspector`
+    And I run `wp plugin install debug-bar wp-author-widget`
 
     When I run `wp doctor check plugin-deactivated --config=custom.yml`
     Then STDOUT should be a table containing rows:
