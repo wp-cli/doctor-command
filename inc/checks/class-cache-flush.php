@@ -32,6 +32,6 @@ class Cache_Flush extends File_Contents {
 		}
 
 		$this->set_status( 'warning' );
-		$this->set_message( 'Use of wp_cache_flush() detected in ' . implode( ', ', $this->_matches )  );
+		$this->set_message( 'Use of wp_cache_flush() detected in ' . implode( ', ', $this->_matches ) );
 	}
 }
