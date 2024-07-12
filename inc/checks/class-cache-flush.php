@@ -31,7 +31,15 @@ class Cache_Flush extends File_Contents {
 			return;
 		}
 
+		// Show relative paths in output.
+		$relative_paths = array_map(
+			function ( $file ) use ( $wp_content_dir ) {
+				return str_replace( $wp_content_dir . '/', '', $file );
+			},
+			$this->_matches
+		);
+
 		$this->set_status( 'warning' );
-		$this->set_message( 'Use of wp_cache_flush() detected in ' . implode( ', ', $this->_matches ) );
+		$this->set_message( 'Use of wp_cache_flush() detected in ' . implode( ', ', $relative_paths ) );
 	}
 }
