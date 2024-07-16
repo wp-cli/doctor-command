@@ -22,6 +22,7 @@ Feature: Check the size of autoloaded options
       is less than threshold (900kb)
       """
 
+  @less-than-wp-6.5
   Scenario: Autoloaded options are greater than 900 kb
     Given a WP install
     And a explode-options.php file:
