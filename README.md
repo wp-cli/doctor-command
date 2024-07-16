@@ -212,7 +212,7 @@ wp package install wp-cli/doctor-command:@stable
 To install the latest development version of this package, use the following command instead:
 
 ```bash
-wp package install wp-cli/doctor-command:dev-master
+wp package install wp-cli/doctor-command:dev-main
 ```
 
 ## Contributing
