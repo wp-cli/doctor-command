@@ -251,7 +251,7 @@ class Command {
 
 		foreach ( $results as $key => $item ) {
 			foreach ( $default_fields as $field ) {
-				if ( ! empty( $assoc_args[ $field ] ) && $item [ $field ] !== $assoc_args[ $field ] ) {
+				if ( ! empty( $assoc_args[ $field ] ) && $item[ $field ] !== $assoc_args[ $field ] ) {
 					unset( $results[ $key ] );
 					break;
 				}

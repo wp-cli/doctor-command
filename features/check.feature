@@ -35,25 +35,33 @@ Feature: Basic check usage
     And I run `wp plugin update --all`
     And I run `wp theme update --all`
     And I run `wp option update blog_public 0`
-
-    When I try `wp doctor check option-blog-public cache-flush --fields=name,status`
-    Then STDOUT should be a table containing rows:
-      | name               | status  |
-      | option-blog-public | error   |
-      | cache-flush        | success |
-    And STDERR should be:
+    And a wp-content/uploads/foo.php file:
       """
-      Error: 1 check reports 'error'.
+      <?php
+      // Simple PHP file.
       """
 
-    When I try `wp doctor check option-blog-public cache-flush --fields=name,status --status=error`
-    Then STDOUT should be a table containing rows:
-      | name               | status  |
-      | option-blog-public | error   |
+    When I try `wp doctor check option-blog-public php-in-upload --format=csv --fields=name,status`
+    Then STDOUT should contain:
+      """
+      php-in-upload,warning
+      """
+    And STDOUT should contain:
+      """
+      option-blog-public,error
+      """
+    And the return code should be 1
+
+    When I try `wp doctor check option-blog-public php-in-upload --format=csv --fields=name,status --status=error`
+    Then STDOUT should contain:
+      """
+      option-blog-public,error
+      """
     And STDOUT should not contain:
       """
-      cache-flush
+      php-in-upload,warning
       """
+    And the return code should be 1
 
   Scenario: Use --spotlight to view warnings and errors
     Given a WP install
