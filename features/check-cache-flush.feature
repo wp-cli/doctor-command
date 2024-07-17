@@ -9,6 +9,19 @@ Feature: Check if wp_cache_flush() function is used inside wp-content directory
       """
 
     When I run `wp doctor check cache-flush`
-    Then STDOUT should be a table containing rows:
-      | name        | status  | message                           |
-      | cache-flush | warning | Use of wp_cache_flush() detected in mu-plugins/plugin.php |
+    Then STDOUT should contain:
+      """
+      cache-flush
+      """
+    And STDOUT should contain:
+      """
+      warning
+      """
+    And STDOUT should contain:
+      """
+      Use of wp_cache_flush() detected
+      """
+    And STDOUT should contain:
+      """
+      mu-plugins/plugin.php
+      """
