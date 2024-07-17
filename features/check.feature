@@ -29,6 +29,40 @@ Feature: Basic check usage
       []
       """
 
+  Scenario: Filter check results
+    Given a WP install
+    And I run `wp plugin activate --all`
+    And I run `wp plugin update --all`
+    And I run `wp theme update --all`
+    And I run `wp option update blog_public 0`
+    And a wp-content/uploads/foo.php file:
+      """
+      <?php
+      // Simple PHP file.
+      """
+
+    When I try `wp doctor check option-blog-public php-in-upload --format=csv --fields=name,status`
+    Then STDOUT should contain:
+      """
+      php-in-upload,warning
+      """
+    And STDOUT should contain:
+      """
+      option-blog-public,error
+      """
+    And the return code should be 1
+
+    When I try `wp doctor check option-blog-public php-in-upload --format=csv --fields=name,status --status=error`
+    Then STDOUT should contain:
+      """
+      option-blog-public,error
+      """
+    And STDOUT should not contain:
+      """
+      php-in-upload,warning
+      """
+    And the return code should be 1
+
   Scenario: Use --spotlight to view warnings and errors
     Given a WP install
     And I run `wp option update blog_public 0`
