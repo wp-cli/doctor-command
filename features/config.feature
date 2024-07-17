@@ -159,6 +159,8 @@ Feature: Configure the Doctor
       constant-savequeries-falsy
       """
 
+  # Minimum requirement for Akismet is WP 5.8.
+  @require-wp-5.8
   Scenario: Use the 'require' attribute to require an arbitrary path
     Given a WP install
     And a config.yml file:

@@ -61,6 +61,9 @@ class Command {
 	 * [--fields=<fields>]
 	 * : Limit the output to specific fields.
 	 *
+	 * [--<field>=<value>]
+	 * : Filter results by key=value pairs.
+	 *
 	 * [--format=<format>]
 	 * : Render results in a particular format.
 	 * ---
@@ -244,7 +247,19 @@ class Command {
 			$error_message = null;
 		}
 
-		$formatter = new Formatter( $assoc_args, array( 'name', 'status', 'message' ) );
+		$default_fields = array( 'name', 'status', 'message' );
+
+		foreach ( $results as $key => $item ) {
+			foreach ( $default_fields as $field ) {
+				if ( ! empty( $assoc_args[ $field ] ) && $item[ $field ] !== $assoc_args[ $field ] ) {
+					unset( $results[ $key ] );
+					break;
+				}
+			}
+		}
+
+		$formatter = new Formatter( $assoc_args, $default_fields );
+
 		$formatter->display_items( $results );
 
 		if ( $should_error ) {

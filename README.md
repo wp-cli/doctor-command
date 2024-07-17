@@ -88,7 +88,7 @@ wp doctor
 Run a series of checks against WordPress to diagnose issues.
 
 ~~~
-wp doctor check [<checks>...] [--all] [--spotlight] [--config=<file>] [--fields=<fields>] [--format=<format>]
+wp doctor check [<checks>...] [--all] [--spotlight] [--config=<file>] [--fields=<fields>] [--<field>=<value>] [--format=<format>]
 ~~~
 
 A check is a routine run against some scope of WordPress that reports
@@ -112,6 +112,9 @@ any of the checks fail, then the command will exit with the code `1`.
 
 	[--fields=<fields>]
 		Limit the output to specific fields.
+
+	[--<field>=<value>]
+		Filter results by key=value pairs.
 
 	[--format=<format>]
 		Render results in a particular format.
@@ -212,7 +215,7 @@ wp package install wp-cli/doctor-command:@stable
 To install the latest development version of this package, use the following command instead:
 
 ```bash
-wp package install wp-cli/doctor-command:dev-master
+wp package install wp-cli/doctor-command:dev-main
 ```
 
 ## Contributing

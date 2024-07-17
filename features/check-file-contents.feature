@@ -16,9 +16,11 @@ Feature: Check files in a WordPress install
       | name          | status    | message                                                       |
       | file-eval     | success   | All 'php' files passed check for 'eval\(.*base64_decode\(.*'. |
 
-    Given a wp-content/mu-plugins/exploited.php file:
+    Given a wp-content/plugins/exploited.php file:
       """
       <?php
+      // Plugin Name: Example Plugin
+
       eval( base64_decode( $_POST ) );
       """
 
