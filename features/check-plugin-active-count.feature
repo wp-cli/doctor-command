@@ -26,7 +26,7 @@ Feature: Check whether a high number of plugins are activated
         options:
           threshold_count: 3
       """
-    And I run `wp plugin install user-switching rewrite-rules-inspector`
+    And I run `wp plugin install debug-bar wp-author-widget`
     And I run `wp plugin activate --all`
 
     When I run `wp doctor check plugin-active-count --config=config.yml`
