@@ -7,7 +7,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 /**
- * Detects any use of the `wp_cache_flush()` function.
+ * Detects and reports the path of files for occurrences of the `wp_cache_flush()` function.
  */
 class Cache_Flush extends File_Contents {
 
@@ -23,10 +23,6 @@ class Cache_Flush extends File_Contents {
 
 		foreach ( $iterator as $file ) {
 			$this->check_file( $file );
-			if ( ! empty( $this->_matches ) ) {
-				// we are currently interested whether there's a use of wp_cache_flush() or not.
-				break;
-			}
 		}
 
 		if ( empty( $this->_matches ) ) {
@@ -35,7 +31,15 @@ class Cache_Flush extends File_Contents {
 			return;
 		}
 
+		// Show relative paths in output.
+		$relative_paths = array_map(
+			function ( $file ) use ( $wp_content_dir ) {
+				return str_replace( $wp_content_dir . '/', '', $file );
+			},
+			$this->_matches
+		);
+
 		$this->set_status( 'warning' );
-		$this->set_message( 'Use of wp_cache_flush() detected.' );
+		$this->set_message( 'Use of wp_cache_flush() detected in ' . implode( ', ', $relative_paths ) );
 	}
 }
