@@ -22,7 +22,7 @@ Feature: Check whether a high number of plugins are activated
     And a config.yml file:
       """
       plugin-active-count:
-        class: runcommand\Doctor\Checks\Plugin_Active_Count
+        class: WP_CLI\Doctor\Check\Plugin_Active_Count
         options:
           threshold_count: 3
       """

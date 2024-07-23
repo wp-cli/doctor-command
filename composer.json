@@ -37,7 +37,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.x-dev"
+            "dev-main": "2.x-dev"
         },
         "commands": [
             "doctor",
@@ -57,8 +57,11 @@
         }
     },
     "autoload": {
+        "psr-4": {
+            "WP_CLI\\Doctor\\": "src/"
+        },
         "files": [
-            "command.php"
+            "doctor-command.php"
         ]
     },
     "minimum-stability": "dev",

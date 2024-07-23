@@ -1,7 +1,8 @@
 <?php
 
-namespace runcommand\Doctor;
+namespace WP_CLI\Doctor;
 
+use Mustangostang\Spyc;
 use WP_CLI;
 use WP_CLI\Utils;
 
@@ -9,8 +10,8 @@ class Checks {
 
 	private static $instance;
 
-	private $checks  = array();
-	private $skipped = array();
+	private $checks         = array();
+	private $skipped_checks = array();
 
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
@@ -29,7 +30,7 @@ class Checks {
 			WP_CLI::error( 'Invalid configuration file.' );
 		}
 
-		$check_data = \Mustangostang\Spyc::YAMLLoad( file_get_contents( $file ) );
+		$check_data = Spyc::YAMLLoad( file_get_contents( $file ) );
 
 		if ( ! empty( $check_data['_']['inherit'] ) ) {
 			$inherited = $check_data['_']['inherit'];
@@ -60,7 +61,7 @@ class Checks {
 				WP_CLI::error( "Check '{$check_name}' is missing 'class' or 'check'. Verify check registration." );
 			}
 
-			$class = ! empty( $check_args['check'] ) ? 'runcommand\Doctor\Checks\\' . $check_args['check'] : $check_args['class'];
+			$class = ! empty( $check_args['check'] ) ? 'WP_CLI\\Doctor\\Check\\' . $check_args['check'] : $check_args['class'];
 			if ( ! class_exists( $class ) ) {
 				WP_CLI::error( "Class '{$class}' for check '{$check_name}' doesn't exist. Verify check registration." );
 			}
@@ -91,7 +92,7 @@ class Checks {
 			}
 			$check = new $check();
 		}
-		if ( ! is_subclass_of( $check, 'runcommand\Doctor\Checks\Check' ) ) {
+		if ( ! is_subclass_of( $check, 'WP_CLI\\Doctor\\Check' ) ) {
 			$class = get_class( $check );
 			WP_CLI::error( "Class '{$class}' for check '{$name}' needs to extend Check base class. Verify check registration." );
 		}
@@ -124,7 +125,7 @@ class Checks {
 	 * @param string $base Base path to prepend.
 	 */
 	private static function absolutize( $path, $base ) {
-		if ( ! empty( $path ) && ! \WP_CLI\Utils\is_path_absolute( $path ) ) {
+		if ( ! empty( $path ) && ! Utils\is_path_absolute( $path ) ) {
 			$path = $base . DIRECTORY_SEPARATOR . $path;
 		}
 		return $path;

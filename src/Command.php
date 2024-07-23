@@ -1,6 +1,6 @@
 <?php
 
-namespace runcommand\Doctor;
+namespace WP_CLI\Doctor;
 
 use Exception;
 use RecursiveDirectoryIterator;
@@ -142,7 +142,7 @@ class Command {
 					}
 				);
 			} else {
-				$file_check = 'runcommand\Doctor\Checks\File';
+				$file_check = 'WP_CLI\Doctor\Check\File';
 				if ( is_a( $check, $file_check ) || is_subclass_of( $check, $file_check ) ) {
 					$file_checks[ $name ] = $check;
 				}
