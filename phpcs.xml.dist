@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="WP-CLI-entity">
+<ruleset name="WP-CLI-doctor">
 	<description>Custom ruleset for WP-CLI doctor-command</description>
 
 	<!--

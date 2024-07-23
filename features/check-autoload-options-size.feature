@@ -51,7 +51,7 @@ Feature: Check the size of autoloaded options
     And a custom.yml file:
       """
       autoload-options-size:
-        class: runcommand\Doctor\Checks\Autoload_Options_Size
+        class: WP_CLI\Doctor\Check\Autoload_Options_Size
         options:
           threshold_kb: 800
       """

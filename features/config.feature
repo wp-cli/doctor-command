@@ -42,7 +42,7 @@ Feature: Configure the Doctor
     And a config.yml file:
       """
       check space:
-        class: runcommand\Doctor\Checks\Constant_Definition
+        class: WP_CLI\Doctor\Check\Constant_Definition
       """
 
     When I try `wp doctor check --all --config=config.yml`
@@ -175,7 +175,7 @@ Feature: Configure the Doctor
       /**
        * Ensures Akismet is activated with the appropriate credentials.
        */
-      class Akismet_Valid_API_Key extends runcommand\Doctor\Checks\Check {
+      class Akismet_Valid_API_Key extends WP_CLI\Doctor\Check {
 
         public function run() {
           // If the Akismet isn't activated, bail early.

@@ -1,7 +1,9 @@
 <?php
 
-namespace runcommand\Doctor\Checks;
+namespace WP_CLI\Doctor\Check;
 
+use WP_CLI;
+use WP_CLI\Doctor\Check;
 use SplFileInfo;
 
 /**
