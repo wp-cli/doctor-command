@@ -36,7 +36,11 @@ class Plugin_Status extends Plugin {
 		parent::__construct( $options );
 	}
 
-	public function run() {
+	public function run( $verbose ) {
+		if ( $verbose ) {
+			WP_CLI::log( "Checking whether the plugin `{$this->name}` is `{$this->status}`..." );
+		}
+
 		$plugins = self::get_plugins();
 
 		$current_status = 'uninstalled';

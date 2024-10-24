@@ -18,7 +18,11 @@ class File_Type extends File {
 	 */
 	protected $symlink;
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking files on the filesystem to be of a certain type..." );
+		}
 
 		if ( isset( $this->symlink ) ) {
 			$symlink = $this->symlink ? 'true' : 'false';

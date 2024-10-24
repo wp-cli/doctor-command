@@ -76,6 +76,9 @@ class Command {
 	 *   - count
 	 * ---
 	 *
+	 * [--verbose]
+	 * : Provide detailed info about checks.
+	 *
 	 * ## AVAILABLE FIELDS
 	 *
 	 * These fields will be displayed by default for each check:
@@ -124,18 +127,38 @@ class Command {
 			}
 		}
 		$file_checks = array();
+
+		$verbose = Utils\get_flag_value( $assoc_args, 'verbose', false );
+
 		$progress    = false;
-		if ( $all && 'table' === $assoc_args['format'] ) {
+		if ( $all && 'table' === $assoc_args['format'] && !$verbose ) {
 			$progress = Utils\make_progress_bar( 'Running checks', count( $checks ) );
 		}
+
+		$total_checks = count( $checks );
+
+		$current_check_count = 0;
+
 		foreach ( $checks as $name => $check ) {
 			$when = $check->get_when();
 			if ( $when ) {
 				WP_CLI::add_hook(
 					$when,
-					static function () use ( $name, $check, &$completed, &$progress ) {
-						$check->run();
+					static function () use ( $name, $check, &$completed, &$progress, $verbose, $total_checks, &$current_check_count ) {
+
+						$current_check_count += 1;
+						if ( $verbose ) {
+							WP_CLI::line( "\n[$current_check_count/$total_checks] $name");
+						}
+
+						$check->run( $verbose);
 						$completed[ $name ] = $check;
+
+						if ( $verbose ) {
+                            $result = $check->get_results();
+                            WP_CLI::log( "{$result['status']} : {$result['message']}" );
+                        }
+
 						if ( $progress ) {
 							$progress->tick();
 						}
@@ -151,7 +174,7 @@ class Command {
 		if ( ! empty( $file_checks ) ) {
 			WP_CLI::add_hook(
 				'after_wp_config_load',
-				static function () use ( $file_checks, &$completed, &$progress ) {
+				static function () use ( $file_checks, &$completed, &$progress, $verbose, $total_checks, &$current_check_count ) {
 					try {
 						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
@@ -178,8 +201,19 @@ class Command {
 						WP_CLI::warning( $e->getMessage() );
 					}
 					foreach ( $file_checks as $name => $check ) {
-						$check->run();
+
+						$current_check_count += 1;
+
+						WP_CLI::log( "\n[$current_check_count/$total_checks] $name");
+
+						$check->run( $verbose );
 						$completed[ $name ] = $check;
+
+						if ( $verbose ) {
+                            $result = $check->get_results();
+                            WP_CLI::log( "{$result['status']} : {$result['message']}" );
+                        }
+
 						if ( $progress ) {
 							$progress->tick();
 						}

@@ -19,7 +19,11 @@ class PHP_In_Upload extends Check {
 	 */
 	protected $php_files_array = array();
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking for PHP files in the Uploads folder..." );
+		}
 
 		// Path to the uploads folder.
 		$wp_content_dir = wp_upload_dir();

@@ -85,8 +85,10 @@ abstract class Check {
 	 *
 	 * Because each check checks for something different, this method must be
 	 * subclassed. Method is expected to set $status_code and $status_message.
+	 *
+	 * @param bool $verbose
 	 */
-	abstract public function run();
+	abstract public function run( $verbose );
 
 	/**
 	 * Get results of the check.

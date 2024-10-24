@@ -17,7 +17,12 @@ class Cron_Count extends Cron {
 	 */
 	protected $threshold_count = 50;
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking whether the number of cron job exceeds threshold of {$this->threshold_count}..." );
+		}
+
 		$crons = self::get_crons();
 		if ( count( $crons ) >= $this->threshold_count ) {
 			$this->set_status( 'error' );

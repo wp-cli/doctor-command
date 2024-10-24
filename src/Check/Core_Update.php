@@ -10,7 +10,12 @@ use WP_CLI\Doctor\Check;
  */
 class Core_Update extends Check {
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking for WordPress updates...." );
+		}
+
 		ob_start();
 		WP_CLI::run_command( array( 'core', 'check-update' ), array( 'format' => 'json' ) );
 		$ret       = ob_get_clean();

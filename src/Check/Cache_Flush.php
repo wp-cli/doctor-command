@@ -13,7 +13,11 @@ use RecursiveIteratorIterator;
  */
 class Cache_Flush extends File_Contents {
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Detecting the path of files for occurrences of the `wp_cache_flush()` function...." );
+		}
 
 		// Path to wp-content directory.
 		$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';

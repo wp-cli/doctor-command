@@ -16,7 +16,12 @@ class Plugin_Active_Count extends Plugin {
 	 */
 	protected $threshold_count = 80;
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking whether the plugins activated is greater than {$this->threshold_count}..." );
+		}
+
 		$active = 0;
 		foreach ( self::get_plugins() as $plugin ) {
 			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {

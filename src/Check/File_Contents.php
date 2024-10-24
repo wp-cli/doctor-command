@@ -28,9 +28,14 @@ class File_Contents extends File {
 	 */
 	protected $exists = false;
 
-	public function run() {
+	public function run( $verbose ) {
 
 		if ( isset( $this->regex ) ) {
+
+			if ( $verbose ) {
+				WP_CLI::log( "Checking files on the filesystem for regex pattern {$this->regex}..." );
+			}
+
 			if ( ! empty( $this->_matches ) ) {
 				//if matches are found
 				if ( $this->exists ) {
@@ -63,10 +68,10 @@ class File_Contents extends File {
 			return;
 		}
 
-		$contents = file_get_contents( $file->getPathname() );
+		// $contents = file_get_contents( $file->getPathname() );
 
-		if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
-			$this->_matches[] = $file;
-		}
+		// if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
+		// 	$this->_matches[] = $file;
+		// }
 	}
 }

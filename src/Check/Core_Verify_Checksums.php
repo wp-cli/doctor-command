@@ -15,7 +15,12 @@ class Core_Verify_Checksums extends Check {
 		$this->set_when( 'before_wp_load' );
 	}
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Verifying WordPress files against published checksums...." );
+		}
+
 		$return_code = WP_CLI::runcommand(
 			'core verify-checksums',
 			array(

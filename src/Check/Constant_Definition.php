@@ -48,7 +48,11 @@ class Constant_Definition extends Check {
 		}
 	}
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Confirming expected state of the {$this->constant} constant...." );
+		}
 
 		if ( isset( $this->falsy ) ) {
 			if ( ! defined( $this->constant ) ) {

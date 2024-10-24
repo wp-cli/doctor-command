@@ -10,7 +10,12 @@ use WP_CLI\Doctor\Check;
  */
 class Theme_Update extends Check {
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking for theme updates..." );
+		}
+
 		ob_start();
 		WP_CLI::run_command( array( 'theme', 'list' ), array( 'format' => 'json' ) );
 		$ret          = ob_get_clean();
@@ -19,6 +24,9 @@ class Theme_Update extends Check {
 		foreach ( $themes as $theme ) {
 			if ( 'available' === $theme['update'] ) {
 				++$update_count;
+				if ( $verbose ) {
+					WP_CLI::log( "- Update {$theme['name']} {$theme['version']} to {$theme['update_version']}");
+				}
 			}
 		}
 
