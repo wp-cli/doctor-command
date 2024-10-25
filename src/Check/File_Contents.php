@@ -68,10 +68,10 @@ class File_Contents extends File {
 			return;
 		}
 
-		// $contents = file_get_contents( $file->getPathname() );
+		$contents = file_get_contents( $file->getPathname() );
 
-		// if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
-		// 	$this->_matches[] = $file;
-		// }
+		if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
+			$this->_matches[] = $file;
+		}
 	}
 }

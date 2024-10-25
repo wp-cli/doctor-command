@@ -39,6 +39,18 @@ class Plugin_Deactivated extends Plugin {
 
 		$threshold = (int) $this->threshold_percentage;
 
+		if ( $active === 0 && $inactive === 0 ) {
+			if ( $verbose ) {
+				WP_CLI::log( "No plugins found." );
+			}
+
+			$this->set_status( 'success' );
+			$this->set_message( "Less than {$threshold} percent of plugins are deactivated." );
+
+			return;
+		}
+
+
 		$inactive_percentage = $inactive / ( $inactive + $active );
 
 		if ( $verbose ) {
