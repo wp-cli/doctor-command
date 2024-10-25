@@ -130,8 +130,8 @@ class Command {
 
 		$verbose = Utils\get_flag_value( $assoc_args, 'verbose', false );
 
-		$progress    = false;
-		if ( $all && 'table' === $assoc_args['format'] && !$verbose ) {
+		$progress = false;
+		if ( $all && 'table' === $assoc_args['format'] && ! $verbose ) {
 			$progress = Utils\make_progress_bar( 'Running checks', count( $checks ) );
 		}
 
@@ -146,18 +146,18 @@ class Command {
 					$when,
 					static function () use ( $name, $check, &$completed, &$progress, $verbose, $total_checks, &$current_check_count ) {
 
-						$current_check_count += 1;
+						++$current_check_count;
 						if ( $verbose ) {
-							WP_CLI::line( "\n[$current_check_count/$total_checks] $name");
+							WP_CLI::line( "\n[$current_check_count/$total_checks] $name" );
 						}
 
-						$check->run( $verbose);
+						$check->run( $verbose );
 						$completed[ $name ] = $check;
 
 						if ( $verbose ) {
-                            $result = $check->get_results();
-                            WP_CLI::log( "{$result['status']} : {$result['message']}" );
-                        }
+							$result = $check->get_results();
+							WP_CLI::log( "{$result['status']} : {$result['message']}" );
+						}
 
 						if ( $progress ) {
 							$progress->tick();
@@ -202,17 +202,17 @@ class Command {
 					}
 					foreach ( $file_checks as $name => $check ) {
 
-						$current_check_count += 1;
+						++$current_check_count;
 
-						WP_CLI::log( "\n[$current_check_count/$total_checks] $name");
+						WP_CLI::log( "\n[$current_check_count/$total_checks] $name" );
 
 						$check->run( $verbose );
 						$completed[ $name ] = $check;
 
 						if ( $verbose ) {
-                            $result = $check->get_results();
-                            WP_CLI::log( "{$result['status']} : {$result['message']}" );
-                        }
+							$result = $check->get_results();
+							WP_CLI::log( "{$result['status']} : {$result['message']}" );
+						}
 
 						if ( $progress ) {
 							$progress->tick();

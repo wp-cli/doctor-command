@@ -13,7 +13,7 @@ class Language_Update extends Check {
 	public function run( $verbose ) {
 
 		if ( $verbose ) {
-			WP_CLI::log( "Checking for language updates..." );
+			WP_CLI::log( 'Checking for language updates...' );
 		}
 
 		// Runs the `wp language core list --format=json` command and returns the output in JSON format.

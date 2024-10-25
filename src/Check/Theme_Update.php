@@ -13,7 +13,7 @@ class Theme_Update extends Check {
 	public function run( $verbose ) {
 
 		if ( $verbose ) {
-			WP_CLI::log( "Checking for theme updates..." );
+			WP_CLI::log( 'Checking for theme updates...' );
 		}
 
 		ob_start();
@@ -25,7 +25,7 @@ class Theme_Update extends Check {
 			if ( 'available' === $theme['update'] ) {
 				++$update_count;
 				if ( $verbose ) {
-					WP_CLI::log( "- Update {$theme['name']} {$theme['version']} to {$theme['update_version']}");
+					WP_CLI::log( "- Update {$theme['name']} {$theme['version']} to {$theme['update_version']}" );
 				}
 			}
 		}

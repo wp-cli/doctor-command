@@ -21,7 +21,7 @@ class File_Type extends File {
 	public function run( $verbose ) {
 
 		if ( $verbose ) {
-			WP_CLI::log( "Checking files on the filesystem to be of a certain type..." );
+			WP_CLI::log( 'Checking files on the filesystem to be of a certain type...' );
 		}
 
 		if ( isset( $this->symlink ) ) {

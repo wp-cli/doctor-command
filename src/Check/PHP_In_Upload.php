@@ -22,7 +22,7 @@ class PHP_In_Upload extends Check {
 	public function run( $verbose ) {
 
 		if ( $verbose ) {
-			WP_CLI::log( "Checking for PHP files in the Uploads folder..." );
+			WP_CLI::log( 'Checking for PHP files in the Uploads folder...' );
 		}
 
 		// Path to the uploads folder.

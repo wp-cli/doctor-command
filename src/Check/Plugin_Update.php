@@ -13,7 +13,7 @@ class Plugin_Update extends Plugin {
 	public function run( $verbose ) {
 
 		if ( $verbose ) {
-			WP_CLI::log( "Checking for plugin updates..." );
+			WP_CLI::log( 'Checking for plugin updates...' );
 		}
 
 		$plugins      = self::get_plugins();
@@ -22,7 +22,7 @@ class Plugin_Update extends Plugin {
 			if ( 'available' === $plugin['update'] ) {
 				++$update_count;
 				if ( $verbose ) {
-					WP_CLI::log( "- Update {$plugin['name']} {$plugin['version']} to {$plugin['update_version']}");
+					WP_CLI::log( "- Update {$plugin['name']} {$plugin['version']} to {$plugin['update_version']}" );
 				}
 			}
 		}

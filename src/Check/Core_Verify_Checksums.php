@@ -18,7 +18,7 @@ class Core_Verify_Checksums extends Check {
 	public function run( $verbose ) {
 
 		if ( $verbose ) {
-			WP_CLI::log( "Verifying WordPress files against published checksums...." );
+			WP_CLI::log( 'Verifying WordPress files against published checksums....' );
 		}
 
 		$return_code = WP_CLI::runcommand(

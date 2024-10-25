@@ -13,7 +13,7 @@ class Core_Update extends Check {
 	public function run( $verbose ) {
 
 		if ( $verbose ) {
-			WP_CLI::log( "Checking for WordPress updates...." );
+			WP_CLI::log( 'Checking for WordPress updates....' );
 		}
 
 		ob_start();

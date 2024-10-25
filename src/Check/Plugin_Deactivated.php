@@ -19,8 +19,6 @@ class Plugin_Deactivated extends Plugin {
 
 	public function run( $verbose ) {
 
-		//add checks for no plugins.
-
 		if ( $verbose ) {
 			WP_CLI::log( "Checking whether the plugins deactivated percentage is greater than {$this->threshold_percentage}..." );
 		}
@@ -39,9 +37,9 @@ class Plugin_Deactivated extends Plugin {
 
 		$threshold = (int) $this->threshold_percentage;
 
-		if ( $active === 0 && $inactive === 0 ) {
+		if ( 0 === $active && 0 === $inactive ) {
 			if ( $verbose ) {
-				WP_CLI::log( "No plugins found." );
+				WP_CLI::log( 'No plugins found.' );
 			}
 
 			$this->set_status( 'success' );
@@ -50,11 +48,10 @@ class Plugin_Deactivated extends Plugin {
 			return;
 		}
 
-
 		$inactive_percentage = $inactive / ( $inactive + $active );
 
 		if ( $verbose ) {
-			WP_CLI::log( sprintf( "%.2f percent of plugins are deactivated.",  $inactive_percentage * 100 ) );
+			WP_CLI::log( sprintf( '%.2f percent of plugins are deactivated.', $inactive_percentage * 100 ) );
 		}
 
 		if ( $inactive + $active > 0 && $inactive_percentage > ( $threshold / 100 ) ) {
