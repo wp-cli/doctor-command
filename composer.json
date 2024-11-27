@@ -19,7 +19,7 @@
         "wp-cli/entity-command": "^2",
         "wp-cli/extension-command": "^2",
         "wp-cli/language-command": "^2",
-        "wp-cli/wp-cli": "^2.1"
+        "wp-cli/wp-cli": "^2.12"
     },
     "require-dev": {
         "wp-cli/wp-cli-tests": "^4"
