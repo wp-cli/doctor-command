@@ -33,7 +33,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "johnpbloch/wordpress-core-installer": true
-        }
+        },
+        "lock": false
     },
     "extra": {
         "branch-alias": {
