@@ -31,6 +31,8 @@ Feature: Basic check usage
 
   Scenario: Filter check results
     Given a WP install
+    # Akismet requires a newer WordPress version, but we don't really need it here.
+    And I run `wp plugin uninstall akismet`
     And I run `wp plugin activate --all`
     And I run `wp plugin update --all`
     And I run `wp theme update --all`
