@@ -10,7 +10,7 @@ Feature: Check whether plugins are up to date
 
   Scenario: Plugins are up to date
     Given a WP install
-     # Akismet requires a newer WordPress version, but we don't really need it here.
+    # Akismet requires a newer WordPress version, but we don't really need it here.
     And I run `wp plugin uninstall akismet`
     And I run `wp plugin update --all`
 
