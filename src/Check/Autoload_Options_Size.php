@@ -17,7 +17,12 @@ class Autoload_Options_Size extends Check {
 	 */
 	protected $threshold_kb = 900;
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking whether autoloaded options size exceeds threshold of {$this->threshold_kb} kb..." );
+		}
+
 		ob_start();
 		WP_CLI::run_command(
 			array( 'option', 'list' ),

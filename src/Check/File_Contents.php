@@ -28,9 +28,14 @@ class File_Contents extends File {
 	 */
 	protected $exists = false;
 
-	public function run() {
+	public function run( $verbose ) {
 
 		if ( isset( $this->regex ) ) {
+
+			if ( $verbose ) {
+				WP_CLI::log( "Checking files on the filesystem for regex pattern {$this->regex}..." );
+			}
+
 			if ( ! empty( $this->_matches ) ) {
 				//if matches are found
 				if ( $this->exists ) {
