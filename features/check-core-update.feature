@@ -59,10 +59,9 @@ Feature: Check whether WordPress is up to date
     Given a WP install
     And I run `wp theme delete --all --force`
     And I run `wp theme install twentytwelve --activate`
-    And I run `wp core download --version=4.1.30 --force`
+    And I run `wp core download --version=5.9.10 --force`
 
-    # This version of WP throws a PHP notice.
-    When I try `wp core update --minor`
+    When I run `wp core update --minor`
     Then STDOUT should contain:
       """
       Success: WordPress updated successfully.
