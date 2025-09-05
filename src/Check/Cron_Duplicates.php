@@ -16,7 +16,12 @@ class Cron_Duplicates extends Cron {
 	 */
 	protected $threshold_count = 10;
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Checking whether the number of duplicate cron job exceeds threshold of {$this->threshold_count}..." );
+		}
+
 		$crons             = self::get_crons();
 		$job_counts        = array();
 		$excess_duplicates = false;
@@ -27,6 +32,9 @@ class Cron_Duplicates extends Cron {
 			++$job_counts[ $job['hook'] ];
 			if ( $job_counts[ $job['hook'] ] >= $this->threshold_count ) {
 				$excess_duplicates = true;
+				if ( $verbose ) {
+					WP_CLI::log( "- {$job['hook']} has exceeded the threshold limit" );
+				}
 			}
 		}
 		if ( $excess_duplicates ) {

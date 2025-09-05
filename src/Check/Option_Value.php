@@ -31,7 +31,11 @@ class Option_Value extends Check {
 	 */
 	protected $value_is_not;
 
-	public function run() {
+	public function run( $verbose ) {
+
+		if ( $verbose ) {
+			WP_CLI::log( "Confirming the expected value of the {$this->option} option..." );
+		}
 
 		if ( isset( $this->value ) && isset( $this->value_is_not ) ) {
 			$this->set_status( 'error' );
