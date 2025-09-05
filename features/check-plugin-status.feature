@@ -18,6 +18,7 @@ Feature: Check the status of a plugin
 
   Scenario: Basic usage
     Given a WP install
+    And I run `wp plugin install https://github.com/wp-cli/sample-plugin/archive/refs/heads/master.zip`
     And a config.yml file:
       """
       plugin-akismet-active:
@@ -25,18 +26,18 @@ Feature: Check the status of a plugin
         options:
           name: akismet
           status: active
-      plugin-hello-uninstalled:
+      plugin-sample-plugin-uninstalled:
         class: WP_CLI\Doctor\Check\Plugin_Status
         options:
-          name: hello
+          name: sample-plugin
           status: uninstalled
       """
 
     When I try `wp doctor check --all --config=config.yml`
     Then STDOUT should be a table containing rows:
-      | name                  | status  | message                                                      |
-      | plugin-akismet-active | error   | Plugin 'akismet' is 'inactive' but expected to be 'active'.  |
-      | plugin-hello-uninstalled | error   | Plugin 'hello' is 'inactive' but expected to be 'uninstalled'. |
+      | name                             | status | message                                                                |
+      | plugin-akismet-active            | error  | Plugin 'akismet' is 'inactive' but expected to be 'active'.            |
+      | plugin-sample-plugin-uninstalled | error  | Plugin 'sample-plugin' is 'inactive' but expected to be 'uninstalled'. |
     And STDERR should contain:
       """
       Error: 2 checks report 'error'.
@@ -48,23 +49,23 @@ Feature: Check the status of a plugin
 
     When I try `wp doctor check --all --config=config.yml`
     Then STDOUT should be a table containing rows:
-      | name                  | status  | message                                                      |
-      | plugin-akismet-active | success   | Plugin 'akismet' is 'active' as expected.                  |
-      | plugin-hello-uninstalled | error   | Plugin 'hello' is 'inactive' but expected to be 'uninstalled'. |
+      | name                             | status  | message                                                                |
+      | plugin-akismet-active            | success | Plugin 'akismet' is 'active' as expected.                              |
+      | plugin-sample-plugin-uninstalled | error   | Plugin 'sample-plugin' is 'inactive' but expected to be 'uninstalled'. |
     And STDERR should contain:
       """
       Error: 1 check reports 'error'.
       """
     And the return code should be 1
 
-    When I run `wp plugin delete hello`
+    When I run `wp plugin delete sample-plugin`
     Then STDOUT should not be empty
 
     When I run `wp doctor check --all --config=config.yml`
     Then STDOUT should be a table containing rows:
-      | name                     | status  | message                                                |
-      | plugin-akismet-active    | success   | Plugin 'akismet' is 'active' as expected.            |
-      | plugin-hello-uninstalled | success   | Plugin 'hello' is 'uninstalled' as expected.         |
+      | name                             | status  | message                                              |
+      | plugin-akismet-active            | success | Plugin 'akismet' is 'active' as expected.            |
+      | plugin-sample-plugin-uninstalled | success | Plugin 'sample-plugin' is 'uninstalled' as expected. |
 
   Scenario: Invalid status registered
     Given a WP install
