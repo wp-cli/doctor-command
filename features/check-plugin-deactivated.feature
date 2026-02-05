@@ -8,9 +8,11 @@ Feature: Check whether a high percentage of plugins are deactivated
       | name                       | description                                                                    |
       | plugin-deactivated         | Warns when greater than 40% of plugins are deactivated.                        |
 
+  # WordPress Importer requirement.
+  @require-wp-5.2
   Scenario: All plugins are activated
     Given a WP install
-    And I run `wp plugin install debug-bar wp-author-widget`
+    And I run `wp plugin install debug-bar wordpress-importer`
     And I run `wp plugin activate --all`
 
     When I run `wp doctor check plugin-deactivated`
@@ -18,15 +20,19 @@ Feature: Check whether a high percentage of plugins are deactivated
       | name               | status  | message                                          |
       | plugin-deactivated | success | Less than 40 percent of plugins are deactivated. |
 
+  # WordPress Importer requirement.
+  @require-wp-5.2
   Scenario: Too many plugins are deactivated
     Given a WP install
-    And I run `wp plugin install debug-bar wp-author-widget`
+    And I run `wp plugin install debug-bar wordpress-importer`
 
     When I run `wp doctor check plugin-deactivated`
     Then STDOUT should be a table containing rows:
       | name               | status  | message                                          |
       | plugin-deactivated | warning | Greater than 40 percent of plugins are deactivated. |
 
+  # WordPress Importer requirement.
+  @require-wp-5.2
   Scenario: Custom percentage of deactivated plugins
     Given a WP install
     And a custom.yml file:
@@ -36,7 +42,7 @@ Feature: Check whether a high percentage of plugins are deactivated
         options:
           threshold_percentage: 60
       """
-    And I run `wp plugin install debug-bar wp-author-widget`
+    And I run `wp plugin install debug-bar wordpress-importer`
 
     When I run `wp doctor check plugin-deactivated --config=custom.yml`
     Then STDOUT should be a table containing rows:
