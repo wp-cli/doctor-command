@@ -8,6 +8,8 @@ Feature: Check whether a high percentage of plugins are deactivated
       | name                       | description                                                                    |
       | plugin-deactivated         | Warns when greater than 40% of plugins are deactivated.                        |
 
+  # WordPress Importer requirement.
+  @require-wp-5.2
   Scenario: All plugins are activated
     Given a WP install
     And I run `wp plugin install debug-bar wordpress-importer`
@@ -18,6 +20,8 @@ Feature: Check whether a high percentage of plugins are deactivated
       | name               | status  | message                                          |
       | plugin-deactivated | success | Less than 40 percent of plugins are deactivated. |
 
+  # WordPress Importer requirement.
+  @require-wp-5.2
   Scenario: Too many plugins are deactivated
     Given a WP install
     And I run `wp plugin install debug-bar wordpress-importer`
@@ -27,6 +31,8 @@ Feature: Check whether a high percentage of plugins are deactivated
       | name               | status  | message                                          |
       | plugin-deactivated | warning | Greater than 40 percent of plugins are deactivated. |
 
+  # WordPress Importer requirement.
+  @require-wp-5.2
   Scenario: Custom percentage of deactivated plugins
     Given a WP install
     And a custom.yml file:

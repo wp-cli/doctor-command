@@ -17,6 +17,8 @@ Feature: Check whether a high number of plugins are activated
       | name                | status  | message                                                   |
       | plugin-active-count | success | Number of active plugins (2) is less than threshold (80). |
 
+  # WordPress Importer requirement.
+  @require-wp-5.2
   Scenario: Greater than threshold plugins are active
     Given a WP install
     And a config.yml file:
