@@ -185,3 +185,47 @@ Feature: Basic check usage
     And STDOUT should be a table containing rows:
       | name                   | status             |
       | autoload-options-size  | success            |
+
+  Scenario: Use --verbose flag to see check progress
+    Given a WP install
+
+    When I run `wp doctor check autoload-options-size --verbose`
+    Then STDOUT should contain:
+      """
+      Running check: autoload-options-size
+      """
+    And STDOUT should contain:
+      """
+      Status:
+      """
+
+  Scenario: Use --verbose flag with multiple checks
+    Given a WP install
+
+    When I run `wp doctor check autoload-options-size core-update --verbose`
+    Then STDOUT should contain:
+      """
+      Running check: autoload-options-size
+      """
+    And STDOUT should contain:
+      """
+      Running check: core-update
+      """
+
+  Scenario: Use --verbose flag with file checks
+    Given a WP install
+    And a wp-content/uploads/foo.php file:
+      """
+      <?php
+      // Simple PHP file.
+      """
+
+    When I run `wp doctor check php-in-upload --verbose`
+    Then STDOUT should contain:
+      """
+      Scanning filesystem for file checks...
+      """
+    And STDOUT should contain:
+      """
+      Running check: php-in-upload
+      """
