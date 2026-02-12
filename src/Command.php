@@ -37,6 +37,11 @@ use WP_CLI\Utils;
 class Command {
 
 	/**
+	 * Number of files to scan before showing progress in verbose mode.
+	 */
+	const VERBOSE_FILE_SCAN_INTERVAL = 1000;
+
+	/**
 	 * Run a series of checks against WordPress to diagnose issues.
 	 *
 	 * A check is a routine run against some scope of WordPress that reports
@@ -174,7 +179,7 @@ class Command {
 						$file_count     = 0;
 						foreach ( $iterator as $file ) {
 							++$file_count;
-							if ( $verbose && 0 === $file_count % 1000 ) {
+							if ( $verbose && 0 === $file_count % self::VERBOSE_FILE_SCAN_INTERVAL ) {
 								WP_CLI::log( "  Scanned {$file_count} files..." );
 							}
 							foreach ( $file_checks as $name => $check ) {
