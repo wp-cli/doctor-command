@@ -214,18 +214,20 @@ Feature: Basic check usage
 
   Scenario: Use --verbose flag with file checks
     Given a WP install
-    And a wp-content/uploads/foo.php file:
+    And a wp-content/plugins/foo.php file:
       """
       <?php
-      // Simple PHP file.
+      // Plugin Name: Foo Plugin
+
+      wp_cache_flush();
       """
 
-    When I run `wp doctor check php-in-upload --verbose`
+    When I run `wp doctor check cache-flush --verbose`
     Then STDOUT should contain:
       """
       Scanning filesystem for file checks...
       """
     And STDOUT should contain:
       """
-      Running check: php-in-upload
+      Running check: cache-flush
       """
