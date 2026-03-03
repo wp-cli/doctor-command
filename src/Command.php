@@ -37,6 +37,11 @@ use WP_CLI\Utils;
 class Command {
 
 	/**
+	 * Number of files to scan before showing progress in verbose mode.
+	 */
+	const VERBOSE_FILE_SCAN_INTERVAL = 1000;
+
+	/**
 	 * Run a series of checks against WordPress to diagnose issues.
 	 *
 	 * A check is a routine run against some scope of WordPress that reports
@@ -76,6 +81,9 @@ class Command {
 	 *   - count
 	 * ---
 	 *
+	 * [--verbose]
+	 * : Display more information about what each check is doing.
+	 *
 	 * ## AVAILABLE FIELDS
 	 *
 	 * These fields will be displayed by default for each check:
@@ -114,6 +122,8 @@ class Command {
 			WP_CLI::error( 'Please specify one or more checks, or use --all.' );
 		}
 
+		$verbose = Utils\get_flag_value( $assoc_args, 'verbose', false );
+
 		$completed = array();
 		$checks    = Checks::get_checks( array( 'name' => $args ) );
 		if ( empty( $checks ) ) {
@@ -125,7 +135,7 @@ class Command {
 		}
 		$file_checks = array();
 		$progress    = false;
-		if ( $all && 'table' === $assoc_args['format'] ) {
+		if ( $all && 'table' === $assoc_args['format'] && ! $verbose ) {
 			$progress = Utils\make_progress_bar( 'Running checks', count( $checks ) );
 		}
 		foreach ( $checks as $name => $check ) {
@@ -133,11 +143,18 @@ class Command {
 			if ( $when ) {
 				WP_CLI::add_hook(
 					$when,
-					static function () use ( $name, $check, &$completed, &$progress ) {
+					static function () use ( $name, $check, &$completed, &$progress, $verbose ) {
+						if ( $verbose ) {
+							WP_CLI::log( "Running check: {$name}" );
+						}
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
 							$progress->tick();
+						}
+						if ( $verbose ) {
+							$results = $check->get_results();
+							WP_CLI::log( "  Status: {$results['status']}" );
 						}
 					}
 				);
@@ -151,12 +168,20 @@ class Command {
 		if ( ! empty( $file_checks ) ) {
 			WP_CLI::add_hook(
 				'after_wp_config_load',
-				static function () use ( $file_checks, &$completed, &$progress ) {
+				static function () use ( $file_checks, &$completed, &$progress, $verbose ) {
+					if ( $verbose ) {
+						WP_CLI::log( 'Scanning filesystem for file checks...' );
+					}
 					try {
 						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 						$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
+						$file_count     = 0;
 						foreach ( $iterator as $file ) {
+							++$file_count;
+							if ( $verbose && 0 === $file_count % self::VERBOSE_FILE_SCAN_INTERVAL ) {
+								WP_CLI::log( "  Scanned {$file_count} files..." );
+							}
 							foreach ( $file_checks as $name => $check ) {
 								$options = $check->get_options();
 								if ( ! empty( $options['only_wp_content'] )
@@ -174,14 +199,24 @@ class Command {
 								$check->check_file( $file );
 							}
 						}
+						if ( $verbose ) {
+							WP_CLI::log( "  Total files scanned: {$file_count}" );
+						}
 					} catch ( Exception $e ) {
 						WP_CLI::warning( $e->getMessage() );
 					}
 					foreach ( $file_checks as $name => $check ) {
+						if ( $verbose ) {
+							WP_CLI::log( "Running check: {$name}" );
+						}
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
 							$progress->tick();
+						}
+						if ( $verbose ) {
+							$results = $check->get_results();
+							WP_CLI::log( "  Status: {$results['status']}" );
 						}
 					}
 				}
