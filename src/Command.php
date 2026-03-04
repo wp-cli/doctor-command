@@ -337,7 +337,9 @@ class Command {
 				if ( '_' === $prop_name[0] ) {
 					continue;
 				}
-				$prop->setAccessible( true );
+				if ( PHP_VERSION_ID < 80100 ) {
+					$prop->setAccessible( true );
+				}
 				$value = $prop->getValue( $class );
 				if ( is_array( $value ) ) {
 					$value = json_encode( $value );
