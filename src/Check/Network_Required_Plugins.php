@@ -39,35 +39,27 @@ class Network_Required_Plugins extends Check {
 			return;
 		}
 
-		$plugins = array();
-		ob_start();
-		WP_CLI::run_command( array( 'plugin', 'list' ), array( 'format' => 'json' ) );
-		$ret = ob_get_clean();
-		if ( ! empty( $ret ) ) {
-			$plugins = json_decode( $ret, true );
+		if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) || ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		if ( ! is_array( $plugins ) ) {
-			$this->set_status( 'error' );
-			$this->set_message( 'Unable to parse plugin list output.' );
-			return;
-		}
-
-		$plugin_statuses = array();
-		foreach ( $plugins as $plugin ) {
-			$plugin_statuses[ $plugin['name'] ] = $plugin['status'];
-		}
+		$installed_plugins = get_plugins();
 
 		$missing            = array();
 		$not_network_active = array();
-		foreach ( $this->plugins as $plugin_name ) {
-			if ( ! isset( $plugin_statuses[ $plugin_name ] ) ) {
-				$missing[] = $plugin_name;
+		foreach ( $this->plugins as $plugin_slug ) {
+			$plugin_file = $this->get_plugin_file( $plugin_slug, $installed_plugins );
+			if ( null === $plugin_file ) {
+				$missing[] = $plugin_slug;
 				continue;
 			}
-			if ( 'active-network' !== $plugin_statuses[ $plugin_name ] ) {
-				$not_network_active[] = "{$plugin_name} ({$plugin_statuses[$plugin_name]})";
+
+			if ( is_plugin_active_for_network( $plugin_file ) ) {
+				continue;
 			}
+
+			$status               = is_plugin_active( $plugin_file ) ? 'active' : 'inactive';
+			$not_network_active[] = "{$plugin_slug} ({$status})";
 		}
 
 		if ( empty( $missing ) && empty( $not_network_active ) ) {
@@ -85,5 +77,32 @@ class Network_Required_Plugins extends Check {
 		}
 		$this->set_status( 'error' );
 		$this->set_message( 'Required network plugin check failed. ' . implode( ' ', $parts ) );
+	}
+
+	/**
+	 * Resolve a plugin slug or file to an installed plugin file path.
+	 *
+	 * @param string $plugin_slug Requested plugin slug/file.
+	 * @param array  $installed_plugins Installed plugins keyed by plugin file.
+	 * @return string|null
+	 */
+	private function get_plugin_file( $plugin_slug, $installed_plugins ) {
+		if ( isset( $installed_plugins[ $plugin_slug ] ) ) {
+			return $plugin_slug;
+		}
+
+		foreach ( array_keys( $installed_plugins ) as $plugin_file ) {
+			$directory_slug = dirname( $plugin_file );
+			if ( '.' !== $directory_slug && $directory_slug === $plugin_slug ) {
+				return $plugin_file;
+			}
+
+			$file_slug = basename( $plugin_file, '.php' );
+			if ( $file_slug === $plugin_slug ) {
+				return $plugin_file;
+			}
+		}
+
+		return null;
 	}
 }

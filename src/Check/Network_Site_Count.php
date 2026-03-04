@@ -27,9 +27,9 @@ class Network_Site_Count extends Check {
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );
 
-		$minimum = (int) $this->minimum;
-		$maximum = (int) $this->maximum;
-		if ( $minimum < 0 || $maximum < 0 || $maximum < $minimum ) {
+		$this->minimum = (int) $this->minimum;
+		$this->maximum = (int) $this->maximum;
+		if ( $this->minimum < 0 || $this->maximum < 0 || $this->maximum < $this->minimum ) {
 			WP_CLI::error( 'Invalid thresholds. Ensure 0 <= minimum <= maximum.' );
 		}
 	}
@@ -41,17 +41,15 @@ class Network_Site_Count extends Check {
 			return;
 		}
 
-		$count   = (int) get_sites( array( 'count' => true ) );
-		$minimum = (int) $this->minimum;
-		$maximum = (int) $this->maximum;
+		$count = (int) get_sites( array( 'count' => true ) );
 
-		if ( $count < $minimum || $count > $maximum ) {
+		if ( $count < $this->minimum || $count > $this->maximum ) {
 			$this->set_status( 'warning' );
-			$this->set_message( "Network has {$count} sites; expected between {$minimum} and {$maximum}." );
+			$this->set_message( "Network has {$count} sites; expected between {$this->minimum} and {$this->maximum}." );
 			return;
 		}
 
 		$this->set_status( 'success' );
-		$this->set_message( "Network has {$count} sites; expected between {$minimum} and {$maximum}." );
+		$this->set_message( "Network has {$count} sites; expected between {$this->minimum} and {$this->maximum}." );
 	}
 }
