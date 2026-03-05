@@ -75,3 +75,26 @@ Feature: Check the value of a network option
     Then STDOUT should be a table containing rows:
       | name                 | status  | message                                                        |
       | network-registration | success | Network option 'registration' is not 'none' as expected.      |
+
+  Scenario: Gracefully render array values in error messages
+    Given a WP multisite installation
+    And a config.yml file:
+      """
+      network-registration:
+        check: Network_Site_Option_Value
+        options:
+          option: registration
+          value: none
+      """
+    And I run `wp eval 'update_site_option( "registration", array( "users" => "all" ) );'`
+
+    When I try `wp doctor check network-registration --config=config.yml`
+    Then STDOUT should contain:
+      """
+      Network option 'registration' is '{"users":"all"}' but expected to be 'none'.
+      """
+    And STDERR should contain:
+      """
+      Error: 1 check reports 'error'.
+      """
+    And the return code should be 1
