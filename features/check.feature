@@ -231,3 +231,16 @@ Feature: Basic check usage
       """
       Running check: cache-flush
       """
+
+  Scenario: Verbose flag is ignored with non-table formats to prevent output corruption
+    Given a WP install
+
+    When I run `wp doctor check autoload-options-size --verbose --format=json`
+    Then STDOUT should not contain:
+      """
+      Running check:
+      """
+    And STDOUT should be JSON containing:
+      """
+      [{"name":"autoload-options-size"}]
+      """

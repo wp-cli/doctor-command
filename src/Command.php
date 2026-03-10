@@ -123,6 +123,10 @@ class Command {
 		}
 
 		$verbose = Utils\get_flag_value( $assoc_args, 'verbose', false );
+		// Verbose mode only works with table format to avoid corrupting machine-readable output
+		if ( $verbose && 'table' !== $assoc_args['format'] ) {
+			$verbose = false;
+		}
 
 		$completed = array();
 		$checks    = Checks::get_checks( array( 'name' => $args ) );
