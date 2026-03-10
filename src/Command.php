@@ -37,6 +37,11 @@ use WP_CLI\Utils;
 class Command {
 
 	/**
+	 * Number of files to scan before showing progress in debug mode.
+	 */
+	const DEBUG_FILE_SCAN_INTERVAL = 1000;
+
+	/**
 	 * Run a series of checks against WordPress to diagnose issues.
 	 *
 	 * A check is a routine run against some scope of WordPress that reports
@@ -134,11 +139,14 @@ class Command {
 				WP_CLI::add_hook(
 					$when,
 					static function () use ( $name, $check, &$completed, &$progress ) {
+						WP_CLI::debug( "Running check: {$name}", 'doctor' );
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
 							$progress->tick();
 						}
+						$results = $check->get_results();
+						WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
 					}
 				);
 			} else {
@@ -152,11 +160,17 @@ class Command {
 			WP_CLI::add_hook(
 				'after_wp_config_load',
 				static function () use ( $file_checks, &$completed, &$progress ) {
+					WP_CLI::debug( 'Scanning filesystem for file checks...', 'doctor' );
 					try {
 						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 						$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
+						$item_count     = 0;
 						foreach ( $iterator as $file ) {
+							++$item_count;
+							if ( 0 === $item_count % self::DEBUG_FILE_SCAN_INTERVAL ) {
+								WP_CLI::debug( "  Visited {$item_count} items...", 'doctor' );
+							}
 							foreach ( $file_checks as $name => $check ) {
 								$options = $check->get_options();
 								if ( ! empty( $options['only_wp_content'] )
@@ -174,15 +188,19 @@ class Command {
 								$check->check_file( $file );
 							}
 						}
+						WP_CLI::debug( "  Total items visited: {$item_count}", 'doctor' );
 					} catch ( Exception $e ) {
 						WP_CLI::warning( $e->getMessage() );
 					}
 					foreach ( $file_checks as $name => $check ) {
+						WP_CLI::debug( "Running check: {$name}", 'doctor' );
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
 							$progress->tick();
 						}
+						$results = $check->get_results();
+						WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
 					}
 				}
 			);

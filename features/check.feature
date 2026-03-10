@@ -185,3 +185,49 @@ Feature: Basic check usage
     And STDOUT should be a table containing rows:
       | name                   | status             |
       | autoload-options-size  | success            |
+
+  Scenario: Use --debug=doctor flag to see check progress
+    Given a WP install
+
+    When I try `wp doctor check autoload-options-size --debug=doctor`
+    Then STDERR should contain:
+      """
+      Running check: autoload-options-size
+      """
+    And STDERR should contain:
+      """
+      Status:
+      """
+
+  Scenario: Use --debug=doctor flag with multiple checks
+    Given a WP install
+
+    When I try `wp doctor check autoload-options-size plugin-deactivated --debug=doctor`
+    Then STDERR should contain:
+      """
+      Running check: autoload-options-size
+      """
+    And STDERR should contain:
+      """
+      Running check: plugin-deactivated
+      """
+
+  Scenario: Use --debug=doctor flag with file checks
+    Given a WP install
+    And a wp-content/plugins/foo.php file:
+      """
+      <?php
+      // Plugin Name: Foo Plugin
+
+      wp_cache_flush();
+      """
+
+    When I try `wp doctor check cache-flush --debug=doctor`
+    Then STDERR should contain:
+      """
+      Scanning filesystem for file checks...
+      """
+    And STDERR should contain:
+      """
+      Running check: cache-flush
+      """
