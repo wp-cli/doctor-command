@@ -37,9 +37,9 @@ use WP_CLI\Utils;
 class Command {
 
 	/**
-	 * Number of files to scan before showing progress in verbose mode.
+	 * Number of files to scan before showing progress in debug mode.
 	 */
-	const VERBOSE_FILE_SCAN_INTERVAL = 1000;
+	const DEBUG_FILE_SCAN_INTERVAL = 1000;
 
 	/**
 	 * Run a series of checks against WordPress to diagnose issues.
@@ -81,9 +81,6 @@ class Command {
 	 *   - count
 	 * ---
 	 *
-	 * [--verbose]
-	 * : Display more information about what each check is doing.
-	 *
 	 * ## AVAILABLE FIELDS
 	 *
 	 * These fields will be displayed by default for each check:
@@ -122,12 +119,6 @@ class Command {
 			WP_CLI::error( 'Please specify one or more checks, or use --all.' );
 		}
 
-		$verbose = Utils\get_flag_value( $assoc_args, 'verbose', false );
-		// Verbose mode only works with table format to avoid corrupting machine-readable output
-		if ( $verbose && 'table' !== $assoc_args['format'] ) {
-			$verbose = false;
-		}
-
 		$completed = array();
 		$checks    = Checks::get_checks( array( 'name' => $args ) );
 		if ( empty( $checks ) ) {
@@ -139,7 +130,7 @@ class Command {
 		}
 		$file_checks = array();
 		$progress    = false;
-		if ( $all && 'table' === $assoc_args['format'] && ! $verbose ) {
+		if ( $all && 'table' === $assoc_args['format'] ) {
 			$progress = Utils\make_progress_bar( 'Running checks', count( $checks ) );
 		}
 		foreach ( $checks as $name => $check ) {
@@ -147,19 +138,15 @@ class Command {
 			if ( $when ) {
 				WP_CLI::add_hook(
 					$when,
-					static function () use ( $name, $check, &$completed, &$progress, $verbose ) {
-						if ( $verbose ) {
-							WP_CLI::log( "Running check: {$name}" );
-						}
+					static function () use ( $name, $check, &$completed, &$progress ) {
+						WP_CLI::debug( "Running check: {$name}", 'doctor' );
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
 							$progress->tick();
 						}
-						if ( $verbose ) {
-							$results = $check->get_results();
-							WP_CLI::log( "  Status: {$results['status']}" );
-						}
+						$results = $check->get_results();
+						WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
 					}
 				);
 			} else {
@@ -172,10 +159,8 @@ class Command {
 		if ( ! empty( $file_checks ) ) {
 			WP_CLI::add_hook(
 				'after_wp_config_load',
-				static function () use ( $file_checks, &$completed, &$progress, $verbose ) {
-					if ( $verbose ) {
-						WP_CLI::log( 'Scanning filesystem for file checks...' );
-					}
+				static function () use ( $file_checks, &$completed, &$progress ) {
+					WP_CLI::debug( 'Scanning filesystem for file checks...', 'doctor' );
 					try {
 						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
@@ -183,8 +168,8 @@ class Command {
 						$item_count     = 0;
 						foreach ( $iterator as $file ) {
 							++$item_count;
-							if ( $verbose && 0 === $item_count % self::VERBOSE_FILE_SCAN_INTERVAL ) {
-								WP_CLI::log( "  Visited {$item_count} items..." );
+							if ( 0 === $item_count % self::DEBUG_FILE_SCAN_INTERVAL ) {
+								WP_CLI::debug( "  Visited {$item_count} items...", 'doctor' );
 							}
 							foreach ( $file_checks as $name => $check ) {
 								$options = $check->get_options();
@@ -203,25 +188,19 @@ class Command {
 								$check->check_file( $file );
 							}
 						}
-						if ( $verbose ) {
-							WP_CLI::log( "  Total items visited: {$item_count}" );
-						}
+						WP_CLI::debug( "  Total items visited: {$item_count}", 'doctor' );
 					} catch ( Exception $e ) {
 						WP_CLI::warning( $e->getMessage() );
 					}
 					foreach ( $file_checks as $name => $check ) {
-						if ( $verbose ) {
-							WP_CLI::log( "Running check: {$name}" );
-						}
+						WP_CLI::debug( "Running check: {$name}", 'doctor' );
 						$check->run();
 						$completed[ $name ] = $check;
 						if ( $progress ) {
 							$progress->tick();
 						}
-						if ( $verbose ) {
-							$results = $check->get_results();
-							WP_CLI::log( "  Status: {$results['status']}" );
-						}
+						$results = $check->get_results();
+						WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
 					}
 				}
 			);

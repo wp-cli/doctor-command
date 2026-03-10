@@ -186,33 +186,33 @@ Feature: Basic check usage
       | name                   | status             |
       | autoload-options-size  | success            |
 
-  Scenario: Use --verbose flag to see check progress
+  Scenario: Use --debug=doctor flag to see check progress
     Given a WP install
 
-    When I run `wp doctor check autoload-options-size --verbose`
-    Then STDOUT should contain:
+    When I run `wp doctor check autoload-options-size --debug=doctor`
+    Then STDERR should contain:
       """
       Running check: autoload-options-size
       """
-    And STDOUT should contain:
+    And STDERR should contain:
       """
       Status:
       """
 
-  Scenario: Use --verbose flag with multiple checks
+  Scenario: Use --debug=doctor flag with multiple checks
     Given a WP install
 
-    When I run `wp doctor check autoload-options-size plugin-deactivated --verbose`
-    Then STDOUT should contain:
+    When I run `wp doctor check autoload-options-size plugin-deactivated --debug=doctor`
+    Then STDERR should contain:
       """
       Running check: autoload-options-size
       """
-    And STDOUT should contain:
+    And STDERR should contain:
       """
       Running check: plugin-deactivated
       """
 
-  Scenario: Use --verbose flag with file checks
+  Scenario: Use --debug=doctor flag with file checks
     Given a WP install
     And a wp-content/plugins/foo.php file:
       """
@@ -222,25 +222,21 @@ Feature: Basic check usage
       wp_cache_flush();
       """
 
-    When I run `wp doctor check cache-flush --verbose`
-    Then STDOUT should contain:
+    When I run `wp doctor check cache-flush --debug=doctor`
+    Then STDERR should contain:
       """
       Scanning filesystem for file checks...
       """
-    And STDOUT should contain:
+    And STDERR should contain:
       """
       Running check: cache-flush
       """
 
-  Scenario: Verbose flag is ignored with non-table formats to prevent output corruption
+  Scenario: Debug output does not corrupt machine-readable formats
     Given a WP install
 
-    When I run `wp doctor check autoload-options-size --verbose --format=json`
-    Then STDOUT should not contain:
-      """
-      Running check:
-      """
-    And STDOUT should be JSON containing:
+    When I run `wp doctor check autoload-options-size --debug=doctor --format=json`
+    Then STDOUT should be JSON containing:
       """
       [{"name":"autoload-options-size"}]
       """
