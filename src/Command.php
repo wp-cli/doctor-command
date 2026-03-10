@@ -176,11 +176,11 @@ class Command {
 						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 						$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
-						$file_count     = 0;
+						$item_count     = 0;
 						foreach ( $iterator as $file ) {
-							++$file_count;
-							if ( $verbose && 0 === $file_count % self::VERBOSE_FILE_SCAN_INTERVAL ) {
-								WP_CLI::log( "  Scanned {$file_count} files..." );
+							++$item_count;
+							if ( $verbose && 0 === $item_count % self::VERBOSE_FILE_SCAN_INTERVAL ) {
+								WP_CLI::log( "  Visited {$item_count} items..." );
 							}
 							foreach ( $file_checks as $name => $check ) {
 								$options = $check->get_options();
@@ -200,7 +200,7 @@ class Command {
 							}
 						}
 						if ( $verbose ) {
-							WP_CLI::log( "  Total files scanned: {$file_count}" );
+							WP_CLI::log( "  Total items visited: {$item_count}" );
 						}
 					} catch ( Exception $e ) {
 						WP_CLI::warning( $e->getMessage() );
