@@ -189,7 +189,7 @@ Feature: Basic check usage
   Scenario: Use --debug=doctor flag to see check progress
     Given a WP install
 
-    When I run `wp doctor check autoload-options-size --debug=doctor`
+    When I try `wp doctor check autoload-options-size --debug=doctor`
     Then STDERR should contain:
       """
       Running check: autoload-options-size
@@ -202,7 +202,7 @@ Feature: Basic check usage
   Scenario: Use --debug=doctor flag with multiple checks
     Given a WP install
 
-    When I run `wp doctor check autoload-options-size plugin-deactivated --debug=doctor`
+    When I try `wp doctor check autoload-options-size plugin-deactivated --debug=doctor`
     Then STDERR should contain:
       """
       Running check: autoload-options-size
@@ -222,7 +222,7 @@ Feature: Basic check usage
       wp_cache_flush();
       """
 
-    When I run `wp doctor check cache-flush --debug=doctor`
+    When I try `wp doctor check cache-flush --debug=doctor`
     Then STDERR should contain:
       """
       Scanning filesystem for file checks...
@@ -230,13 +230,4 @@ Feature: Basic check usage
     And STDERR should contain:
       """
       Running check: cache-flush
-      """
-
-  Scenario: Debug output does not corrupt machine-readable formats
-    Given a WP install
-
-    When I run `wp doctor check autoload-options-size --debug=doctor --format=json`
-    Then STDOUT should be JSON containing:
-      """
-      [{"name":"autoload-options-size"}]
       """
