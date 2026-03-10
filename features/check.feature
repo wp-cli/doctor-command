@@ -202,14 +202,14 @@ Feature: Basic check usage
   Scenario: Use --verbose flag with multiple checks
     Given a WP install
 
-    When I run `wp doctor check autoload-options-size core-update --verbose`
+    When I run `wp doctor check autoload-options-size plugin-deactivated --verbose`
     Then STDOUT should contain:
       """
       Running check: autoload-options-size
       """
     And STDOUT should contain:
       """
-      Running check: core-update
+      Running check: plugin-deactivated
       """
 
   Scenario: Use --verbose flag with file checks
