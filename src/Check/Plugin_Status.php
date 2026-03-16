@@ -3,7 +3,6 @@
 namespace WP_CLI\Doctor\Check;
 
 use WP_CLI;
-use WP_CLI\Doctor\Check;
 
 /**
  * Errors if plugin '%name%' isn't in the expected state '%status%'.

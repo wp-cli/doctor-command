@@ -2,9 +2,6 @@
 
 namespace WP_CLI\Doctor\Check;
 
-use WP_CLI;
-use WP_CLI\Doctor\Check;
-
 /**
  * Warns when there are plugin updates available.
  */

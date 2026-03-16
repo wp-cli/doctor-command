@@ -2,8 +2,6 @@
 
 namespace WP_CLI\Doctor\Check;
 
-use WP_CLI;
-
 /**
  * Warns when there are greater than %threshold_count% plugins activated.
  */

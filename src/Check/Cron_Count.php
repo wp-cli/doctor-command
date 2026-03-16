@@ -2,9 +2,6 @@
 
 namespace WP_CLI\Doctor\Check;
 
-use WP_CLI;
-use WP_CLI\Doctor\Check;
-
 /**
  * Errors when there's an excess of %threshold_count% total cron jobs registered.
  */

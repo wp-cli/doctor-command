@@ -3,8 +3,6 @@
 namespace WP_CLI\Doctor\Check;
 
 use FilesystemIterator;
-use WP_CLI;
-use WP_CLI\Doctor\Check;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
