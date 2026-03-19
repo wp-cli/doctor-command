@@ -19,7 +19,15 @@ class Cron_Duplicates extends Cron {
 		$job_counts        = array();
 		$excess_duplicates = false;
 		foreach ( $crons as $job ) {
-			$key = json_encode( array( $job['hook'], isset( $job['args'] ) ? $job['args'] : array() ) );
+			$key_data = array( $job['hook'], isset( $job['args'] ) ? $job['args'] : array() );
+			if ( function_exists( 'wp_json_encode' ) ) {
+				$key = wp_json_encode( $key_data );
+			} else {
+				$key = json_encode( $key_data );
+			}
+			if ( false === $key ) {
+				$key = serialize( $key_data );
+			}
 			if ( ! isset( $job_counts[ $key ] ) ) {
 				$job_counts[ $key ] = 0;
 			}
