@@ -26,6 +26,7 @@ class Cron_Duplicates extends Cron {
 				$key = json_encode( $key_data );
 			}
 			if ( false === $key ) {
+				// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 				$key = serialize( $key_data );
 			}
 			if ( ! isset( $job_counts[ $key ] ) ) {
