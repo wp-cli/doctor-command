@@ -26,6 +26,21 @@ Feature: Check for excess duplicate cron entries
       | cron-duplicates | success | All cron job counts are within normal operating expectations. |
     And STDERR should be empty
 
+  Scenario: Cron check is healthy when same hook has unique args (e.g. publish_future_post)
+    Given a wp-content/mu-plugins/plugin.php file:
+      """
+      <?php
+      for ( $i = 1; $i <= 15; $i++ ) {
+          wp_schedule_single_event( time() + ( $i * 60 ), 'publish_future_post', array( $i ) );
+      }
+      """
+
+    When I run `wp doctor check cron-duplicates`
+    Then STDOUT should be a table containing rows:
+      | name            | status  | message                                                       |
+      | cron-duplicates | success | All cron job counts are within normal operating expectations. |
+    And STDERR should be empty
+
   Scenario: Cron check errors with excess duplicate crons
     Given a wp-content/mu-plugins/plugin.php file:
       """
