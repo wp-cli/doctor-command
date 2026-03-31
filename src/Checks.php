@@ -4,7 +4,8 @@ namespace WP_CLI\Doctor;
 
 use Mustangostang\Spyc;
 use WP_CLI;
-use WP_CLI\Utils;
+use WP_CLI\Path;
+
 
 class Checks {
 
@@ -78,7 +79,7 @@ class Checks {
 	 * Register a check with the Doctor
 	 *
 	 * @param string $name Name for the check.
-	 * @param string $class Check class name.
+	 * @param string $check Check class name.
 	 */
 	public static function add_check( $name, $check ) {
 
@@ -125,7 +126,7 @@ class Checks {
 	 * @param string $base Base path to prepend.
 	 */
 	private static function absolutize( $path, $base ) {
-		if ( ! empty( $path ) && ! Utils\is_path_absolute( $path ) ) {
+		if ( ! empty( $path ) && ! Path::is_absolute( $path ) ) {
 			$path = $base . DIRECTORY_SEPARATOR . $path;
 		}
 		return $path;

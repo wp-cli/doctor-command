@@ -38,6 +38,12 @@ class Option_Value extends Check {
 			return;
 		}
 
+		if ( ! isset( $this->value ) && ! isset( $this->value_is_not ) ) {
+			$this->set_status( 'error' );
+			$this->set_message( 'You must use either "value" or "value_is_not".' );
+			return;
+		}
+
 		$actual_value = get_option( $this->option );
 
 		if ( isset( $this->value ) ) {
@@ -48,14 +54,13 @@ class Option_Value extends Check {
 				$status  = 'error';
 				$message = "Option '{$this->option}' is '{$actual_value}' but expected to be '{$this->value}'.";
 			}
-		} elseif ( isset( $this->value_is_not ) ) {
-			if ( $actual_value == $this->value_is_not ) { // phpcs:ignore Universal.Operators.StrictComparisons -- Keep existing behavior.
-				$status  = 'error';
-				$message = "Option '{$this->option}' is '{$actual_value}' and expected not to be.";
-			} else {
-				$status  = 'success';
-				$message = "Option '{$this->option}' is not '{$this->value_is_not}' as expected.";
-			}
+		} elseif ( $actual_value == $this->value_is_not ) { // phpcs:ignore Universal.Operators.StrictComparisons -- Keep existing behavior.
+			$status  = 'error';
+			$message = "Option '{$this->option}' is '{$actual_value}' and expected not to be.";
+
+		} else {
+			$status  = 'success';
+			$message = "Option '{$this->option}' is not '{$this->value_is_not}' as expected.";
 		}
 
 		$this->set_status( $status );
