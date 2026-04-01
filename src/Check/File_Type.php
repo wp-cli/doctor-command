@@ -12,9 +12,9 @@ class File_Type extends File {
 	/**
 	 * Assert the file type is or isn't a symlink.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
-	protected $symlink;
+	protected $symlink = null;
 
 	public function run() {
 

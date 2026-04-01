@@ -26,9 +26,9 @@ class Constant_Definition extends Check {
 	/**
 	 * Whether or not the constant is expected to be a falsy value.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
-	protected $falsy;
+	protected $falsy = null;
 
 	/**
 	 * Expected value of the constant.
@@ -99,7 +99,7 @@ class Constant_Definition extends Check {
 			return;
 		}
 
-		if ( $this->defined && ! isset( $this->value ) ) {
+		if ( ! isset( $this->value ) ) {
 			$this->set_status( 'success' );
 			$this->set_message( "Constant '{$this->constant}' is defined." );
 			return;

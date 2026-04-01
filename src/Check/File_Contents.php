@@ -12,9 +12,9 @@ class File_Contents extends File {
 	/**
 	 * Regex pattern to check against each file’s contents.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	protected $regex;
+	protected $regex = null;
 
 	/**
 	 * Assert existence or absence of the regex pattern.
