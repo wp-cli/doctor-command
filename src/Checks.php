@@ -101,9 +101,10 @@ class Checks {
 	}
 
 	/**
-	 * Get checks registred with the Doctor.
+	 * Get checks registered with the Doctor.
 	 *
 	 * @param array $args Filter checks based on some attribute.
+	 * @return array<string, Check>
 	 */
 	public static function get_checks( $args = array() ) {
 		if ( ! empty( $args['name'] ) ) {

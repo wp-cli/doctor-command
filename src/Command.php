@@ -185,6 +185,7 @@ class Command {
 								if ( ! in_array( $file->getExtension(), $extension, true ) ) {
 									continue;
 								}
+								/** @var Check\File $check */
 								$check->check_file( $file );
 							}
 						}

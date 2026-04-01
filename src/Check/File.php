@@ -58,4 +58,11 @@ abstract class File extends Check {
 			'path'            => $this->path,
 		);
 	}
+
+	/**
+	 * Check a specific file.
+	 *
+	 * @param \SplFileInfo $file File to check.
+	 */
+	abstract public function check_file( \SplFileInfo $file );
 }
