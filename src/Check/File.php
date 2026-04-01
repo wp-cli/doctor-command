@@ -12,7 +12,7 @@ abstract class File extends Check {
 	/**
 	 * File checks are run as their own group.
 	 */
-	protected $_when = false;
+	protected $_when = 'manual'; // Run manually via group
 
 	/**
 	 * File extension to check.
@@ -49,7 +49,7 @@ abstract class File extends Check {
 	/**
 	 * Get the options for this check
 	 *
-	 * @return string
+	 * @return array<string, bool|string>
 	 */
 	public function get_options() {
 		return array(
