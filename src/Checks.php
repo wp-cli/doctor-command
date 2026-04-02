@@ -78,8 +78,8 @@ class Checks {
 	/**
 	 * Register a check with the Doctor
 	 *
-	 * @param string $name Name for the check.
-	 * @param string $check Check class name.
+	 * @param string        $name  Name for the check.
+	 * @param object|string $check Check class name or instance.
 	 */
 	public static function add_check( $name, $check ) {
 
