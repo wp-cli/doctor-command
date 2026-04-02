@@ -108,6 +108,10 @@ class Command {
 	 *     +--------------------+--------+--------------------------------------------+
 	 *
 	 * @when before_wp_load
+	 *
+	 * @param array<string>        $args       Names of one or more checks to run.
+	 * @param array<string, mixed> $assoc_args Command options.
+	 * @return void
 	 */
 	public function check( $args, $assoc_args ) {
 
@@ -333,6 +337,10 @@ class Command {
 	 *
 	 * @when before_wp_load
 	 * @subcommand list
+	 *
+	 * @param array<string>        $args       Command arguments.
+	 * @param array<string, mixed> $assoc_args Command options.
+	 * @return void
 	 */
 	public function list_( $args, $assoc_args ) {
 
@@ -379,6 +387,8 @@ class Command {
 
 	/**
 	 * Runs through the entirety of the WP bootstrap process
+	 *
+	 * @return void
 	 */
 	private function load_wordpress_with_template() {
 		global $wp_query;
@@ -446,6 +456,8 @@ class Command {
 
 	/**
 	 * Get the path to the default config file
+	 *
+	 * @return string
 	 */
 	private static function get_default_config() {
 		return dirname( __DIR__ ) . '/doctor.yml';

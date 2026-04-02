@@ -7,8 +7,14 @@ use WP_CLI\Doctor\Check;
 
 abstract class Cron extends Check {
 
+	/**
+	 * @var array<mixed>|null
+	 */
 	protected static $crons;
 
+	/**
+	 * @return array<mixed>
+	 */
 	protected static function get_crons() {
 
 		if ( isset( self::$crons ) ) {

@@ -24,6 +24,9 @@ class Network_Site_Count extends Check {
 	 */
 	protected $maximum = 500;
 
+	/**
+	 * @param array<string, mixed> $options
+	 */
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );
 
@@ -34,6 +37,9 @@ class Network_Site_Count extends Check {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		if ( ! is_multisite() ) {
 			$this->set_status( 'success' );

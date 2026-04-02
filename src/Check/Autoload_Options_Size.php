@@ -17,6 +17,9 @@ class Autoload_Options_Size extends Check {
 	 */
 	protected $threshold_kb = 900;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		ob_start();
 		WP_CLI::run_command(
@@ -40,6 +43,11 @@ class Autoload_Options_Size extends Check {
 		}
 	}
 
+	/**
+	 * @param int|float $size Size in bytes.
+	 * @param int       $precision Precision.
+	 * @return string
+	 */
 	private static function format_bytes( $size, $precision = 2 ) {
 		$base     = log( $size, 1024 );
 		$suffixes = array( '', 'kb', 'mb', 'g', 't' );

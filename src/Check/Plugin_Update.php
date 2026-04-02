@@ -7,6 +7,9 @@ namespace WP_CLI\Doctor\Check;
  */
 class Plugin_Update extends Plugin {
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$plugins      = self::get_plugins();
 		$update_count = 0;

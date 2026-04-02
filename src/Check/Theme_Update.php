@@ -10,6 +10,9 @@ use WP_CLI\Doctor\Check;
  */
 class Theme_Update extends Check {
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		ob_start();
 		WP_CLI::run_command( array( 'theme', 'list' ), array( 'format' => 'json' ) );

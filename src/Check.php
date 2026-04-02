@@ -31,6 +31,8 @@ abstract class Check {
 
 	/**
 	 * Initialize the check.
+	 *
+	 * @param array<string, mixed> $options
 	 */
 	public function __construct( $options = array() ) {
 
@@ -48,6 +50,8 @@ abstract class Check {
 
 	/**
 	 * Get when the check is expected to run.
+	 *
+	 * @return string
 	 */
 	public function get_when() {
 		return $this->_when;
@@ -57,6 +61,7 @@ abstract class Check {
 	 * Set when the check is expected to run.
 	 *
 	 * @param string $when
+	 * @return void
 	 */
 	public function set_when( $when ) {
 		$this->_when = $when;
@@ -66,6 +71,7 @@ abstract class Check {
 	 * Set the status of the check.
 	 *
 	 * @param string $status
+	 * @return void
 	 */
 	protected function set_status( $status ) {
 		$this->_status = $status;
@@ -75,6 +81,7 @@ abstract class Check {
 	 * Set the message of the check.
 	 *
 	 * @param string $message
+	 * @return void
 	 */
 	protected function set_message( $message ) {
 		$this->_message = $message;
@@ -85,13 +92,15 @@ abstract class Check {
 	 *
 	 * Because each check checks for something different, this method must be
 	 * subclassed. Method is expected to set $status_code and $status_message.
+	 *
+	 * @return void
 	 */
 	abstract public function run();
 
 	/**
 	 * Get results of the check.
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function get_results() {
 		return array(

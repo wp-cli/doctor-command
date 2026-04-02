@@ -7,8 +7,14 @@ use WP_CLI\Doctor\Check;
 
 abstract class Plugin extends Check {
 
+	/**
+	 * @var array<mixed>|null
+	 */
 	protected static $plugins;
 
+	/**
+	 * @return array<mixed>
+	 */
 	protected static function get_plugins() {
 
 		if ( isset( self::$plugins ) ) {

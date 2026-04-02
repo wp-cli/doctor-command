@@ -56,6 +56,10 @@ class File_Contents extends File {
 		}
 	}
 
+	/**
+	 * @param SplFileInfo $file
+	 * @return void
+	 */
 	public function check_file( SplFileInfo $file ) {
 		if ( $file->isDir() || ! isset( $this->regex ) ) {
 			return;

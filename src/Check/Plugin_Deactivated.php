@@ -14,6 +14,9 @@ class Plugin_Deactivated extends Plugin {
 	 */
 	protected $threshold_percentage = 40;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$plugins = self::get_plugins();
 

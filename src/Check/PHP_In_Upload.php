@@ -14,10 +14,13 @@ class PHP_In_Upload extends Check {
 	/**
 	 * Array containing list of files found in the uploads folder
 	 *
-	 * @var array
+	 * @var array<\SplFileInfo>
 	 */
 	protected $php_files_array = array();
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 
 		// Path to the uploads folder.

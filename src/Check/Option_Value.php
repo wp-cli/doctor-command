@@ -30,6 +30,9 @@ class Option_Value extends Check {
 	 */
 	protected $value_is_not;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 
 		if ( isset( $this->value ) && isset( $this->value_is_not ) ) {

@@ -14,6 +14,9 @@ class Cron_Duplicates extends Cron {
 	 */
 	protected $threshold_count = 10;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$crons             = self::get_crons();
 		$job_counts        = array();

@@ -27,6 +27,9 @@ class Plugin_Status extends Plugin {
 	 */
 	protected $status;
 
+	/**
+	 * @param array<string, mixed> $options
+	 */
 	public function __construct( $options = array() ) {
 		$valid_statuses = array( 'uninstalled', 'installed', 'active' );
 		if ( ! in_array( $options['status'], $valid_statuses, true ) ) {
@@ -35,6 +38,9 @@ class Plugin_Status extends Plugin {
 		parent::__construct( $options );
 	}
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$plugins = self::get_plugins();
 

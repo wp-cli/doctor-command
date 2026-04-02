@@ -11,6 +11,9 @@ use RecursiveIteratorIterator;
  */
 class Cache_Flush extends File_Contents {
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 
 		// Path to wp-content directory.

@@ -10,11 +10,17 @@ use WP_CLI\Doctor\Check;
  */
 class Core_Verify_Checksums extends Check {
 
+	/**
+	 * @param array<string, mixed> $options
+	 */
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );
 		$this->set_when( 'before_wp_load' );
 	}
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$return_code = WP_CLI::runcommand(
 			'core verify-checksums',

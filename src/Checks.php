@@ -9,11 +9,24 @@ use WP_CLI\Path;
 
 class Checks {
 
+	/**
+	 * @var Checks|null
+	 */
 	private static $instance;
 
-	private $checks         = array();
+	/**
+	 * @var array<string, \WP_CLI\Doctor\Check>
+	 */
+	private $checks = array();
+
+	/**
+	 * @var array<string, array<string>>
+	 */
 	private $skipped_checks = array();
 
+	/**
+	 * @return Checks
+	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new Checks();
@@ -25,6 +38,7 @@ class Checks {
 	 * Register checks from a config file
 	 *
 	 * @param string $file
+	 * @return void
 	 */
 	public static function register_config( $file ) {
 		if ( ! is_file( $file ) ) {
@@ -80,6 +94,7 @@ class Checks {
 	 *
 	 * @param string        $name  Name for the check.
 	 * @param object|string $check Check class name or instance.
+	 * @return void
 	 */
 	public static function add_check( $name, $check ) {
 
@@ -103,8 +118,8 @@ class Checks {
 	/**
 	 * Get checks registered with the Doctor.
 	 *
-	 * @param array $args Filter checks based on some attribute.
-	 * @return array<string, Check>
+	 * @param array<string, mixed> $args Filter checks based on some attribute.
+	 * @return array<string, \WP_CLI\Doctor\Check>
 	 */
 	public static function get_checks( $args = array() ) {
 		if ( ! empty( $args['name'] ) ) {
@@ -125,6 +140,7 @@ class Checks {
 	 *
 	 * @param string $path Path to file.
 	 * @param string $base Base path to prepend.
+	 * @return string
 	 */
 	private static function absolutize( $path, $base ) {
 		if ( ! empty( $path ) && ! Path::is_absolute( $path ) ) {

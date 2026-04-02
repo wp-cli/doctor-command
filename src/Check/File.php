@@ -42,7 +42,7 @@ abstract class File extends Check {
 	/**
 	 * Any files matching the check.
 	 *
-	 * @var array
+	 * @var array<string|\SplFileInfo>
 	 */
 	protected $_matches = array();
 
@@ -63,6 +63,7 @@ abstract class File extends Check {
 	 * Check a specific file.
 	 *
 	 * @param \SplFileInfo $file File to check.
+	 * @return void
 	 */
 	abstract public function check_file( \SplFileInfo $file );
 }
