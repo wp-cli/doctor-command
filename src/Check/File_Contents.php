@@ -66,6 +66,9 @@ class File_Contents extends File {
 		}
 
 		$contents = file_get_contents( $file->getPathname() );
+		if ( false === $contents ) {
+			return;
+		}
 
 		if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
 			$this->_matches[] = $file;

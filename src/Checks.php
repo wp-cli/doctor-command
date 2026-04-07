@@ -45,7 +45,12 @@ class Checks {
 			WP_CLI::error( 'Invalid configuration file.' );
 		}
 
-		$check_data = Spyc::YAMLLoad( file_get_contents( $file ) );
+		$contents = file_get_contents( $file );
+		if ( false === $contents ) {
+			WP_CLI::error( 'Could not read configuration file.' );
+		}
+
+		$check_data = Spyc::YAMLLoad( $contents );
 
 		if ( ! empty( $check_data['_']['inherit'] ) ) {
 			$inherited = $check_data['_']['inherit'];

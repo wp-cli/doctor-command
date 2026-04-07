@@ -185,7 +185,8 @@ class Command {
 								&& 0 !== stripos( $file->getPathname(), ABSPATH . $options['path'] ) ) {
 									continue;
 								}
-								$extension = explode( '|', $options['extension'] );
+								$ext_option = isset( $options['extension'] ) && is_string( $options['extension'] ) ? $options['extension'] : '';
+								$extension  = explode( '|', $ext_option );
 								if ( ! in_array( $file->getExtension(), $extension, true ) ) {
 									continue;
 								}
@@ -357,7 +358,8 @@ class Command {
 		$items = array();
 		foreach ( Checks::get_checks() as $check_name => $class ) {
 			$reflection  = new \ReflectionClass( $class );
-			$description = self::remove_decorations( $reflection->getDocComment() );
+			$doc_comment = $reflection->getDocComment();
+			$description = $doc_comment ? self::remove_decorations( $doc_comment ) : '';
 			$tokens      = array();
 			foreach ( $reflection->getProperties() as $prop ) {
 				$prop_name = $prop->getName();
