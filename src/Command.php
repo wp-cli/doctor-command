@@ -114,7 +114,6 @@ class Command {
 	 * @return void
 	 */
 	public function check( $args, $assoc_args ) {
-
 		$config = (string) Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
 		Checks::register_config( $config );
 
@@ -139,7 +138,7 @@ class Command {
 		}
 		foreach ( $checks as $name => $check ) {
 			$when = $check->get_when();
-			if ( $when ) {
+			if ( $when && 'manual' !== $when ) {
 				WP_CLI::add_hook(
 					$when,
 					static function () use ( $name, $check, &$completed, &$progress ) {
@@ -160,61 +159,6 @@ class Command {
 				}
 			}
 		}
-		if ( ! empty( $file_checks ) ) {
-			WP_CLI::add_hook(
-				'after_wp_config_load',
-				static function () use ( $file_checks, &$completed, &$progress ) {
-					WP_CLI::debug( 'Scanning filesystem for file checks...', 'doctor' );
-					try {
-						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
-						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
-						$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
-						$item_count     = 0;
-						foreach ( $iterator as $file ) {
-							if ( ! $file instanceof \SplFileInfo ) {
-								continue;
-							}
-							++$item_count;
-							if ( 0 === $item_count % self::DEBUG_FILE_SCAN_INTERVAL ) {
-								WP_CLI::debug( "  Visited {$item_count} items...", 'doctor' );
-							}
-							foreach ( $file_checks as $name => $check ) {
-								$options = $check->get_options();
-								if ( ! empty( $options['only_wp_content'] )
-								&& 0 !== stripos( $file->getPath(), $wp_content_dir ) ) {
-									continue;
-								}
-								if ( ! empty( $options['path'] )
-								&& 0 !== stripos( $file->getPathname(), ABSPATH . $options['path'] ) ) {
-									continue;
-								}
-								$ext_option = isset( $options['extension'] ) && is_string( $options['extension'] ) ? $options['extension'] : '';
-								$extension  = explode( '|', $ext_option );
-								if ( ! in_array( $file->getExtension(), $extension, true ) ) {
-									continue;
-								}
-								/** @var Check\File $check */
-								$check->check_file( $file );
-							}
-						}
-						WP_CLI::debug( "  Total items visited: {$item_count}", 'doctor' );
-					} catch ( Exception $e ) {
-						WP_CLI::warning( $e->getMessage() );
-					}
-					foreach ( $file_checks as $name => $check ) {
-						WP_CLI::debug( "Running check: {$name}", 'doctor' );
-						$check->run();
-						$completed[ $name ] = $check;
-						if ( $progress ) {
-							$progress->tick();
-						}
-						$results = $check->get_results();
-						WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
-					}
-				}
-			);
-		}
-
 		if ( ! isset( WP_CLI::get_runner()->config['url'] ) ) {
 			WP_CLI::add_wp_hook(
 				'muplugins_loaded',
@@ -228,6 +172,52 @@ class Command {
 			$this->load_wordpress_with_template();
 		} catch ( Exception $e ) {
 			WP_CLI::warning( $e->getMessage() );
+		}
+
+		// Run file checks manually after WordPress is loaded.
+		if ( ! empty( $file_checks ) ) {
+			try {
+				$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
+				$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
+				$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
+				$item_count     = 0;
+				foreach ( $iterator as $file ) {
+					if ( ! $file instanceof \SplFileInfo ) {
+						continue;
+					}
+					++$item_count;
+					foreach ( $file_checks as $name => $check ) {
+						$options = $check->get_options();
+						if ( ! empty( $options['only_wp_content'] )
+						&& 0 !== stripos( $file->getPath(), $wp_content_dir ) ) {
+							continue;
+						}
+						if ( ! empty( $options['path'] )
+						&& 0 !== stripos( $file->getPathname(), ABSPATH . $options['path'] ) ) {
+							continue;
+						}
+						$ext_option = isset( $options['extension'] ) && is_string( $options['extension'] ) ? $options['extension'] : '';
+						$extension  = explode( '|', $ext_option );
+						if ( ! in_array( $file->getExtension(), $extension, true ) ) {
+							continue;
+						}
+						/** @var Check\File $check */
+						$check->check_file( $file );
+					}
+				}
+			} catch ( Exception $e ) {
+				WP_CLI::warning( $e->getMessage() );
+			}
+			foreach ( $file_checks as $name => $check ) {
+				WP_CLI::debug( "Running check: {$name}", 'doctor' );
+				$check->run();
+				$completed[ $name ] = $check;
+				if ( $progress ) {
+					$progress->tick();
+				}
+				$results = $check->get_results();
+				WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
+			}
 		}
 
 		$results = array();

@@ -24,7 +24,9 @@ class Cache_Flush extends File_Contents {
 		// Regex to match.
 		$this->regex = 'wp_cache_flush\(\)';
 
-		foreach ( $iterator as $file ) {
+		$files = iterator_to_array( $iterator );
+
+		foreach ( $files as $file ) {
 			if ( ! $file instanceof \SplFileInfo ) {
 				continue;
 			}
