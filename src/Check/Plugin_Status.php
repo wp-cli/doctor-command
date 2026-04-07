@@ -46,8 +46,11 @@ class Plugin_Status extends Plugin {
 
 		$current_status = 'uninstalled';
 		foreach ( self::get_plugins() as $plugin ) {
+			if ( ! isset( $plugin['name'] ) || ! isset( $plugin['status'] ) ) {
+				continue;
+			}
 			if ( $plugin['name'] === $this->name ) {
-				$current_status = $plugin['status'];
+				$current_status = is_string( $plugin['status'] ) ? $plugin['status'] : 'uninstalled';
 				break;
 			}
 		}

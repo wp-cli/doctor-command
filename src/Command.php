@@ -110,12 +110,12 @@ class Command {
 	 * @when before_wp_load
 	 *
 	 * @param array<string>        $args       Names of one or more checks to run.
-	 * @param array<string, mixed> $assoc_args Command options.
+	 * @param array<string, bool|string> $assoc_args Command options.
 	 * @return void
 	 */
 	public function check( $args, $assoc_args ) {
 
-		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
+		$config = (string) Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
 		Checks::register_config( $config );
 
 		$all = Utils\get_flag_value( $assoc_args, 'all' );
@@ -171,6 +171,9 @@ class Command {
 						$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
 						$item_count     = 0;
 						foreach ( $iterator as $file ) {
+							if ( ! $file instanceof \SplFileInfo ) {
+								continue;
+							}
 							++$item_count;
 							if ( 0 === $item_count % self::DEBUG_FILE_SCAN_INTERVAL ) {
 								WP_CLI::debug( "  Visited {$item_count} items...", 'doctor' );
@@ -340,7 +343,7 @@ class Command {
 	 * @subcommand list
 	 *
 	 * @param array<string>        $args       Command arguments.
-	 * @param array<string, mixed> $assoc_args Command options.
+	 * @param array<string, bool|string> $assoc_args Command options.
 	 * @return void
 	 */
 	public function list_( $args, $assoc_args ) {
@@ -352,7 +355,7 @@ class Command {
 			$assoc_args
 		);
 
-		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
+		$config = (string) Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
 		Checks::register_config( $config );
 
 		$items = array();
@@ -373,7 +376,11 @@ class Command {
 				if ( is_array( $value ) ) {
 					$value = json_encode( $value );
 				}
-				$tokens[ '%' . $prop_name . '%' ] = $value;
+				if ( is_scalar( $value ) ) {
+					$tokens[ '%' . $prop_name . '%' ] = (string) $value;
+				} else {
+					$tokens[ '%' . $prop_name . '%' ] = gettype( $value );
+				}
 			}
 			if ( ! empty( $tokens ) ) {
 				$description = str_replace( array_keys( $tokens ), array_values( $tokens ), $description );
@@ -384,7 +391,7 @@ class Command {
 				'description' => $description,
 			);
 		}
-		Utils\format_items( $assoc_args['format'], $items, explode( ',', $assoc_args['fields'] ) );
+		Utils\format_items( (string) $assoc_args['format'], $items, explode( ',', (string) $assoc_args['fields'] ) );
 	}
 
 	/**

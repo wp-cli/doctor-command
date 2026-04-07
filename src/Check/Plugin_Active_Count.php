@@ -20,6 +20,9 @@ class Plugin_Active_Count extends Plugin {
 	public function run() {
 		$active = 0;
 		foreach ( self::get_plugins() as $plugin ) {
+			if ( ! isset( $plugin['status'] ) ) {
+				continue;
+			}
 			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {
 				++$active;
 			}

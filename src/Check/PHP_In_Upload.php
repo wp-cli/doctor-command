@@ -29,6 +29,9 @@ class PHP_In_Upload extends Check {
 		$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 
 		foreach ( $iterator as $file ) {
+			if ( ! $file instanceof \SplFileInfo ) {
+				continue;
+			}
 			if ( 'php' === $file->getExtension() ) {
 				$this->php_files_array[] = $file;
 			}

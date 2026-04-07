@@ -22,6 +22,9 @@ class Cron_Duplicates extends Cron {
 		$job_counts        = array();
 		$excess_duplicates = false;
 		foreach ( $crons as $job ) {
+			if ( ! isset( $job['hook'] ) ) {
+				continue;
+			}
 			$key_data = array( $job['hook'], isset( $job['args'] ) ? $job['args'] : array() );
 			if ( function_exists( 'wp_json_encode' ) ) {
 				$key = wp_json_encode( $key_data );

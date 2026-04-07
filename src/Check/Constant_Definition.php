@@ -135,6 +135,9 @@ class Constant_Definition extends Check {
 		} elseif ( is_null( $value ) ) {
 			return 'null';
 		}
-		return (string) $value;
+		if ( is_scalar( $value ) ) {
+			return (string) $value;
+		}
+		return gettype( $value );
 	}
 }

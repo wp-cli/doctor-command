@@ -14,6 +14,9 @@ class Plugin_Update extends Plugin {
 		$plugins      = self::get_plugins();
 		$update_count = 0;
 		foreach ( $plugins as $plugin ) {
+			if ( ! isset( $plugin['update'] ) ) {
+				continue;
+			}
 			if ( 'available' === $plugin['update'] ) {
 				++$update_count;
 			}

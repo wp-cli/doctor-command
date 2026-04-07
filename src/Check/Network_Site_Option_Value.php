@@ -98,6 +98,9 @@ class Network_Site_Option_Value extends Check {
 		if ( false === $value ) {
 			return 'false';
 		}
-		return (string) $value;
+		if ( is_scalar( $value ) ) {
+			return (string) $value;
+		}
+		return gettype( $value );
 	}
 }

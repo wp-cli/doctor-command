@@ -131,6 +131,9 @@ class Checks {
 			$checks = array();
 			$names  = is_array( $args['name'] ) ? $args['name'] : array( $args['name'] );
 			foreach ( $names as $name ) {
+				if ( ! is_string( $name ) ) {
+					continue;
+				}
 				if ( isset( self::$instance->checks[ $name ] ) ) {
 					$checks[ $name ] = self::$instance->checks[ $name ];
 				}
