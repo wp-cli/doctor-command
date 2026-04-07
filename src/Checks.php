@@ -117,7 +117,7 @@ class Checks {
 			$class = get_class( $check );
 			WP_CLI::error( "Class '{$class}' for check '{$name}' needs to extend Check base class. Verify check registration." );
 		}
-		self::$instance->checks[ $name ] = $check;
+		self::get_instance()->checks[ $name ] = $check;
 	}
 
 	/**

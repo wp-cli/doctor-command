@@ -450,9 +450,15 @@ class Command {
 	 * @return string
 	 */
 	private static function remove_decorations( $comment ) {
-		$comment = preg_replace( '|^/\*\*[\r\n]+|', '', $comment );
-		$comment = preg_replace( '|\n[\t ]*\*/$|', '', $comment );
-		$comment = preg_replace( '|^[\t ]*\* ?|m', '', $comment );
+		$replaced = preg_replace( '|^/\*\*[\r\n]+|', '', $comment );
+		$comment  = is_string( $replaced ) ? $replaced : '';
+
+		$replaced = preg_replace( '|\n[\t ]*\*/$|', '', $comment );
+		$comment  = is_string( $replaced ) ? $replaced : '';
+
+		$replaced = preg_replace( '|^[\t ]*\* ?|m', '', $comment );
+		$comment  = is_string( $replaced ) ? $replaced : '';
+
 		return $comment;
 	}
 

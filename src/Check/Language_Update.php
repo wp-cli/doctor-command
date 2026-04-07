@@ -22,6 +22,10 @@ class Language_Update extends Check {
 			)
 		);
 
+		if ( ! is_array( $languages ) ) {
+			$languages = [];
+		}
+
 		// Returns the count of each value that the key 'update' is mapped to.
 		$counts = array_count_values( array_column( $languages, 'update' ) );
 
