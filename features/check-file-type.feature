@@ -32,7 +32,7 @@ Feature: Check the type of file
       """
     And the return code should be 1
 
-
+  @skip-object-cache
   Scenario: Check that object-cache.php is a symlink
     Given a WP install
     And a config.yml file:
