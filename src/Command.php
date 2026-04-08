@@ -181,12 +181,10 @@ class Command {
 				$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 				$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
 				$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
-				$item_count     = 0;
 				foreach ( $iterator as $file ) {
 					if ( ! $file instanceof \SplFileInfo ) {
 						continue;
 					}
-					++$item_count;
 					foreach ( $file_checks as $name => $check ) {
 						$options = $check->get_options();
 						if ( ! empty( $options['only_wp_content'] )

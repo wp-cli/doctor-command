@@ -49,7 +49,7 @@ class Constant_Definition extends Check {
 		}
 	}
 
-		/**
+	/**
 	 * @return void
 	 */
 	public function run() {
