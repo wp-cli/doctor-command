@@ -190,13 +190,14 @@ class Command {
 					foreach ( $file_checks as $name => $check ) {
 						$options = $check->get_options();
 						if ( ! empty( $options['only_wp_content'] )
-						&& 0 !== stripos( $file->getPath(), $wp_content_dir ) ) {
+						&& 0 !== stripos( \WP_CLI\Path::normalize( $file->getPath() ), \WP_CLI\Path::normalize( $wp_content_dir ) ) ) {
 							continue;
 						}
 						if ( ! empty( $options['path'] )
-						&& 0 !== stripos( $file->getPathname(), ABSPATH . $options['path'] ) ) {
+						&& 0 !== stripos( \WP_CLI\Path::normalize( $file->getPathname() ), \WP_CLI\Path::normalize( ABSPATH . $options['path'] ) ) ) {
 							continue;
 						}
+
 						$ext_option = isset( $options['extension'] ) && is_string( $options['extension'] ) ? $options['extension'] : '';
 						$extension  = explode( '|', $ext_option );
 						if ( ! in_array( $file->getExtension(), $extension, true ) ) {

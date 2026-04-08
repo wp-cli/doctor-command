@@ -42,7 +42,9 @@ class Cache_Flush extends File_Contents {
 		// Show relative paths in output.
 		$relative_paths = array_map(
 			function ( $file ) use ( $wp_content_dir ) {
-				return str_replace( $wp_content_dir . '/', '', $file );
+				$normalized_file = \WP_CLI\Path::normalize( (string) $file );
+				$normalized_dir  = \WP_CLI\Path::normalize( $wp_content_dir );
+				return str_replace( rtrim( $normalized_dir, '/' ) . '/', '', $normalized_file );
 			},
 			$this->_matches
 		);

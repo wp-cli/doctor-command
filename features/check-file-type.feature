@@ -1,6 +1,6 @@
 Feature: Check the type of file
 
-  @skip-object-cache
+  @skip-object-cache @skip-windows
   Scenario: Check that object-cache.php isn't a symlink
     Given a WP install
     And a config.yml file:
@@ -33,7 +33,7 @@ Feature: Check the type of file
       """
     And the return code should be 1
 
-  @skip-object-cache
+  @skip-object-cache @skip-windows
   Scenario: Check that object-cache.php is a symlink
     Given a WP install
     And a config.yml file:
