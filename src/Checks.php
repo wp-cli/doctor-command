@@ -4,15 +4,29 @@ namespace WP_CLI\Doctor;
 
 use Mustangostang\Spyc;
 use WP_CLI;
-use WP_CLI\Utils;
+use WP_CLI\Path;
+
 
 class Checks {
 
+	/**
+	 * @var Checks|null
+	 */
 	private static $instance;
 
-	private $checks         = array();
+	/**
+	 * @var array<string, \WP_CLI\Doctor\Check>
+	 */
+	private $checks = array();
+
+	/**
+	 * @var array<string, array<string>>
+	 */
 	private $skipped_checks = array();
 
+	/**
+	 * @return Checks
+	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new Checks();
@@ -24,13 +38,19 @@ class Checks {
 	 * Register checks from a config file
 	 *
 	 * @param string $file
+	 * @return void
 	 */
 	public static function register_config( $file ) {
 		if ( ! is_file( $file ) ) {
 			WP_CLI::error( 'Invalid configuration file.' );
 		}
 
-		$check_data = Spyc::YAMLLoad( file_get_contents( $file ) );
+		$contents = file_get_contents( $file );
+		if ( false === $contents ) {
+			WP_CLI::error( 'Could not read configuration file.' );
+		}
+
+		$check_data = Spyc::YAMLLoad( $contents );
 
 		if ( ! empty( $check_data['_']['inherit'] ) ) {
 			$inherited = $check_data['_']['inherit'];
@@ -77,8 +97,9 @@ class Checks {
 	/**
 	 * Register a check with the Doctor
 	 *
-	 * @param string $name Name for the check.
-	 * @param string $class Check class name.
+	 * @param string        $name  Name for the check.
+	 * @param object|string $check Check class name or instance.
+	 * @return void
 	 */
 	public static function add_check( $name, $check ) {
 
@@ -96,21 +117,25 @@ class Checks {
 			$class = get_class( $check );
 			WP_CLI::error( "Class '{$class}' for check '{$name}' needs to extend Check base class. Verify check registration." );
 		}
-		self::$instance->checks[ $name ] = $check;
+		self::get_instance()->checks[ $name ] = $check;
 	}
 
 	/**
-	 * Get checks registred with the Doctor.
+	 * Get checks registered with the Doctor.
 	 *
-	 * @param array $args Filter checks based on some attribute.
+	 * @param array<string, mixed> $args Filter checks based on some attribute.
+	 * @return array<string, \WP_CLI\Doctor\Check>
 	 */
 	public static function get_checks( $args = array() ) {
 		if ( ! empty( $args['name'] ) ) {
 			$checks = array();
 			$names  = is_array( $args['name'] ) ? $args['name'] : array( $args['name'] );
 			foreach ( $names as $name ) {
-				if ( isset( self::$instance->checks[ $name ] ) ) {
-					$checks[ $name ] = self::$instance->checks[ $name ];
+				if ( ! is_string( $name ) ) {
+					continue;
+				}
+				if ( isset( self::get_instance()->checks[ $name ] ) ) {
+					$checks[ $name ] = self::get_instance()->checks[ $name ];
 				}
 			}
 			return $checks;
@@ -123,9 +148,10 @@ class Checks {
 	 *
 	 * @param string $path Path to file.
 	 * @param string $base Base path to prepend.
+	 * @return string
 	 */
 	private static function absolutize( $path, $base ) {
-		if ( ! empty( $path ) && ! Utils\is_path_absolute( $path ) ) {
+		if ( ! empty( $path ) && ! Path::is_absolute( $path ) ) {
 			$path = $base . DIRECTORY_SEPARATOR . $path;
 		}
 		return $path;

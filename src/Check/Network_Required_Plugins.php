@@ -13,10 +13,13 @@ class Network_Required_Plugins extends Check {
 	/**
 	 * List of required plugin slugs.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	protected $plugins = array();
 
+	/**
+	 * @param array<string, mixed> $options
+	 */
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );
 
@@ -32,6 +35,9 @@ class Network_Required_Plugins extends Check {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		if ( ! is_multisite() ) {
 			$this->set_status( 'success' );
@@ -80,10 +86,8 @@ class Network_Required_Plugins extends Check {
 	}
 
 	/**
-	 * Resolve a plugin slug or file to an installed plugin file path.
-	 *
-	 * @param string $plugin_slug Requested plugin slug/file.
-	 * @param array  $installed_plugins Installed plugins keyed by plugin file.
+	 * @param string               $plugin_slug Requested plugin slug/file.
+	 * @param array<string, mixed> $installed_plugins Installed plugins keyed by plugin file.
 	 * @return string|null
 	 */
 	private function get_plugin_file( $plugin_slug, $installed_plugins ) {

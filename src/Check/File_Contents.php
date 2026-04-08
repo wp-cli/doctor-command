@@ -12,9 +12,9 @@ class File_Contents extends File {
 	/**
 	 * Regex pattern to check against each file’s contents.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	protected $regex;
+	protected $regex = null;
 
 	/**
 	 * Assert existence or absence of the regex pattern.
@@ -56,12 +56,19 @@ class File_Contents extends File {
 		}
 	}
 
+	/**
+	 * @param SplFileInfo $file
+	 * @return void
+	 */
 	public function check_file( SplFileInfo $file ) {
 		if ( $file->isDir() || ! isset( $this->regex ) ) {
 			return;
 		}
 
 		$contents = file_get_contents( $file->getPathname() );
+		if ( false === $contents ) {
+			return;
+		}
 
 		if ( preg_match( '#' . $this->regex . '#i', $contents ) ) {
 			$this->_matches[] = $file;

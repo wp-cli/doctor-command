@@ -12,7 +12,7 @@ abstract class File extends Check {
 	/**
 	 * File checks are run as their own group.
 	 */
-	protected $_when = false;
+	protected $_when = 'manual'; // Run manually via group
 
 	/**
 	 * File extension to check.
@@ -42,14 +42,14 @@ abstract class File extends Check {
 	/**
 	 * Any files matching the check.
 	 *
-	 * @var array
+	 * @var array<string|\SplFileInfo>
 	 */
 	protected $_matches = array();
 
 	/**
 	 * Get the options for this check
 	 *
-	 * @return string
+	 * @return array<string, bool|string>
 	 */
 	public function get_options() {
 		return array(
@@ -58,4 +58,12 @@ abstract class File extends Check {
 			'path'            => $this->path,
 		);
 	}
+
+	/**
+	 * Check a specific file.
+	 *
+	 * @param \SplFileInfo $file File to check.
+	 * @return void
+	 */
+	abstract public function check_file( \SplFileInfo $file );
 }

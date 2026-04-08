@@ -1,0 +1,14 @@
+parameters:
+  level: 9
+  paths:
+    - src
+    - doctor-command.php
+  scanDirectories:
+    - vendor/wp-cli/wp-cli/php
+  scanFiles:
+    - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    - tests/phpstan/scan-files.php
+  treatPhpDocTypesAsCertain: false
+  ignoreErrors:
+    - '#Call to deprecated method setAccessible\(\) of class ReflectionProperty\.#'
+

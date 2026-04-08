@@ -14,11 +14,17 @@ class Cron_Duplicates extends Cron {
 	 */
 	protected $threshold_count = 10;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$crons             = self::get_crons();
 		$job_counts        = array();
 		$excess_duplicates = false;
 		foreach ( $crons as $job ) {
+			if ( ! isset( $job['hook'] ) ) {
+				continue;
+			}
 			$key_data = array( $job['hook'], isset( $job['args'] ) ? $job['args'] : array() );
 			if ( function_exists( 'wp_json_encode' ) ) {
 				$key = wp_json_encode( $key_data );

@@ -108,10 +108,13 @@ class Command {
 	 *     +--------------------+--------+--------------------------------------------+
 	 *
 	 * @when before_wp_load
+	 *
+	 * @param array<string>        $args       Names of one or more checks to run.
+	 * @param array<string, bool|string> $assoc_args Command options.
+	 * @return void
 	 */
 	public function check( $args, $assoc_args ) {
-
-		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
+		$config = (string) Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
 		Checks::register_config( $config );
 
 		$all = Utils\get_flag_value( $assoc_args, 'all' );
@@ -135,7 +138,7 @@ class Command {
 		}
 		foreach ( $checks as $name => $check ) {
 			$when = $check->get_when();
-			if ( $when ) {
+			if ( $when && 'manual' !== $when ) {
 				WP_CLI::add_hook(
 					$when,
 					static function () use ( $name, $check, &$completed, &$progress ) {
@@ -156,56 +159,6 @@ class Command {
 				}
 			}
 		}
-		if ( ! empty( $file_checks ) ) {
-			WP_CLI::add_hook(
-				'after_wp_config_load',
-				static function () use ( $file_checks, &$completed, &$progress ) {
-					WP_CLI::debug( 'Scanning filesystem for file checks...', 'doctor' );
-					try {
-						$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
-						$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
-						$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
-						$item_count     = 0;
-						foreach ( $iterator as $file ) {
-							++$item_count;
-							if ( 0 === $item_count % self::DEBUG_FILE_SCAN_INTERVAL ) {
-								WP_CLI::debug( "  Visited {$item_count} items...", 'doctor' );
-							}
-							foreach ( $file_checks as $name => $check ) {
-								$options = $check->get_options();
-								if ( ! empty( $options['only_wp_content'] )
-								&& 0 !== stripos( $file->getPath(), $wp_content_dir ) ) {
-									continue;
-								}
-								if ( ! empty( $options['path'] )
-								&& 0 !== stripos( $file->getPathname(), ABSPATH . $options['path'] ) ) {
-									continue;
-								}
-								$extension = explode( '|', $options['extension'] );
-								if ( ! in_array( $file->getExtension(), $extension, true ) ) {
-									continue;
-								}
-								$check->check_file( $file );
-							}
-						}
-						WP_CLI::debug( "  Total items visited: {$item_count}", 'doctor' );
-					} catch ( Exception $e ) {
-						WP_CLI::warning( $e->getMessage() );
-					}
-					foreach ( $file_checks as $name => $check ) {
-						WP_CLI::debug( "Running check: {$name}", 'doctor' );
-						$check->run();
-						$completed[ $name ] = $check;
-						if ( $progress ) {
-							$progress->tick();
-						}
-						$results = $check->get_results();
-						WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
-					}
-				}
-			);
-		}
-
 		if ( ! isset( WP_CLI::get_runner()->config['url'] ) ) {
 			WP_CLI::add_wp_hook(
 				'muplugins_loaded',
@@ -219,6 +172,52 @@ class Command {
 			$this->load_wordpress_with_template();
 		} catch ( Exception $e ) {
 			WP_CLI::warning( $e->getMessage() );
+		}
+
+		// Run file checks manually after WordPress is loaded.
+		if ( ! empty( $file_checks ) ) {
+			WP_CLI::debug( 'Scanning filesystem for file checks...', 'doctor' );
+			try {
+				$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
+				$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
+				$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : ABSPATH . 'wp-content';
+				foreach ( $iterator as $file ) {
+					if ( ! $file instanceof \SplFileInfo ) {
+						continue;
+					}
+					foreach ( $file_checks as $name => $check ) {
+						$options = $check->get_options();
+						if ( ! empty( $options['only_wp_content'] )
+						&& 0 !== stripos( \WP_CLI\Path::normalize( $file->getPath() ), \WP_CLI\Path::normalize( $wp_content_dir ) ) ) {
+							continue;
+						}
+						if ( ! empty( $options['path'] )
+						&& 0 !== stripos( \WP_CLI\Path::normalize( $file->getPathname() ), \WP_CLI\Path::normalize( ABSPATH . $options['path'] ) ) ) {
+							continue;
+						}
+
+						$ext_option = isset( $options['extension'] ) && is_string( $options['extension'] ) ? $options['extension'] : '';
+						$extension  = explode( '|', $ext_option );
+						if ( ! in_array( $file->getExtension(), $extension, true ) ) {
+							continue;
+						}
+						/** @var Check\File $check */
+						$check->check_file( $file );
+					}
+				}
+			} catch ( Exception $e ) {
+				WP_CLI::warning( $e->getMessage() );
+			}
+			foreach ( $file_checks as $name => $check ) {
+				WP_CLI::debug( "Running check: {$name}", 'doctor' );
+				$check->run();
+				$completed[ $name ] = $check;
+				if ( $progress ) {
+					$progress->tick();
+				}
+				$results = $check->get_results();
+				WP_CLI::debug( "  Status: {$results['status']}", 'doctor' );
+			}
 		}
 
 		$results = array();
@@ -332,6 +331,10 @@ class Command {
 	 *
 	 * @when before_wp_load
 	 * @subcommand list
+	 *
+	 * @param array<string>        $args       Command arguments.
+	 * @param array<string, bool|string> $assoc_args Command options.
+	 * @return void
 	 */
 	public function list_( $args, $assoc_args ) {
 
@@ -342,13 +345,14 @@ class Command {
 			$assoc_args
 		);
 
-		$config = Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
+		$config = (string) Utils\get_flag_value( $assoc_args, 'config', self::get_default_config() );
 		Checks::register_config( $config );
 
 		$items = array();
 		foreach ( Checks::get_checks() as $check_name => $class ) {
 			$reflection  = new \ReflectionClass( $class );
-			$description = self::remove_decorations( $reflection->getDocComment() );
+			$doc_comment = $reflection->getDocComment();
+			$description = $doc_comment ? self::remove_decorations( $doc_comment ) : '';
 			$tokens      = array();
 			foreach ( $reflection->getProperties() as $prop ) {
 				$prop_name = $prop->getName();
@@ -362,7 +366,11 @@ class Command {
 				if ( is_array( $value ) ) {
 					$value = json_encode( $value );
 				}
-				$tokens[ '%' . $prop_name . '%' ] = $value;
+				if ( is_scalar( $value ) ) {
+					$tokens[ '%' . $prop_name . '%' ] = (string) $value;
+				} else {
+					$tokens[ '%' . $prop_name . '%' ] = gettype( $value );
+				}
 			}
 			if ( ! empty( $tokens ) ) {
 				$description = str_replace( array_keys( $tokens ), array_values( $tokens ), $description );
@@ -373,11 +381,13 @@ class Command {
 				'description' => $description,
 			);
 		}
-		Utils\format_items( $assoc_args['format'], $items, explode( ',', $assoc_args['fields'] ) );
+		Utils\format_items( (string) $assoc_args['format'], $items, explode( ',', (string) $assoc_args['fields'] ) );
 	}
 
 	/**
 	 * Runs through the entirety of the WP bootstrap process
+	 *
+	 * @return void
 	 */
 	private function load_wordpress_with_template() {
 		global $wp_query;
@@ -437,14 +447,22 @@ class Command {
 	 * @return string
 	 */
 	private static function remove_decorations( $comment ) {
-		$comment = preg_replace( '|^/\*\*[\r\n]+|', '', $comment );
-		$comment = preg_replace( '|\n[\t ]*\*/$|', '', $comment );
-		$comment = preg_replace( '|^[\t ]*\* ?|m', '', $comment );
+		$replaced = preg_replace( '|^/\*\*[\r\n]+|', '', $comment );
+		$comment  = is_string( $replaced ) ? $replaced : '';
+
+		$replaced = preg_replace( '|\n[\t ]*\*/$|', '', $comment );
+		$comment  = is_string( $replaced ) ? $replaced : '';
+
+		$replaced = preg_replace( '|^[\t ]*\* ?|m', '', $comment );
+		$comment  = is_string( $replaced ) ? $replaced : '';
+
 		return $comment;
 	}
 
 	/**
 	 * Get the path to the default config file
+	 *
+	 * @return string
 	 */
 	private static function get_default_config() {
 		return dirname( __DIR__ ) . '/doctor.yml';

@@ -14,6 +14,9 @@ class Cron_Count extends Cron {
 	 */
 	protected $threshold_count = 50;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$crons = self::get_crons();
 		if ( count( $crons ) >= $this->threshold_count ) {

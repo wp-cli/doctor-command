@@ -30,6 +30,9 @@ class Network_Site_Option_Value extends Check {
 	 */
 	protected $value_is_not;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		if ( ! is_multisite() ) {
 			$this->set_status( 'success' );
@@ -95,6 +98,9 @@ class Network_Site_Option_Value extends Check {
 		if ( false === $value ) {
 			return 'false';
 		}
-		return (string) $value;
+		if ( is_scalar( $value ) ) {
+			return (string) $value;
+		}
+		return gettype( $value );
 	}
 }

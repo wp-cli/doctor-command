@@ -11,6 +11,9 @@ use RecursiveIteratorIterator;
  */
 class Cache_Flush extends File_Contents {
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 
 		// Path to wp-content directory.
@@ -22,6 +25,9 @@ class Cache_Flush extends File_Contents {
 		$this->regex = 'wp_cache_flush\(\)';
 
 		foreach ( $iterator as $file ) {
+			if ( ! $file instanceof \SplFileInfo ) {
+				continue;
+			}
 			$this->check_file( $file );
 		}
 
@@ -34,7 +40,9 @@ class Cache_Flush extends File_Contents {
 		// Show relative paths in output.
 		$relative_paths = array_map(
 			function ( $file ) use ( $wp_content_dir ) {
-				return str_replace( $wp_content_dir . '/', '', $file );
+				$normalized_file = \WP_CLI\Path::normalize( (string) $file );
+				$normalized_dir  = \WP_CLI\Path::normalize( $wp_content_dir );
+				return str_replace( rtrim( $normalized_dir, '/' ) . '/', '', $normalized_file );
 			},
 			$this->_matches
 		);

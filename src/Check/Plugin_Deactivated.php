@@ -14,12 +14,18 @@ class Plugin_Deactivated extends Plugin {
 	 */
 	protected $threshold_percentage = 40;
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 		$plugins = self::get_plugins();
 
 		$active   = 0;
 		$inactive = 0;
 		foreach ( self::get_plugins() as $plugin ) {
+			if ( ! isset( $plugin['status'] ) ) {
+				continue;
+			}
 			if ( 'active' === $plugin['status'] || 'active-network' === $plugin['status'] ) {
 				++$active;
 			} elseif ( 'inactive' === $plugin['status'] ) {

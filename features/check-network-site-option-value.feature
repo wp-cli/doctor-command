@@ -26,7 +26,7 @@ Feature: Check the value of a network option
           option: registration
           value: all
       """
-    And I run `wp eval 'update_site_option( "registration", "none" );'`
+    And I run `wp eval "update_site_option( 'registration', 'none' );"`
 
     When I try `wp doctor check network-registration --config=config.yml`
     Then STDOUT should be a table containing rows:
@@ -38,7 +38,7 @@ Feature: Check the value of a network option
       """
     And the return code should be 1
 
-    When I run `wp eval 'update_site_option( "registration", "all" );'`
+    When I run `wp eval "update_site_option( 'registration', 'all' );"`
     Then STDOUT should be empty
 
     When I run `wp doctor check network-registration --config=config.yml`
@@ -56,7 +56,7 @@ Feature: Check the value of a network option
           option: registration
           value_is_not: none
       """
-    And I run `wp eval 'update_site_option( "registration", "none" );'`
+    And I run `wp eval "update_site_option( 'registration', 'none' );"`
 
     When I try `wp doctor check network-registration --config=config.yml`
     Then STDOUT should be a table containing rows:
@@ -68,7 +68,7 @@ Feature: Check the value of a network option
       """
     And the return code should be 1
 
-    When I run `wp eval 'update_site_option( "registration", "all" );'`
+    When I run `wp eval "update_site_option( 'registration', 'all' );"`
     Then STDOUT should be empty
 
     When I run `wp doctor check network-registration --config=config.yml`
@@ -86,7 +86,7 @@ Feature: Check the value of a network option
           option: registration
           value: none
       """
-    And I run `wp eval 'update_site_option( "registration", array( "users" => "all" ) );'`
+    And I run `wp eval "update_site_option( 'registration', array( 'users' => 'all' ) );"`
 
     When I try `wp doctor check network-registration --config=config.yml`
     Then STDOUT should contain:

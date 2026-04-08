@@ -13,11 +13,17 @@ class Core_Update extends Check {
 	public function run() {
 		ob_start();
 		WP_CLI::run_command( array( 'core', 'check-update' ), array( 'format' => 'json' ) );
-		$ret       = ob_get_clean();
-		$updates   = ! empty( $ret ) ? json_decode( $ret, true ) : array();
+		$ret     = ob_get_clean();
+		$updates = ! empty( $ret ) ? json_decode( $ret, true ) : array();
+		if ( ! is_array( $updates ) ) {
+			$updates = array();
+		}
 		$has_minor = false;
 		$has_major = false;
 		foreach ( $updates as $update ) {
+			if ( ! is_array( $update ) || ! isset( $update['update_type'] ) ) {
+				continue;
+			}
 			switch ( $update['update_type'] ) {
 				case 'minor':
 					$has_minor = true;

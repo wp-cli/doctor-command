@@ -26,9 +26,9 @@ class Constant_Definition extends Check {
 	/**
 	 * Whether or not the constant is expected to be a falsy value.
 	 *
-	 * @var bool
+	 * @var bool|null
 	 */
-	protected $falsy;
+	protected $falsy = null;
 
 	/**
 	 * Expected value of the constant.
@@ -39,6 +39,8 @@ class Constant_Definition extends Check {
 
 	/**
 	 * Initialize the constant check
+	 *
+	 * @param array<string, mixed> $options
 	 */
 	public function __construct( $options = array() ) {
 		parent::__construct( $options );
@@ -47,6 +49,9 @@ class Constant_Definition extends Check {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function run() {
 
 		if ( isset( $this->falsy ) ) {
@@ -99,7 +104,7 @@ class Constant_Definition extends Check {
 			return;
 		}
 
-		if ( $this->defined && ! isset( $this->value ) ) {
+		if ( ! isset( $this->value ) ) {
 			$this->set_status( 'success' );
 			$this->set_message( "Constant '{$this->constant}' is defined." );
 			return;
@@ -118,12 +123,21 @@ class Constant_Definition extends Check {
 		}
 	}
 
+	/**
+	 * @param mixed $value
+	 * @return string
+	 */
 	private static function human_value( $value ) {
 		if ( true === $value ) {
-			$value = 'true';
+			return 'true';
 		} elseif ( false === $value ) {
-			$value = 'false';
+			return 'false';
+		} elseif ( is_null( $value ) ) {
+			return 'null';
 		}
-		return $value;
+		if ( is_scalar( $value ) ) {
+			return (string) $value;
+		}
+		return gettype( $value );
 	}
 }
