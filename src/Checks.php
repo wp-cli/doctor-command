@@ -134,8 +134,8 @@ class Checks {
 				if ( ! is_string( $name ) ) {
 					continue;
 				}
-				if ( isset( self::$instance->checks[ $name ] ) ) {
-					$checks[ $name ] = self::$instance->checks[ $name ];
+				if ( isset( self::get_instance()->checks[ $name ] ) ) {
+					$checks[ $name ] = self::get_instance()->checks[ $name ];
 				}
 			}
 			return $checks;
