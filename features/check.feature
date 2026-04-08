@@ -80,9 +80,9 @@ Feature: Basic check usage
     Then STDOUT should be:
       """
       name,status
-      cache-flush,warning
       option-blog-public,error
       php-in-upload,success
+      cache-flush,warning
       """
     And the return code should be 1
 
@@ -104,8 +104,8 @@ Feature: Basic check usage
     Then STDOUT should be:
       """
       name,status
-      cache-flush,warning
       option-blog-public,error
+      cache-flush,warning
       """
     And the return code should be 1
 

@@ -176,6 +176,7 @@ class Command {
 
 		// Run file checks manually after WordPress is loaded.
 		if ( ! empty( $file_checks ) ) {
+			WP_CLI::debug( 'Scanning filesystem for file checks...', 'doctor' );
 			try {
 				$directory      = new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS );
 				$iterator       = new RecursiveIteratorIterator( $directory, RecursiveIteratorIterator::CHILD_FIRST );
