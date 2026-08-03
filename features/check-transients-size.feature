@@ -29,7 +29,7 @@ Feature: Check the size of autoloaded transients
       <?php
       $value = str_repeat( '9', 15000 );
       for ( $i = 0; $i < 75; $i++ ) {
-        set_transient( 'doctor_big_' . $i, $value );
+        add_option( '_transient_doctor_big_' . $i, $value, '', true );
       }
       """
     And I run `wp eval-file create-large-transients.php`
@@ -53,7 +53,8 @@ Feature: Check the size of autoloaded transients
       $value = str_repeat( '9', 15000 );
       for ( $i = 0; $i < 75; $i++ ) {
         update_option( 'doctor_big_option_' . $i, $value, true );
-        set_transient( 'doctor_expiring_big_' . $i, $value, HOUR_IN_SECONDS );
+        add_option( '_transient_doctor_expiring_big_' . $i, $value, '', false );
+        add_option( '_transient_timeout_doctor_expiring_big_' . $i, time() + HOUR_IN_SECONDS, '', false );
       }
       """
     And I run `wp eval-file create-large-nonmatching-data.php`
