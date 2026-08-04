@@ -42,15 +42,4 @@ class Autoload_Options_Size extends Check {
 			$this->set_message( "Autoloaded options size ({$human_total}) is less than threshold ({$human_threshold})." );
 		}
 	}
-
-	/**
-	 * @param int|float $size Size in bytes.
-	 * @param int       $precision Precision.
-	 * @return string
-	 */
-	private static function format_bytes( $size, $precision = 2 ) {
-		$base     = log( $size, 1024 );
-		$suffixes = array( '', 'kb', 'mb', 'g', 't' );
-		return round( pow( 1024, $base - floor( $base ) ), $precision ) . $suffixes[ (int) floor( $base ) ];
-	}
 }

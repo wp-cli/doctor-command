@@ -79,3 +79,35 @@ Feature: Check the size of autoloaded transients
       """
       is less than threshold (800kb)
       """
+
+  Scenario: Zero threshold is formatted safely
+    Given a WP install
+    And a custom.yml file:
+      """
+      transients-size:
+        class: WP_CLI\Doctor\Check\Transients_Size
+        options:
+          threshold_kb: 0
+      """
+
+    When I run `wp doctor check transients-size --fields=message --config=custom.yml`
+    Then STDOUT should contain:
+      """
+      threshold (0)
+      """
+
+  Scenario: Very large thresholds are formatted safely
+    Given a WP install
+    And a custom.yml file:
+      """
+      transients-size:
+        class: WP_CLI\Doctor\Check\Transients_Size
+        options:
+          threshold_kb: 1099511627776
+      """
+
+    When I run `wp doctor check transients-size --fields=message --config=custom.yml`
+    Then STDOUT should contain:
+      """
+      is less than threshold (1024t)
+      """

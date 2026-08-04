@@ -88,6 +88,24 @@ abstract class Check {
 	}
 
 	/**
+	 * Format a byte count for check result messages.
+	 *
+	 * @param int|float $size Size in bytes.
+	 * @param int       $precision Precision.
+	 * @return string
+	 */
+	protected static function format_bytes( $size, $precision = 2 ) {
+		if ( 0 >= $size ) {
+			return '0';
+		}
+
+		$suffixes = array( '', 'kb', 'mb', 'g', 't' );
+		$base     = min( (int) floor( log( $size, 1024 ) ), count( $suffixes ) - 1 );
+
+		return round( $size / pow( 1024, $base ), $precision ) . $suffixes[ $base ];
+	}
+
+	/**
 	 * Run the check.
 	 *
 	 * Because each check checks for something different, this method must be
