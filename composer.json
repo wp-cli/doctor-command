@@ -13,13 +13,13 @@
     ],
     "require": {
         "ext-json": "*",
-        "wp-cli/checksum-command": "^2",
-        "wp-cli/core-command": "^2",
-        "wp-cli/cron-command": "^2",
-        "wp-cli/entity-command": "^2",
-        "wp-cli/extension-command": "^2",
-        "wp-cli/language-command": "^2",
-        "wp-cli/wp-cli": "^2.13"
+        "wp-cli/checksum-command": "^2 || ^3",
+        "wp-cli/core-command": "^2 || ^3",
+        "wp-cli/cron-command": "^2 || ^3",
+        "wp-cli/entity-command": "^2 || ^3",
+        "wp-cli/extension-command": "^2 || ^3",
+        "wp-cli/language-command": "^2 || ^3",
+        "wp-cli/wp-cli": "^3.0"
     },
     "require-dev": {
         "wp-cli/wp-cli-tests": "^5"
