@@ -19,7 +19,50 @@ Feature: Check the size of autoloaded transients
     When I run `wp doctor check transients-size --fields=message`
     Then STDOUT should contain:
       """
-      is less than threshold (900kb)
+      does not exceed threshold (900kb)
+      """
+
+  Scenario: Autoloaded transients equal 900 kb
+    Given a WP install
+    And a wp-content/mu-plugins/exact-threshold-transients.php file:
+      """
+      <?php
+      add_action(
+        'wp_loaded',
+        static function () {
+          global $wpdb;
+
+          $option_names = $wpdb->get_col( "SELECT option_name FROM {$wpdb->options}" );
+          foreach ( $option_names as $option_name ) {
+            if (
+              0 === strpos( $option_name, '_transient_' )
+              || 0 === strpos( $option_name, '_site_transient_' )
+            ) {
+              delete_option( $option_name );
+            }
+          }
+
+          add_option( '_transient_doctor_exact_threshold', str_repeat( '9', 900 * 1024 ), '', true );
+        },
+        PHP_INT_MAX
+      );
+      """
+
+    When I run `wp option list --transients --autoload=on --format=total_bytes`
+    Then STDOUT should be:
+      """
+      921600
+      """
+
+    When I run `wp doctor check transients-size --fields=name,status`
+    Then STDOUT should be a table containing rows:
+      | name            | status  |
+      | transients-size | success |
+
+    When I run `wp doctor check transients-size --fields=message`
+    Then STDOUT should contain:
+      """
+      Autoloaded transients size (900kb) does not exceed threshold (900kb).
       """
 
   Scenario: Autoloaded transients are greater than 900 kb
@@ -77,7 +120,7 @@ Feature: Check the size of autoloaded transients
     When I run `wp doctor check transients-size --fields=message --config=custom.yml`
     Then STDOUT should contain:
       """
-      is less than threshold (800kb)
+      does not exceed threshold (800kb)
       """
 
   Scenario: Zero threshold is formatted safely
@@ -109,5 +152,5 @@ Feature: Check the size of autoloaded transients
     When I run `wp doctor check transients-size --fields=message --config=custom.yml`
     Then STDOUT should contain:
       """
-      is less than threshold (1024t)
+      does not exceed threshold (1024t)
       """

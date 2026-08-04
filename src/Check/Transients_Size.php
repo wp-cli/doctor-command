@@ -40,7 +40,7 @@ class Transients_Size extends Check {
 			$this->set_message( "Autoloaded transients size ({$human_total}) exceeds threshold ({$human_threshold})" );
 		} else {
 			$this->set_status( 'success' );
-			$this->set_message( "Autoloaded transients size ({$human_total}) is less than threshold ({$human_threshold})." );
+			$this->set_message( "Autoloaded transients size ({$human_total}) does not exceed threshold ({$human_threshold})." );
 		}
 	}
 }
