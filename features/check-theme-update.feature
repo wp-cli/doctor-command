@@ -20,7 +20,7 @@ Feature: Check whether themes are up to date
   Scenario: One theme has an update available
     Given a WP install
     And I run `wp theme update --all`
-    And I run `wp theme install moina --version=1.1.2`
+    And I run `wp theme install oceanly --version=1.0.0`
 
     When I run `wp doctor check theme-update`
     Then STDOUT should be a table containing rows:
