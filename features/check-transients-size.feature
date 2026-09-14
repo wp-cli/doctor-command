@@ -24,29 +24,20 @@ Feature: Check the size of autoloaded transients
 
   Scenario: Autoloaded transients equal 900 kb
     Given a WP install
-    And a wp-content/mu-plugins/exact-threshold-transients.php file:
+    # Warm the lazy core caches (block CSS transients) so the ambient autoloaded
+    # transients stop changing between the seed run and the assertions below.
+    And I run `wp doctor check transients-size --fields=name,status`
+    And a seed-exact-threshold-transient.php file:
       """
       <?php
-      add_action(
-        'wp_loaded',
-        static function () {
-          global $wpdb;
-
-          $option_names = $wpdb->get_col( "SELECT option_name FROM {$wpdb->options}" );
-          foreach ( $option_names as $option_name ) {
-            if (
-              0 === strpos( $option_name, '_transient_' )
-              || 0 === strpos( $option_name, '_site_transient_' )
-            ) {
-              delete_option( $option_name );
-            }
-          }
-
-          add_option( '_transient_doctor_exact_threshold', str_repeat( '9', 900 * 1024 ), '', true );
-        },
-        PHP_INT_MAX
+      $existing_bytes = (int) WP_CLI::runcommand(
+        'option list --transients --autoload=on --format=total_bytes',
+        array( 'launch' => false, 'return' => true )
       );
+
+      add_option( '_transient_doctor_exact_threshold', str_repeat( '9', ( 900 * 1024 ) - $existing_bytes ), '', true );
       """
+    And I run `wp eval-file seed-exact-threshold-transient.php`
 
     When I run `wp option list --transients --autoload=on --format=total_bytes`
     Then STDOUT should be:
@@ -152,5 +143,5 @@ Feature: Check the size of autoloaded transients
     When I run `wp doctor check transients-size --fields=message --config=custom.yml`
     Then STDOUT should contain:
       """
-      does not exceed threshold (1024t)
+      does not exceed threshold (1024tb)
       """
