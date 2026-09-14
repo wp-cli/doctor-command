@@ -99,7 +99,7 @@ abstract class Check {
 			return '0';
 		}
 
-		$suffixes = array( '', 'kb', 'mb', 'g', 't' );
+		$suffixes = array( '', 'kb', 'mb', 'gb', 'tb' );
 		$base     = min( (int) floor( log( $size, 1024 ) ), count( $suffixes ) - 1 );
 
 		return round( $size / pow( 1024, $base ), $precision ) . $suffixes[ $base ];
