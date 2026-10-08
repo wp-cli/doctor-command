@@ -16,7 +16,7 @@
         "wp-cli/checksum-command": "^2 || ^3",
         "wp-cli/core-command": "^2 || ^3",
         "wp-cli/cron-command": "^2 || ^3",
-        "wp-cli/entity-command": "^2 || ^3",
+        "wp-cli/entity-command": "^2.8.12 || ^3",
         "wp-cli/extension-command": "^2 || ^3",
         "wp-cli/language-command": "^2 || ^3",
         "wp-cli/wp-cli": "^3.0"

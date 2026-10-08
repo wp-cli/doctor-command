@@ -6,9 +6,9 @@ use WP_CLI;
 use WP_CLI\Doctor\Check;
 
 /**
- * Warns when autoloaded options size exceeds threshold of %threshold_kb% kb.
+ * Warns when autoloaded transients size exceeds threshold of %threshold_kb% kb.
  */
-class Autoload_Options_Size extends Check {
+class Transients_Size extends Check {
 
 	/**
 	 * Threshold in kilobytes.
@@ -25,8 +25,9 @@ class Autoload_Options_Size extends Check {
 		WP_CLI::run_command(
 			array( 'option', 'list' ),
 			array(
-				'autoload' => 'on',
-				'format'   => 'total_bytes',
+				'transients' => true,
+				'autoload'   => 'on',
+				'format'     => 'total_bytes',
 			)
 		);
 		$total_bytes = (int) ob_get_clean();
@@ -36,10 +37,10 @@ class Autoload_Options_Size extends Check {
 		$human_total     = self::format_bytes( $total_bytes );
 		if ( $threshold_bytes < $total_bytes ) {
 			$this->set_status( 'warning' );
-			$this->set_message( "Autoloaded options size ({$human_total}) exceeds threshold ({$human_threshold})" );
+			$this->set_message( "Autoloaded transients size ({$human_total}) exceeds threshold ({$human_threshold})" );
 		} else {
 			$this->set_status( 'success' );
-			$this->set_message( "Autoloaded options size ({$human_total}) does not exceed threshold ({$human_threshold})." );
+			$this->set_message( "Autoloaded transients size ({$human_total}) does not exceed threshold ({$human_threshold})." );
 		}
 	}
 }

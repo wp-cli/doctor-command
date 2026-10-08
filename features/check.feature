@@ -160,6 +160,7 @@ Feature: Basic check usage
     Then STDOUT should be a table containing rows:
       | name                  |
       | autoload-options-size |
+      | transients-size       |
       | core-update           |
       | core-verify-checksums |
       | plugin-deactivated    |
