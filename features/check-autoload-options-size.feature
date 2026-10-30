@@ -19,7 +19,7 @@ Feature: Check the size of autoloaded options
     When I run `wp doctor check autoload-options-size --fields=message`
     Then STDOUT should contain:
       """
-      is less than threshold (900kb)
+      does not exceed threshold (900kb)
       """
 
   @less-than-wp-6.5
@@ -59,5 +59,5 @@ Feature: Check the size of autoloaded options
     When I run `wp doctor check autoload-options-size --fields=message --config=custom.yml`
     Then STDOUT should contain:
       """
-      is less than threshold (800kb)
+      does not exceed threshold (800kb)
       """
