@@ -1,6 +1,8 @@
 # Default check configuration for `wp doctor`
 autoload-options-size:
   check: Autoload_Options_Size
+transients-size:
+  check: Transients_Size
 constant-savequeries-falsy:
   check: Constant_Definition
   options:
