@@ -28,6 +28,7 @@ use WP_CLI\Utils;
  *     | name                       | description                                                                    |
  *     +----------------------------+--------------------------------------------------------------------------------+
  *     | autoload-options-size      | Warns when autoloaded options size exceeds threshold of 900 kb.                |
+ *     | transients-size            | Warns when autoloaded transients size exceeds threshold of 900 kb.             |
  *     | constant-savequeries-falsy | Confirms expected state of the SAVEQUERIES constant.                           |
  *     | constant-wp-debug-falsy    | Confirms expected state of the WP_DEBUG constant.                              |
  *     | core-update                | Errors when new WordPress minor release is available; warns for major release. |
@@ -325,6 +326,7 @@ class Command {
 	 *     | name                       | description                                                                    |
 	 *     +----------------------------+--------------------------------------------------------------------------------+
 	 *     | autoload-options-size      | Warns when autoloaded options size exceeds threshold of 900 kb.                |
+	 *     | transients-size            | Warns when autoloaded transients size exceeds threshold of 900 kb.             |
 	 *     | constant-savequeries-falsy | Confirms expected state of the SAVEQUERIES constant.                           |
 	 *     | constant-wp-debug-falsy    | Confirms expected state of the WP_DEBUG constant.                              |
 	 *     | core-update                | Errors when new WordPress minor release is available; warns for major release. |
